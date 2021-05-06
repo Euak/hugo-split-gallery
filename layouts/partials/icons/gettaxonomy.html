@@ -1,0 +1,10 @@
+{{ $icon := false }}
+{{ $taxonomy_term := . }}
+
+{{ with site.Params.taxonomies }}
+    {{ with .Get ($taxonomy_term) }}
+        {{ $icon = .Get "icon" }}
+    {{ end }}
+{{ end }}
+
+{{ return $icon }}

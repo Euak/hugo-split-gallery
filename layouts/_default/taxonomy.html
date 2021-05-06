@@ -1,0 +1,18 @@
+{{ define "title" }}
+{{/* Taxonomy pages don't have .Params.Title */}}
+{{ .Title | plainify }} | {{ .Site.Title | plainify }}
+{{ end }}
+{{ define "title_html" }}
+{{/* Taxonomy pages don't have .Params.Title */}}
+{{ $icon := partial "icons/gettaxonomy.html" .Data.Plural }}
+{{ if $icon }}<i class="fa fa-{{ $icon }}"></i> {{ end }}
+{{ .Title }}
+{{ end }}
+
+{{ define "main_left" }}
+{{ partial "grid.html" . }}
+{{ end }}
+
+{{ define "main_right" }}
+{{ partial "list.html" . }}
+{{ end }}

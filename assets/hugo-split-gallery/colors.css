@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
+body {
+    color: #848d96;
+    background-color: #113106;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: lighter;
+    font-size: smaller;
+}
+
+a,
+button.btn {
+    color: #8da5bd;
+  transition-duration: 0.5s;
+  text-decoration: underline dotted #848d96 1px;
+    border-style: none;
+    box-shadow: none;
+}
+
+a:hover, button.btn:hover {
+    color: #008000;
+    transition-duration: 0.1s;
+    text-decoration: underline dotted #008000 1px;
+  }
+
+  .btn.btn-link {
+    font-weight: inherit;
+    font-size: inherit;
+    vertical-align: text-top;
+    padding: 0px;
+  }

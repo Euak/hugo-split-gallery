@@ -1,0 +1,17 @@
+<div id="mapid" style="width: 100%; height: 50vh;" class="mb-1"></div>
+<script>
+initMap();
+var promises = [];
+{{ range .Resources.Match "*.gpx" }}
+    promises.push(
+        showGPX("{{ .Permalink }}", colors[nextColor()]).then(function (featuregroup) {
+            featuregroup.bindPopup('<strong>{{ .Name }}</strong><br>'
+            + '<a href="{{ .Permalink }}"><i class="fa fa-map-signs"></i> {{ i18n "downloadGPXfile" }}</a><br>'
+            + '<a href="https://map2gpx.fr?url={{ .Permalink }}"><i class="fa fa-map"></i> {{ i18n "openGPXinmap2gpx" }}</a>');
+        })
+    );
+{{ end }}
+Promise.all(promises).then((values) => {
+    map.fitBounds(bounds);
+});
+</script>

@@ -1,0 +1,24 @@
+{
+ "author": "Thomas Muguet",
+ "bugs": {
+  "url": "https://gitlab.com/tmuguet/hugo-split-gallery"
+ },
+ "comments": {
+  "dependencies": {},
+  "devDependencies": {}
+ },
+ "description": "Hugo Split Gallery theme",
+ "devDependencies": {},
+ "homepage": "https://gitlab.com/tmuguet/hugo-split-gallery",
+ "keywords": [
+  "hugo",
+  "gohugo"
+ ],
+ "license": "MIT",
+ "name": "hugo-split-gallery",
+ "repository": {
+  "type": "git",
+  "url": "git+https://gitlab.com/tmuguet/hugo-split-gallery.git"
+ },
+ "version": "1.0.0"
+}

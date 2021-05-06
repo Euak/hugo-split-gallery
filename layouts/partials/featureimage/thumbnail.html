@@ -1,0 +1,12 @@
+{{ $linkToThumbnail := false }}
+{{ $featured_image := .Param "featured_image" }}
+{{ if $featured_image }}
+    {{ $img := .Resources.GetMatch $featured_image }}
+    {{ if $img }}
+        {{ $linkToThumbnail = partial "thumbnail.html" $img }}
+    {{ end }}
+{{ end }}
+{{ if not $linkToThumbnail }}
+    {{ warnf "Could not find featured image for %s (%s)" .RelPermalink .Kind}}
+{{ end }}
+{{ return $linkToThumbnail }}

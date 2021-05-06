@@ -1,0 +1,19 @@
+{{ define "title" }}
+{{/* We redefine title to include taxonomy name */}}
+{{ .Data.Singular | humanize | plainify }} {{ .Title | plainify }} | {{ .Site.Title | plainify }}
+{{ end }}
+{{ define "title_html" }}
+{{/* We redefine title to include taxonomy name */}}
+{{ $icon := partial "icons/gettaxonomy.html" .Data.Plural }}
+{{ if $icon }}<i class="fa fa-{{ $icon }}"></i> {{ end }}
+{{ .Data.Singular | humanize }} {{ .Title }}
+{{ end }}
+
+{{ define "main_left" }}
+{{ partial "grid.html" . }}
+{{ end }}
+
+{{ define "main_right" }}
+{{ partial "map/list.html" . }}
+{{ partial "list.html" . }}
+{{ end }}

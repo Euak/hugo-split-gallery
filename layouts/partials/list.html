@@ -1,0 +1,30 @@
+{{ $leafpages := partial "getleafpages.html" . }}
+
+{{ $showDate := false }}
+{{ $showCount := false }}
+{{ if eq .Kind "page" }}
+    {{ warnf "Should not be called here"}}
+{{ else if eq .Kind "term" }}
+    {{ $showDate = true }}
+    {{ $showCount = false }}
+{{ else if eq .Kind "taxonomy" }}
+    {{ $showDate = false }}
+    {{ $showCount = true }}
+{{ else if eq .Kind "section" }}
+    {{ $showDate = true }}
+    {{ $showCount = false }}
+{{ else if eq .Kind "home" }}
+    {{ $showDate = true }}
+    {{ $showCount = false }}
+{{ end }}
+
+<ul>
+    {{ range $leafpages }}
+    <li>
+        <a href="{{ .Permalink }}">{{ if $showDate }}{{ .Date.Format "2006-01-02" }} | {{ end }}{{ .Title }}</a>
+        {{ if $showCount }}
+            {{ len .Data.Pages }}
+        {{ end }}
+    </li>
+    {{ end }}
+</ul>

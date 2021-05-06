@@ -1,0 +1,6 @@
+{{ $linkToThumbnail := "" }}
+{{ $thumbnail := .Resize "x150" }}
+{{ with $thumbnail }}
+    {{ $linkToThumbnail = .Permalink }}
+{{ end }}
+{{ return $linkToThumbnail }}

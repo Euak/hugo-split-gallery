@@ -1,0 +1,129 @@
+{{ define "main_left" }}
+{{ $featured_image := partial "featureimage/bg.html" . }}
+{{ $includeOriginalImage := default true (.Param "includeOriginalImage") }}
+{{ $largeImageSize := default "2000x" (.Param "largeImageSize") }}
+
+<script>
+{{ with .Resources.ByType "image" }}
+  {{ range . }}
+    {{ if $includeOriginalImage }}
+      addzipfile(zip, "{{ .Permalink | safeURL }}");
+    {{ else }}
+      {{ $large := .Resize $largeImageSize }}
+      addzipfile(zip, "{{ $large.Permalink | safeURL }}");
+    {{ end }}
+  {{ end }}
+{{ end }}
+</script>
+
+<div class="col-lg-6 p-0" id="gallery-panel-left" style="background-image: url('{{ $featured_image }}');">
+  <div class="container-fluid h-100 p-0">
+    <div class="row h-100 p-0">
+      <div class="col my-auto p-0">
+        <ul class="split-grid list-unstyled">
+          {{ with .Resources.ByType "image" }}
+            {{ range . }}
+              {{ $linkToThumbnail := partial "thumbnail.html" . }}
+              {{ $large := .Resize $largeImageSize }}
+              {{ if $includeOriginalImage }}
+                <li><a href="{{ .Permalink }}"
+                    data-srcset="{{ .Permalink }} {{ .Width }}w, {{ $large.Permalink }} {{ $large.Width }}w"
+                    data-fancybox="gallery"><img src="{{ $linkToThumbnail }}" /></a></li>
+              {{ else }}
+                <li><a href="{{ $large.Permalink }}"
+                    data-srcset="{{ $large.Permalink }} {{ $large.Width }}w"
+                    data-fancybox="gallery"><img src="{{ $linkToThumbnail }}" /></a></li>
+              {{ end }}
+            {{ end }}
+          {{ end }}
+        <li></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}
+
+{{ define "main_right" }}
+{{ $nbTracks := len (.Resources.Match "*.gpx") }}
+
+<p>{{ .Content }}</p>
+
+{{ if gt (len (.Resources.Match "*.gpx")) 0 }}
+  {{ partial "map/single.html" . }}
+
+  <script>
+    {{ range $index, $element := .Resources.ByType "image" }}
+    {{ with $element.Exif }}
+      {{ if and (.Lat) (.Long) }}
+        addMarker([{{ .Lat }}, {{ .Long }}], {{ $index }});
+      {{ end }}
+    {{ end }}
+    {{ end }}
+  </script>
+{{ end }}
+{{ end }}
+
+{{ define "lists" }}
+<div class="col">
+  <ul class="list-unstyled">
+    <li><i class="fa fa-file"></i> {{ i18n "publishedAt" (.Date.Format "2006-01-02") }}</li>
+    {{ $dates := slice }}
+    {{ with .Resources.ByType "image" }}
+      {{ range . }}
+        {{ with .Exif }}
+          {{ $dates = $dates | append (.Date.Format "2006-01-02") }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    <li><i class="fa fa-camera"></i> {{ i18n "photosTakenOn" (delimit (sort (uniq ($dates))) ", ") }}</li>
+    {{ $allTaxonomies := slice }}
+    {{ range $taxonomy_term, $taxonomy := .Site.Taxonomies }}
+      {{ $allTaxonomies = $allTaxonomies | append $taxonomy_term }}
+    {{ end }}
+
+    {{ range $key, $value := .Params }}
+      {{ if in $allTaxonomies $key }}
+        {{ $icon := partial "icons/gettaxonomy.html" $key }}
+        <li>
+          {{ if reflect.IsSlice $value }}
+            {{ with $.Site.GetPage (printf "/%s" $key) }}
+              <a href="{{ .Permalink }}">
+                {{ if $icon }}<i class="fa fa-{{ $icon }}"></i> {{ end }}
+                {{ $key | humanize }}
+              </a>
+            {{ end }}: 
+            {{ range sort $value }}
+              {{ with $.Site.GetPage (printf "/%s/%s" $key .) }}<a href="{{ .Permalink }}">{{ .Title }}</a>{{ end }}
+            {{ end }}
+          {{ else }}
+            {{ with $.Site.GetPage (printf "/%s" $key) }}
+              <a href="{{ .Permalink }}">
+                {{ if $icon }}<i class="fa fa-{{ $icon }}"></i> {{ end }}
+                {{ $key | singularize | humanize }}
+              </a>
+            {{ end }}: 
+            {{ with $.Site.GetPage (printf "/%s/%s" $key $value) }}<a href="{{ .Permalink }}">{{ .Title }}</a>{{ end }}
+          {{ end }}
+        </li>
+      {{ end }}
+    {{ end }}
+  </ul>
+</div>
+<div class="col">
+  <ul class="list-unstyled">
+    {{ if gt (len (.Resources.Match "*.gpx")) 1 }}
+      {{ range .Resources.Match "*.gpx" }}
+        <li><a href="{{ .Permalink }}"><i class="fa fa-map-signs"></i> {{ i18n "downloadGPXfileWithName" .Name }}</a></li>
+        <li><a href="https://map2gpx.fr?url={{ .Permalink }}"><i class="fa fa-map"></i> {{ i18n "openGPXinmap2gpxWithName" .Name }}</a></li>
+      {{ end }}
+    {{ else if gt (len (.Resources.Match "*.gpx")) 0 }}
+      <li><a href="{{ (index (.Resources.Match "*.gpx") 0).Permalink }}"><i class="fa fa-map-signs"></i> {{ i18n "downloadGPXfile" }}</a></li>
+      <li><a href="https://map2gpx.fr?url={{ (index (.Resources.Match "*.gpx") 0).Permalink }}"><i class="fa fa-map"></i> {{ i18n "openGPXinmap2gpx" }}</a></li>
+    {{ end }}
+  </ul>
+</div>
+<div class="col">
+  <ul class="list-unstyled"><li><button type="button" class="btn btn-link" onclick="dl(this);" data-filename="{{ .Title | urlize }}"><i class="fa fa-cloud-download"></i> {{ i18n "downloadPhotos" }}</button></li></ul>
+</div>
+{{ end }}

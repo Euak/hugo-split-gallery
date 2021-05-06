@@ -1,0 +1,12 @@
+name = "Hugo Split Gallery"
+license = "MIT"
+licenselink = "https://gitlab.com/tmuguet/hugo-split-gallery/-/blob/main/LICENSE.md"
+description = "Photo gallery inspired by Hugo Split Theme"
+homepage = "https://gitlab.com/tmuguet/hugo-split-gallery"
+tags = ["website", "gallery", "responsive"]
+features = ["posts"]
+min_version = "0.64.0"
+
+[author]
+  name = "Thomas Muguet"
+  homepage = "https://tmuguet.me/"

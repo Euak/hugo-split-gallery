@@ -1,0 +1,35 @@
+[poweredby]
+other = """\
+    Powered by <a href="https://gohugo.io/">hugo</a> and \
+    <a href="https://gitlab.com/tmuguet/hugo-split-gallery">Hugo Split Gallery theme</a> \
+    (inspired by <a href="https://github.com/tmuguet/hugo-split-theme">Hugo Split Theme</a> and \
+    <a href="https://onepagelove.com/split">Split Template</a> by \
+    <a href="https://onepagelove.com">One Page Love</a>) \
+    """
+
+[sections]
+other = "Sections"
+
+[publishedAt]
+other = "Article published on {{ . }}"
+
+[photosTakenOn]
+other = "Photos taken on {{ . }}"
+
+[downloadPhotos]
+other = "Download all photos"
+
+[downloadGPXfile]
+other = "Download GPX file"
+
+[downloadGPXfileWithName]
+other = "Download GPX file '{{ . }}'"
+
+[openGPXinmap2gpx]
+other = "Open the track in map2gpx"
+
+[openGPXinmap2gpxWithName]
+other = "Open the track '{{ . }}' in map2gpx"
+
+[error404]
+other = "This is not the page you were looking for"
