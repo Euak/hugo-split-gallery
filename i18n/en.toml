@@ -10,6 +10,9 @@ other = """\
 [sections]
 other = "Sections"
 
+[seealso]
+other = "See also..."
+
 [publishedAt]
 other = "Article published on {{ . }}"
 
