@@ -5,63 +5,73 @@
   background-size: cover;
 }
 @media (min-width: 992px) {
-    #gallery-panel-left {
-      height: 100vh;
-      overflow-y: auto;
-      overflow-x: hidden; /* Hide panoramic photos that are too wide */
-    }
+  #gallery-panel-left {
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden; /* Hide panoramic photos that are too wide */
   }
+}
 
-  @media (min-width: 992px) {
-      #gallery-panel-right {
-        height: 100vh;
-        overflow: auto;
-      }
-    }
-    
-  .vertical-align-center {
+@media (min-width: 992px) {
+  #gallery-panel-right {
+    height: 100vh;
+    overflow: auto;
+  }
+}
+  
+.vertical-align-center {
   margin-top: auto;
   margin-bottom: auto;
-  }
+}
 
 ul, ol {
-    margin: 0;
+  margin: 0;
   padding: 0;
   border: 0;
 }
 
 ul.split-grid {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: auto;
-    margin-bottom: auto;
-    max-width: 100%;
-    height: 100%;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: auto;
+  margin-bottom: auto;
+  max-width: 100%;
+  height: 100%;
+}
 .split-grid li {
-    height: 100px;
-    flex-grow: 1;
-  }
+  height: 100px;
+  flex-grow: 1;
+}
 .split-grid li:last-child {
-    flex-grow: 10;
-  }
+  flex-grow: 10;
+}
 .split-grid li a {
-    height: 100%;
-    width: 100%;
-  }
+  height: 100%;
+  width: 100%;
+}
 .split-grid li a img {
-    max-height: 100%;
-    min-width: 100%;
-    object-fit: cover;
-    vertical-align: bottom;
-  }
+  max-height: 100%;
+  min-width: 100%;
+  object-fit: cover;
+  vertical-align: bottom;
+}
 .split-grid h3 {
-    font-size: 14px;
-    line-height: normal;
-  }
+  font-size: 14px;
+  line-height: normal;
+}
 
 .btn.btn-link {
-    text-align: left;
+  text-align: left;
+  font-weight: inherit;
+  font-size: inherit;
+  vertical-align: text-top;
+  padding: 0px;
+}
+
+a,
+button.btn {
+  border-style: none;
+  box-shadow: none;
 }
 
 .c4-izmir {
