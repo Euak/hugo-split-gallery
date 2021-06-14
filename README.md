@@ -5,9 +5,9 @@ This Hugo theme features a photo gallery, a map and custom content per page, and
 
 It is inspired by [Hugo Split Theme](https://github.com/christianmendoza/hugo-split-theme), itself ported from [Split](https://onepagelove.com/split) by [One Page Love](https://onepagelove.com).
 
-![screenshot](/screenshot.png)
+![screenshot](/images/screenshot.png)
 
-[DEMO](https://example.com/)
+[DEMO](https://thomasmuguet.info)
 
 ## Installation
 
@@ -47,7 +47,7 @@ content/
 │   │       └── ..
 ```
 
-In other words, photos displayed in the gallery **must** be in a `images` subfolder, and GPX track(s) must be at the same level as the content.
+In other words, photos displayed in the gallery **must** be in a `images` subfolder, and GPX track(s) -if any- must be at the same level as the content.
 
 Additionnally, the content of the post:
 
