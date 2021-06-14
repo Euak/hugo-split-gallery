@@ -60,12 +60,12 @@
                     {{ end }}
                 </ul>
 
-              {{ if or .PrevInSection .NextInSection }}
+                {{ if or .PrevInSection .NextInSection }}
                 <ul class="list-inline">
                   {{ with .PrevInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}"><i class="fa fa-arrow-left"></i> {{ .Title }}</a></li>{{ end }}
                   {{ with .NextInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}">{{ .Title }} <i class="fa fa-arrow-right"></i></a></li>{{ end }}
                 </ul>
-              {{ end }}
+                {{ end }}
               </aside>
 
               <h1>{{ block "title_html" . }}{{ .Title | default .Site.Title | safeHTML }} {{/* .Kind }} {{ partial "getleafpage.html" . */}}{{ end }}</h1>
@@ -80,7 +80,10 @@
               </div>
 
               <div class="split-footnote my-2">
-                {{ block "footnote" . }}{{ with .Params.Footnote }}{{ . }}{{ end }}{{ end }}
+                {{ block "footnote" . }}
+                  {{ with .Params.footnote }}{{ . }}{{ end }}
+                  {{ with .Site.Params.footnote }}{{ . | safeHTML }}{{ end }}
+                {{ end }}
               </div>
 
               <div class="split-credit mt-4">

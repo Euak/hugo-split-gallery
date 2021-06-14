@@ -100,6 +100,37 @@ You can configure the icons using [FontAwesome 4.7](https://fontawesome.com/v4.7
       icon = "paw"
 ```
 
+### Footnotes
+
+You can define footnotes per-page and globally to the site.
+
+Use `footnote` parameter in your post to define a specific footnote for that page:
+
+```text
+---
+title: "Lac de la Muzelle et lac Lauvitel"
+date: 2017-07-30T00:00:00+00:00
+featured_image: "images/IMGP3719.jpg"
+footnote: "Foo bar"
+---
+
+Cat ipsum dolor sit amet, hide from vacuum cleaner swat turds around the house hate dog don't nosh on the birds. Run outside as soon as door open. 
+```
+
+Use the `footnote` parameter in your site configuration to apply it to all your website (you can include HTML):
+
+```toml
+[params]
+  footnote = """
+  <ul class='list-inline'>
+    <li class='list-inline-item me-4'><a href='/about/'><i class='fa fa-info-circle'></i> À propos</a></li>
+    <li class='list-inline-item me-4'><a href='https://tmuguet.me/'><i class='fa fa-address-card'></i> Site pro.</a></li>
+    <li class='list-inline-item me-4'><a href='https://map2gpx.fr/'><i class='fa fa-map'></i> map2gpx</a></li>
+  </ul>"""
+```
+
+If both are provided, both are displayed.
+
 ### Custom CSS
 
 You can override the built-in css by using your own. Put your own css files in the `static` directory of your website and modify the `customCss` parameter in your config file. The path referenced in the parameter should be relative to the `static` folder.
