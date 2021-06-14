@@ -1,0 +1,12 @@
+{{ $linkToCover := false }}
+{{ $featured_image := .Param "featured_image" }}
+{{ if $featured_image }}
+    {{ $img := .Resources.GetMatch $featured_image }}
+    {{ if $img }}
+        {{ $linkToCover = $img.Permalink }}
+    {{ end }}
+{{ end }}
+{{ if not $linkToCover }}
+    {{ warnf "Could not find featured image for %s (%s)" .RelPermalink .Kind}}
+{{ end }}
+{{ return $linkToCover }}

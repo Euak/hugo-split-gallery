@@ -1,0 +1,43 @@
+{{ define "main_left" }}
+{{ $featured_image := partial "featureimage/plain.html" . }}
+
+<div class="col-lg-6 p-0" id="gallery-panel-left" style="background-image: url('{{ $featured_image }}');">
+  <div class="container-fluid h-100 p-0">
+  </div>
+</div>
+{{ end }}
+
+{{ define "main_right" }}
+<p>{{ .Content }}</p>
+{{ end }}
+
+{{ define "lists" }}
+{{ if .Date }}
+<div class="col">
+  <ul class="list-unstyled">
+    <li><i class="fa fa-file"></i> {{ i18n "publishedAt" (.Date.Format "2006-01-02") }}</li>
+  </ul>
+</div>
+{{ end }}
+
+{{ if .Param "seealso" }}
+<div class="col">
+  <p>{{ i18n "seealso" }}</p>
+  <ul>
+    {{ with .Param "seealso" }}
+      {{ if reflect.IsSlice . }}
+        {{ range . }}
+          {{ with $.Site.GetPage . }}
+            <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+          {{ end }}
+        {{ end }}
+      {{ else }}
+        {{ with $.Site.GetPage . }}
+          <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  </ul>
+</div>
+{{ end }}
+{{ end }}
