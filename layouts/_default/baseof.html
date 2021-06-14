@@ -51,7 +51,18 @@
                   {{ .Site.Title | safeHTML }}
                 </a>
               </p>
+
+              {{ if or .PrevInSection .NextInSection }}
+              <div class="split-bio my-2">
+                <div class="row">
+                {{ with .PrevInSection }}<div class="col"><a href="{{ .Permalink }}"><i class="fa fa-arrow-left"></i> {{ .Title }}</a></div>{{ end }}
+                {{ with .NextInSection }}<div class="col"><a href="{{ .Permalink }}">{{ .Title }} <i class="fa fa-arrow-right"></i></a></div>{{ end }}
+                </div>
+              </div>
+              {{ end }}
+
               <h1>{{ block "title_html" . }}{{ .Title | default .Site.Title | safeHTML }} {{/* .Kind }} {{ partial "getleafpage.html" . */}}{{ end }}</h1>
+
               <div class="split-bio my-2">
                 {{ block "main_right" . }}{{ end }}
               </div>
@@ -60,6 +71,7 @@
                   {{ block "lists" . }}{{ end }}
                 </div>
               </div>
+
               <div class="split-footnote my-2">
                 {{ block "footnote" . }}{{ with .Params.Footnote }}{{ . }}{{ end }}{{ end }}
               </div>
