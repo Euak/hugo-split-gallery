@@ -5,7 +5,7 @@
 {{ define "title_html" }}
 {{/* We redefine title to include taxonomy name */}}
 {{ $icon := partial "icons/gettaxonomy.html" .Data.Plural }}
-{{ if $icon }}<i class="fa fa-{{ $icon }}"></i> {{ end }}
+{{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
 {{ .Data.Singular | humanize }} {{ .Title }}
 {{ end }}
 

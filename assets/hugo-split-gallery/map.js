@@ -63,7 +63,6 @@ function showGPX(track, color) {
         bounds = bounds.extend(e.target.getBounds());
 
         if (!start.equals(end, 100)) {
-          console.log('Added end for ', track);
           var marker = L.marker(end, {
             icon: iconsMap[color]
           });

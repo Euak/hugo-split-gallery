@@ -62,8 +62,8 @@
 
                 {{ if or .PrevInSection .NextInSection }}
                 <ul class="list-inline">
-                  {{ with .PrevInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}"><i class="fa fa-arrow-left"></i> {{ .Title }}</a></li>{{ end }}
-                  {{ with .NextInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}">{{ .Title }} <i class="fa fa-arrow-right"></i></a></li>{{ end }}
+                  {{ with .PrevInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}"><i class="fa fa-arrow-left fa-fw"></i> {{ .Title }}</a></li>{{ end }}
+                  {{ with .NextInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}">{{ .Title }} <i class="fa fa-arrow-right fa-fw"></i></a></li>{{ end }}
                 </ul>
                 {{ end }}
               </aside>

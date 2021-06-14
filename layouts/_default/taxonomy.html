@@ -5,7 +5,7 @@
 {{ define "title_html" }}
 {{/* Taxonomy pages don't have .Params.Title */}}
 {{ $icon := partial "icons/gettaxonomy.html" .Data.Plural }}
-{{ if $icon }}<i class="fa fa-{{ $icon }}"></i> {{ end }}
+{{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
 {{ .Title }}
 {{ end }}
 

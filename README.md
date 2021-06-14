@@ -123,9 +123,9 @@ Use the `footnote` parameter in your site configuration to apply it to all your 
 [params]
   footnote = """
   <ul class='list-inline'>
-    <li class='list-inline-item me-4'><a href='/about/'><i class='fa fa-info-circle'></i> À propos</a></li>
-    <li class='list-inline-item me-4'><a href='https://tmuguet.me/'><i class='fa fa-address-card'></i> Site pro.</a></li>
-    <li class='list-inline-item me-4'><a href='https://map2gpx.fr/'><i class='fa fa-map'></i> map2gpx</a></li>
+    <li class='list-inline-item me-4'><a href='/about/'><i class='fa fa-info-circle fa-fw'></i> À propos</a></li>
+    <li class='list-inline-item me-4'><a href='https://tmuguet.me/'><i class='fa fa-address-card fa-fw'></i> Site pro.</a></li>
+    <li class='list-inline-item me-4'><a href='https://map2gpx.fr/'><i class='fa fa-map fa-fw'></i> map2gpx</a></li>
   </ul>"""
 ```
 
