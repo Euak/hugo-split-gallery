@@ -44,7 +44,7 @@
         <div class="container h-100">
           <div class="row h-100">
             <div class="col my-auto">
-              <p class="lead"><a href="{{ .Site.Home.RelPermalink }}">
+              <p class="lead my-0"><a href="{{ .Site.Home.RelPermalink }}">
                   {{ with .Site.Params.siteLogo }}
                     <img src="{{ relURL (.) }}" alt="{{ $.Site.Title | plainify }}" />
                   {{ end }}
@@ -52,14 +52,21 @@
                 </a>
               </p>
 
+              <aside class="mt-0 mb-2">
+                <ul class="list-inline">
+                    {{ $currentPage := . }}
+                    {{ range .Site.Menus.main }}
+                        <li class="list-inline-item me-4"><a href="{{ .URL }}">{{ .Pre }} <span>{{ .Name }}</span></a></li>
+                    {{ end }}
+                </ul>
+
               {{ if or .PrevInSection .NextInSection }}
-              <div class="split-bio my-2">
-                <div class="row">
-                {{ with .PrevInSection }}<div class="col"><a href="{{ .Permalink }}"><i class="fa fa-arrow-left"></i> {{ .Title }}</a></div>{{ end }}
-                {{ with .NextInSection }}<div class="col"><a href="{{ .Permalink }}">{{ .Title }} <i class="fa fa-arrow-right"></i></a></div>{{ end }}
-                </div>
-              </div>
+                <ul class="list-inline">
+                  {{ with .PrevInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}"><i class="fa fa-arrow-left"></i> {{ .Title }}</a></li>{{ end }}
+                  {{ with .NextInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}">{{ .Title }} <i class="fa fa-arrow-right"></i></a></li>{{ end }}
+                </ul>
               {{ end }}
+              </aside>
 
               <h1>{{ block "title_html" . }}{{ .Title | default .Site.Title | safeHTML }} {{/* .Kind }} {{ partial "getleafpage.html" . */}}{{ end }}</h1>
 
