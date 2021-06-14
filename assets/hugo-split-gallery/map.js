@@ -106,5 +106,6 @@ function addMarker(latlng, idx) {
     marker.setOpacity(1).setIcon(iconSelected);
   }, function () {
     marker.setOpacity(0.5).setIcon(iconDefault);
+    if (bounds) map.flyToBounds(bounds);
   });
 }

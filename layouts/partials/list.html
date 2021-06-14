@@ -21,7 +21,7 @@
 <ul>
     {{ range $leafpages }}
     <li>
-        <a href="{{ .Permalink }}">{{ if $showDate }}{{ .Date.Format "2006-01-02" }} | {{ end }}{{ .Title }}</a>
+        <a href="{{ .Permalink }}">{{ if and $showDate .Date }}{{ .Date.Format "2006-01-02" }} | {{ end }}{{ .Title }}</a>
         {{ if $showCount }}
             {{ len .Data.Pages }}
         {{ end }}
