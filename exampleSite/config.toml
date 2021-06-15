@@ -1,0 +1,37 @@
+title = "Hugo Split Gallery theme sample site"
+baseURL = "https://example.com"
+languageCode = "en-us"
+theme = "hugo-split-gallery"
+themesDir = "../.."
+
+DefaultContentLanguage = "en"
+
+[taxonomies]
+  location = "locations"
+  season = "seasons"
+
+[params]
+  robots = "index, follow"
+  favicon = ""
+  siteLogo = ""
+  description = "Photo gallery inspired by Hugo Split Theme"
+  facebook = ""
+  twitter = "https://twitter.com/thomasmuguet"
+  instagram = ""
+  youtube = ""
+  github = ""
+  gitlab = "https://gitlab.com/tmuguet/hugo-split-gallery"
+  linkedin = ""
+  mastodon = ""
+  slack = ""
+  stackoverflow = ""
+  rss = ""
+  includeOriginalImage = false
+  largeImageSize = "2000x"
+  footnote = "Fork me on <a href='https://gitlab.com/tmuguet/hugo-split-gallery'>GitLab</a>!"
+
+  [params.taxonomies]
+    [params.taxonomies.locations]
+      icon = "location-arrow"
+    [params.taxonomies.seasons]
+      icon = "calendar"
