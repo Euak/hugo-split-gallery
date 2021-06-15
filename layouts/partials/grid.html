@@ -3,12 +3,12 @@
 {{ if $leafpage }}
     {{ $featured_image := partial "featureimage/bg.html" $leafpage }}
     {{ if $featured_image }}
-<div class="col-lg-6 p-0" id="gallery-panel-left" style="background-image: url('{{ $featured_image }}');">
+<div class="col-lg-6 p-0" id="gallery-panel" style="background-image: url('{{ $featured_image }}');">
     {{ else }}
-<div class="col-lg-6 p-0" id="gallery-panel-left">
+<div class="col-lg-6 p-0" id="gallery-panel">
     {{ end }}
 {{ else }}
-<div class="col-lg-6 p-0" id="gallery-panel-left">
+<div class="col-lg-6 p-0" id="gallery-panel">
 {{ end }}
 
     <div class="container-fluid h-100 p-0">

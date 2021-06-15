@@ -9,11 +9,11 @@
 {{ .Data.Singular | humanize }} {{ .Title }}
 {{ end }}
 
-{{ define "main_left" }}
+{{ define "gallery" }}
 {{ partial "grid.html" . }}
 {{ end }}
 
-{{ define "main_right" }}
+{{ define "main_content" }}
 {{ partial "map/list.html" . }}
 {{ partial "list.html" . }}
 {{ end }}

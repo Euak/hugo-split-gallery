@@ -39,8 +39,7 @@
 <body>
   <div class="container-fluid">
     <div class="row">
-      {{ block "main_left" . }}{{ end }}
-      <div class="col-lg-6" id="gallery-panel-right">
+      <div class="col-lg-6" id="content-panel">
         <div class="container h-100">
           <div class="row h-100">
             <div class="col my-auto">
@@ -71,7 +70,7 @@
               <h1>{{ block "title_html" . }}{{ .Title | default .Site.Title | safeHTML }} {{/* .Kind }} {{ partial "getleafpage.html" . */}}{{ end }}</h1>
 
               <div class="split-bio my-2">
-                {{ block "main_right" . }}{{ end }}
+                {{ block "main_content" . }}{{ end }}
               </div>
               <div class="split-lists my-4">
                 <div class="row">
@@ -100,6 +99,8 @@
           </div>
         </div>
       </div>
+
+      {{ block "gallery" . }}{{ end }}
     </div>
   </div>
 </body>

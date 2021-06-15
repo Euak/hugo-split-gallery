@@ -1,13 +1,13 @@
-{{ define "main_left" }}
+{{ define "gallery" }}
 {{ $featured_image := partial "featureimage/plain.html" . }}
 
-<div class="col-lg-6 p-0" id="gallery-panel-left" style="background-image: url('{{ $featured_image }}');">
+<div class="col-lg-6 p-0" id="gallery-panel" style="background-image: url('{{ $featured_image }}');">
   <div class="container-fluid h-100 p-0">
   </div>
 </div>
 {{ end }}
 
-{{ define "main_right" }}
+{{ define "main_content" }}
 <p>{{ .Content }}</p>
 {{ end }}
 

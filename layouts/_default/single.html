@@ -1,4 +1,4 @@
-{{ define "main_left" }}
+{{ define "gallery" }}
 {{ $featured_image := partial "featureimage/bg.html" . }}
 {{ $includeOriginalImage := default true (.Param "includeOriginalImage") }}
 {{ $largeImageSize := default "2000x" (.Param "largeImageSize") }}
@@ -16,7 +16,7 @@
 {{ end }}
 </script>
 
-<div class="col-lg-6 p-0" id="gallery-panel-left" style="background-image: url('{{ $featured_image }}');">
+<div class="col-lg-6 p-0" id="gallery-panel" style="background-image: url('{{ $featured_image }}');">
   <div class="container-fluid h-100 p-0">
     <div class="row h-100 p-0">
       <div class="col my-auto p-0">
@@ -44,7 +44,7 @@
 </div>
 {{ end }}
 
-{{ define "main_right" }}
+{{ define "main_content" }}
 {{ $nbTracks := len (.Resources.Match "*.gpx") }}
 
 <p>{{ .Content }}</p>

@@ -1,4 +1,4 @@
-{{ define "main_left" }}
+{{ define "gallery" }}
   {{ $featured_image := false }}
   {{ with index .Site.RegularPages 0 }}
     {{ $featured_image = partial "featureimage/bg.html" . }}
@@ -11,6 +11,6 @@
 </div>
 {{ end }}
 
-{{ define "main_right" }}
+{{ define "main_content" }}
 <h1>{{ i18n "error404" }}</h1>
 {{ end }}
