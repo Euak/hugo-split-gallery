@@ -7,7 +7,7 @@ It is inspired by [Hugo Split Theme](https://github.com/christianmendoza/hugo-sp
 
 ![screenshot](/images/screenshot.png)
 
-[DEMO](https://thomasmuguet.info)
+[Demo](https://tmuguet.gitlab.io/hugo-split-gallery/); [Live example](https://thomasmuguet.info/)
 
 ## Installation
 
