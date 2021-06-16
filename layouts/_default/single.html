@@ -4,6 +4,7 @@
 {{ $largeImageSize := default "2000x" (.Param "largeImageSize") }}
 
 <script>
+$(document).ready(function () {
 {{ with .Resources.ByType "image" }}
   {{ range . }}
     {{ if $includeOriginalImage }}
@@ -14,6 +15,7 @@
     {{ end }}
   {{ end }}
 {{ end }}
+});
 </script>
 
 <div class="col-lg-6 p-0" id="gallery-panel" style="background-image: url('{{ $featured_image }}');">
@@ -53,6 +55,7 @@
   {{ partial "map/single.html" . }}
 
   <script>
+  $(document).ready(function () {
     {{ range $index, $element := .Resources.ByType "image" }}
     {{ with $element.Exif }}
       {{ if and (.Lat) (.Long) }}
@@ -60,6 +63,7 @@
       {{ end }}
     {{ end }}
     {{ end }}
+  });
   </script>
 {{ end }}
 {{ end }}
