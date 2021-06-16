@@ -5,14 +5,14 @@ variables:
 
 test:
   script:
-    - cd exampleSite && hugo --config config.ci.toml
+    - cd exampleSite && hugo --config .config.ci.toml
   except:
     variables:
       - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 pages:
   script:
-    - cd exampleSite && hugo --config config.ci.toml
+    - cd exampleSite && hugo --config .config.ci.toml
   artifacts:
     paths:
       - public
