@@ -1,8 +1,9 @@
 title = "Hugo Split Gallery theme sample site"
-baseURL = "https://example.com"
+baseURL = "https://tmuguet.gitlab.io/hugo-split-gallery/"
 languageCode = "en-us"
 theme = "hugo-split-gallery"
 themesDir = "../.."
+publishDir = "../public"  # GitLab expects public folder at root
 
 DefaultContentLanguage = "en"
 
