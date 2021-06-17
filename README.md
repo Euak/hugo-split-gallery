@@ -131,6 +131,44 @@ Use the `footnote` parameter in your site configuration to apply it to all your 
 
 If both are provided, both are displayed.
 
+### Images
+
+By default, this theme processes all images to:
+
+* Generate a thumbnail (non-configurable)
+* Generate a large-res image of width 2000px
+* Include the original image as high-res
+
+You can change the size of the large-res image via the `largeImageSize` parameter of your site's configuration (see [hugo documentatiopn](https://gohugo.io/content-management/image-processing/#resize) for valid values).
+
+Example:
+
+```toml
+[params]
+  largeImageSize = "4000x"
+```
+
+You can disable the inclusion of the original high-res images via setting `includeOriginalImage` to `false` in the site's configuration. This helps saving disk space and makes the build much faster. In such case, you should also set [`publishResources`](https://gohugo.io/content-management/build-options/#publishresources) to `false` in your posts.
+
+Example of site configuration:
+
+```toml
+[params]
+  includeOriginalImage = false
+```
+
+Example of posts configuration (at the root of `posts`):
+
+```text
+---
+title: "My hikes"
+cascade:
+    _build:
+        publishResources: false
+---
+
+```
+
 ### Custom CSS
 
 You can override the built-in css by using your own. Put your own css files in the `static` directory of your website and modify the `customCss` parameter in your config file. The path referenced in the parameter should be relative to the `static` folder.
