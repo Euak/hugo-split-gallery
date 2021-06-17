@@ -1,4 +1,5 @@
 title = "Hugo Split Gallery theme sample site"
+copyright = "&copy;2021 Me"
 baseURL = "https://example.com"
 languageCode = "en-us"
 theme = "hugo-split-gallery"

@@ -7,21 +7,30 @@ It is inspired by [Hugo Split Theme](https://github.com/christianmendoza/hugo-sp
 
 ![screenshot](/images/screenshot.png)
 
-[Demo](https://tmuguet.gitlab.io/hugo-split-gallery/); [Live example](https://thomasmuguet.info/)
+[Demo](https://tmuguet.gitlab.io/hugo-split-gallery/); [Live example](https://thomasmuguet.info/).
+
+This project follows [semantic versioning](https://semver.org/), meaning any new minor version (e.g. 1.1.0 -> 1.2.0) only introduces new features without breaking changes, and breaking changes are only introduced in major versions (e.g. 1.1.0 -> 2.0.0).
+This means you can safely upgrade from one minor version to the next one.
 
 ## Installation
 
-Inside the folder of your Hugo site run:
+Inside the folder of your Hugo site, run the following command:
 
 ```bash
 git submodule add https://gitlab.com/tmuguet/hugo-split-gallery.git themes/hugo-split-gallery
 ```
 
-For more information read the official [setup guide](https://gohugo.io/overview/installing/) of Hugo.
+Then, change (or add) the theme in the site's configuration (e.g. _config.toml_):
+
+```toml
+theme = "hugo-split-gallery"
+```
+
+For more information, read the official [setup guide](https://gohugo.io/getting-started/quick-start/#step-3-add-a-theme) of Hugo.
 
 ## Getting started
 
-After installing the theme successfully it requires a just a few more steps to get your site running.
+After installing the theme successfully, you just need to add some content.
 
 ### Content archetype
 
@@ -208,6 +217,20 @@ You can have a logo displayed next to your site's title. Put your logo into the 
   siteLogo = "img/logo.png"
 ```
 
+## Updating
+
+From the folder of your Hugo website, run the following commands to update to the latest version:
+
+```bash
+cd themes/hugo-split-gallery && git pull
+```
+
+## License
+
+This theme is licensed under the MIT license, except for the photos distributed with the example site which are not free to use.
+
 ## Contributing
 
 If you find a bug or have an idea for a feature, feel free to use the [issue tracker](https://gitlab.com/tmuguet/hugo-split-gallery/-/issues) to let me know.
+
+In case you want to merge some code, you are more than welcome to open merge requests (with or without a related issue). Please target the `next` branch of this repo, as `main` is reserved for tagged versions. Please also note this theme follows semantic versioning, thus don't introduce breaking changes if they are not necessary.
