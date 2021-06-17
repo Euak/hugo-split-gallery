@@ -51,7 +51,7 @@ In other words, photos displayed in the gallery **must** be in a `images` subfol
 
 Additionnally, the content of the post:
 
-* **requires** a `featured_image` parameter, refering to a picture from this post, which will be used as thumbnail in the home gallery,
+* **requires** an `images` parameter, refering to at least one picture from this post, which will be used as thumbnail in the home gallery,
 * can have a `seealso` parameter, refering to one or multiple other posts.
 
 Example:
@@ -60,7 +60,7 @@ Example:
 ---
 title: "Lac de la Muzelle et lac Lauvitel"
 date: 2017-07-30T00:00:00+00:00
-featured_image: "images/IMGP3719.jpg"
+images: ["images/IMGP3719.jpg"]
 seealso: ["posts/lac-lauvitel", "posts/lac-muzelle"]    # If single, can avoid the brackets
 ---
 
@@ -110,7 +110,7 @@ Use `footnote` parameter in your post to define a specific footnote for that pag
 ---
 title: "Lac de la Muzelle et lac Lauvitel"
 date: 2017-07-30T00:00:00+00:00
-featured_image: "images/IMGP3719.jpg"
+images: ["images/IMGP3719.jpg"]
 footnote: "Foo bar"
 ---
 

@@ -1,7 +1,7 @@
 {{ $linkToCover := false }}
-{{ $featured_image := .Param "featured_image" }}
-{{ if $featured_image }}
-    {{ $img := .Resources.GetMatch $featured_image }}
+{{ $featured_images := .Param "images" }}
+{{ if $featured_images }}
+    {{ $img := .Resources.GetMatch (index $featured_images 0) }}
     {{ if $img }}
         {{ $img = $img | images.Filter (images.GaussianBlur 30) (images.Brightness -30) }}
         {{ with $img }}

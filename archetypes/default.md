@@ -1,5 +1,5 @@
 ---
 title: "{{ replace .TranslationBaseName "-" " " | title }}"
 date: {{ .Date }}
-featured_image: ""
+images: ["images/"]
 ---
