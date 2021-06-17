@@ -15,20 +15,9 @@ DefaultContentLanguage = "en"
   favicon = ""
   siteLogo = ""
   description = "Photo gallery inspired by Hugo Split Theme"
-  facebook = ""
-  twitter = "https://twitter.com/thomasmuguet"
-  instagram = ""
-  youtube = ""
-  github = ""
-  gitlab = "https://gitlab.com/tmuguet/hugo-split-gallery"
-  linkedin = ""
-  mastodon = ""
-  slack = ""
-  stackoverflow = ""
-  rss = ""
+  images = ["DSCF0348.jpg"]
   includeOriginalImage = false
   largeImageSize = "2000x"
-  footnote = "Fork me on <a href='https://gitlab.com/tmuguet/hugo-split-gallery'>GitLab</a>!"
 
   [params.taxonomies]
     [params.taxonomies.locations]
