@@ -86,7 +86,7 @@ Some additionnal parameters are available to tweak your site, described below.
 
 ### Taxonomies
 
-Hugo Split Gallery supports custom taxonomies (as long as they don't have space in their name).
+Hugo Split Gallery supports custom taxonomies (as long as they don't have space in their name and values).
 
 Example:
 
