@@ -3,6 +3,7 @@
 {{ $includeOriginalImage := default true (.Param "includeOriginalImage") }}
 {{ $largeImageSize := default "2000x" (.Param "largeImageSize") }}
 
+{{ if (default false ($.Site.Params.enableDownloadAll)) }}
 <script>
 $(document).ready(function () {
 {{ with .Resources.ByType "image" }}
@@ -17,6 +18,7 @@ $(document).ready(function () {
 {{ end }}
 });
 </script>
+{{ end }}
 
 <div class="col-lg-6 p-0" id="gallery-panel" style="background-image: url('{{ $featured_image }}');">
   <div class="container-fluid h-100 p-0">
@@ -127,9 +129,11 @@ $(document).ready(function () {
     {{ end }}
   </ul>
 </div>
+{{ if (default false ($.Site.Params.enableDownloadAll)) }}
 <div class="col">
   <ul class="list-unstyled"><li><button type="button" class="btn btn-link" onclick="dl(this);" data-filename="{{ .Title | urlize }}"><i class="fa fa-cloud-download fa-fw"></i> {{ i18n "downloadPhotos" }}</button></li></ul>
 </div>
+{{ end }}
 
 {{ if .Param "seealso" }}
 <div class="col">

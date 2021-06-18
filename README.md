@@ -178,6 +178,10 @@ cascade:
 
 ```
 
+### Download
+
+By default, a link _Download all photos_ is displayed for all posts. this can be disabled via setting the `enableDownloadAll` site's parameter to `false`.
+
 ### Custom CSS
 
 You can override the built-in css by using your own. Put your own css files in the `static` directory of your website and modify the `customCss` parameter in your config file. The path referenced in the parameter should be relative to the `static` folder.
