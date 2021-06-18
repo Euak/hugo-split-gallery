@@ -229,6 +229,25 @@ From the folder of your Hugo website, run the following commands to update to th
 cd themes/hugo-split-gallery && git pull
 ```
 
+## Reference
+
+### Site parameters reference
+
+* `customCss`: list of paths to custom CSS files to include (optional, defaults to empty list)
+* `customJs`: list of paths to custom JavaScript files to include (optional, defaults to empty list)
+* `enableDownloadAll`: enable _Download all photos_ link on posts (optional, defaults to `true`)
+* `footnote`: enable a footnote to be displayed on all pages (optional, defaults to none)
+* `includeOriginalImage`: include original image as very-high-res for photo galleries (optional, defaults to `true`)
+* `largeImageSize`: size for high-res photo (optional, defaults to `2000px`)
+* `siteLogo`: path to a logo to be displayed next to the title (optional, defaults to none)
+* `useDefaultColors`: use default colors in theme (optional, defaults to `true`)
+* `useDefaultFonts`: use default fonts in theme (optional, defaults to `true`)
+
+### Post parameters reference
+
+* `images`: list of paths to the featured images - must have at least one (required)
+* `seealso`: list of paths to related posts (optional, default to none)
+
 ## License
 
 This theme is licensed under the MIT license, except for the photos distributed with the example site which are not free to use.

@@ -14,11 +14,17 @@ DefaultContentLanguage = "en"
 [params]
   robots = "index, follow"
   favicon = ""
-  siteLogo = ""
   description = "Photo gallery inspired by Hugo Split Theme"
   images = ["DSCF0348.jpg"]
+  # customCss = ['css/custom1.css', 'css/custom2.css']
+  # customJs = ['js/custom1.js', 'js/custom2.js']
+  # enableDownloadAll = true
+  footnote = "Foo bar"
   includeOriginalImage = false
-  largeImageSize = "2000x"
+  # largeImageSize = "2000x"
+  # siteLogo = ""
+  # useDefaultColors = true
+  # useDefaultFonts = true
 
   [params.taxonomies]
     [params.taxonomies.locations]
