@@ -25,6 +25,14 @@ DefaultContentLanguage = "en"
   # siteLogo = ""
   # useDefaultColors = true
   # useDefaultFonts = true
+  galleryLoop = true
+  # galleryCounter = true
+  # galleryButtons = ["zoom", "slideShow", "close"]
+  # galleryAnimationEffect = "zoom"
+  # galleryAnimationDuration = 366
+  # galleryTransitionEffect = "fade"
+  # galleryTransitionDuration = 366
+  # gallerySlideshowSpeed = 3000
 
   [params.taxonomies]
     [params.taxonomies.locations]

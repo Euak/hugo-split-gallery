@@ -11,11 +11,13 @@
 <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js" integrity="sha256-xoh0y6ov0WULfXcLMoaA6nZfszdgI8w2CEJ/3k8NBIE=" crossorigin="anonymous"></script>
 {{ end }}
 
-{{ with resources.Match "/hugo-split-gallery/*.js" }}
-{{ range . }}
-<script src="{{ .Permalink }}"></script>
+{{ with resources.GetMatch "/hugo-split-gallery/map.js" }}<script src="{{ .Permalink }}"></script>{{ end }}
+{{ if (default false ($.Site.Params.enableDownloadAll)) }}
+{{ with resources.GetMatch "/hugo-split-gallery/zip.js" }}<script src="{{ .Permalink }}"></script>{{ end }}
 {{ end }}
-{{ end }}
+
+{{ $built := resources.GetMatch "/hugo-split-gallery/fancybox.js" | resources.ExecuteAsTemplate "hugo-split-gallery/fancybox.js" . }}
+<script src="{{ $built.Permalink }}"></script>
 
 {{ range .Site.Params.customJs }}
 <script src="{{ relURL (.) }}"></script>
