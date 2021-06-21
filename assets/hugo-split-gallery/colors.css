@@ -15,3 +15,7 @@ a:hover, button.btn:hover {
   transition-duration: 0.1s;
   text-decoration: underline dotted #008000 1px;
 }
+
+.c4-izmir {
+  --primary-color: #113106;
+}
