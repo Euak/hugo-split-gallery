@@ -287,3 +287,10 @@ This theme is licensed under the MIT license, except for the photos distributed 
 If you find a bug or have an idea for a feature, feel free to use the [issue tracker](https://gitlab.com/tmuguet/hugo-split-gallery/-/issues) to let me know.
 
 In case you want to merge some code, you are more than welcome to open merge requests (with or without a related issue). Please target the `next` branch of this repo, as `main` is reserved for tagged versions. Please also note this theme follows semantic versioning, thus don't introduce breaking changes if they are not necessary.
+
+### Adding translation
+
+If you wish to add a new translation, there are two files to create:
+
+* `i18n/<language>.toml`, containing main theme translations
+* `assets/hugo-split-gallery/fancybox.<language>.js`, containing fancybox translations

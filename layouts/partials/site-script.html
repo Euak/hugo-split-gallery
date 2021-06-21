@@ -16,8 +16,9 @@
 {{ with resources.GetMatch "/hugo-split-gallery/zip.js" }}<script src="{{ .Permalink }}"></script>{{ end }}
 {{ end }}
 
-{{ $built := resources.GetMatch "/hugo-split-gallery/fancybox.js" | resources.ExecuteAsTemplate "hugo-split-gallery/fancybox.js" . }}
-<script src="{{ $built.Permalink }}"></script>
+{{ $fancyboxParams := resources.GetMatch "/hugo-split-gallery/fancybox.js" | resources.ExecuteAsTemplate "hugo-split-gallery/fancybox.js" . }}
+<script src="{{ $fancyboxParams.Permalink }}"></script>
+{{ with resources.GetMatch (printf "/hugo-split-gallery/fancybox.%s.js" .Site.Language.Lang) }}<script src="{{ .Permalink }}"></script>{{ end }}
 
 {{ range .Site.Params.customJs }}
 <script src="{{ relURL (.) }}"></script>
