@@ -294,3 +294,13 @@ If you wish to add a new translation, there are two files to create:
 
 * `i18n/<language>.toml`, containing main theme translations
 * `assets/hugo-split-gallery/fancybox.<language>.js`, containing fancybox translations
+
+### Adding new third-parties / updating third-parties
+
+Adding/updating a third-party requires npm to be used. Resources (JS, CSS, images, fonts, etc.) are copied and commited into git, so using this theme does not require npm.
+
+1. Add or update the third-party as a development dependency (e.g. `npm install --save-dev my-third-party`)
+2. Edit `post-install.js` to add the resources to be copied
+3. Run `npm i` to run the script
+4. Edit `layouts/partials/site-script.html` and/or `layouts/partials/site-style.html` to include the new resources
+   1. If there are non-CSS/JS files (e.g. images, fonts), Hugo will not copy them by itself whne generating the site. A hack is provided in `layouts/partials/site-style.html` to bundle them anyway.

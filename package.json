@@ -8,7 +8,6 @@
   "devDependencies": {}
  },
  "description": "Hugo Split Gallery theme",
- "devDependencies": {},
  "homepage": "https://gitlab.com/tmuguet/hugo-split-gallery",
  "keywords": [
   "hugo",
@@ -20,5 +19,22 @@
   "type": "git",
   "url": "git+https://gitlab.com/tmuguet/hugo-split-gallery.git"
  },
- "version": "1.0.0"
+ "version": "1.0.0",
+ "scripts": {
+  "postinstall": "node ./post-install.js"
+ },
+ "devDependencies": {
+  "@ciar4n/izmir": "^1.0.1",
+  "@fancyapps/fancybox": "^3.5.7",
+  "bootstrap": "^5.0.1",
+  "file-saver": "^2.0.5",
+  "font-awesome": "^4.7.0",
+  "gently-copy": "^3.2.0",
+  "jquery": "^3.6.0",
+  "jszip": "^3.6.0",
+  "jszip-utils": "^0.1.0",
+  "leaflet": "^1.7.1",
+  "leaflet-gpx": "^1.5.2",
+  "leaflet.awesome-markers": "^2.0.5"
+ }
 }
