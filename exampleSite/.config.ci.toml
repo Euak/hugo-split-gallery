@@ -1,5 +1,5 @@
 title = "Hugo Split Gallery theme sample site"
-copyright = "Theme licensed under the MIT license; photos are &copy; Thomas Muguet"
+copyright = "Theme licensed under the GPLv3 license; photos are &copy; Thomas Muguet"
 baseURL = "https://tmuguet.gitlab.io/hugo-split-gallery/"
 languageCode = "en-us"
 theme = "hugo-split-gallery"
