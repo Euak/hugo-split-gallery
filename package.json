@@ -13,7 +13,7 @@
   "hugo",
   "gohugo"
  ],
- "license": "MIT",
+ "license": "GPLv3",
  "name": "hugo-split-gallery",
  "repository": {
   "type": "git",
