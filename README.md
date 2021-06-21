@@ -3,7 +3,7 @@
 Split Gallery is a theme for [Hugo](http://gohugo.io/) focused on photos and maps.  
 This Hugo theme features a photo gallery, a map and custom content per page, and supports custom sections and taxonomies.
 
-This project is licensed under the [GPLv3 license](/LICENSE.md). Due to 3rd-party included in this project, you are *not* free to use it for commercial applications. See the license section below for more info.
+This project is licensed under the [GPLv3 license](/LICENSE). Due to 3rd-party included in this project, you are *not* free to use it for commercial applications. See the license section below for more info.
 
 It is inspired by [Hugo Split Theme](https://github.com/christianmendoza/hugo-split-theme), itself ported from [Split](https://onepagelove.com/split) by [One Page Love](https://onepagelove.com).
 
@@ -282,7 +282,7 @@ cd themes/hugo-split-gallery && git pull
 
 ## License
 
-This theme is licensed under the [GPLv3 license](/LICENSE.md), except for the photos distributed with the example site which are not free to use.
+This theme is licensed under the [GPLv3 license](/LICENSE), except for the photos distributed with the example site which are not free to use.
 
 This theme includes [fancybox](https://fancyapps.com/fancybox/3/), which is not free to use for commercial applications. If you wish to use this theme in commercial applications, you will need to get a [commercial license from fancybox](https://fancyapps.com/fancybox/3/#license).
 

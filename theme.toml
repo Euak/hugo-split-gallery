@@ -1,6 +1,6 @@
 name = "Hugo Split Gallery"
 license = "GPLv3"
-licenselink = "https://gitlab.com/tmuguet/hugo-split-gallery/-/blob/main/LICENSE.md"
+licenselink = "https://gitlab.com/tmuguet/hugo-split-gallery/-/blob/main/LICENSE"
 description = "Photo gallery inspired by Hugo Split Theme"
 homepage = "https://gitlab.com/tmuguet/hugo-split-gallery"
 tags = ["website", "gallery", "responsive"]
