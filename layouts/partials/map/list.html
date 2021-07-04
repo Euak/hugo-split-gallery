@@ -1,5 +1,13 @@
 {{ $leafpages := partial "getleafpages.html" . }}
 
+{{ $hasTracks := false }}
+{{ range $leafpages }}
+  {{ range .Resources.Match "*.gpx" }}
+    {{ $hasTracks = true }}
+  {{ end }}
+{{ end }}
+
+{{ if $hasTracks }}
 <div id="mapid" style="width: 100%; height: 50vh;" class="mb-2"></div>
 <script>
 initMap();
@@ -15,6 +23,7 @@ var promises = [];
     {{ end }}
 {{ end }}
 Promise.all(promises).then((values) => {
-    map.fitBounds(bounds);
+  map.fitBounds(bounds);
 });
 </script>
+{{ end }}

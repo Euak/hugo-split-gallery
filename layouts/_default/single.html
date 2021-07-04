@@ -49,11 +49,11 @@ $(document).ready(function () {
 {{ end }}
 
 {{ define "main_content" }}
-{{ $nbTracks := len (.Resources.Match "*.gpx") }}
+{{ $hasTracks := gt (len (.Resources.Match "*.gpx")) 0 }}
 
 <p>{{ .Content }}</p>
 
-{{ if gt (len (.Resources.Match "*.gpx")) 0 }}
+{{ if $hasTracks }}
   {{ partial "map/single.html" . }}
 
   <script>
