@@ -280,6 +280,17 @@ cd themes/hugo-split-gallery && git pull
 * `images`: list of paths to the featured images - must have at least one (required)
 * `seealso`: list of paths to related posts (optional, default to none)
 
+### Warnings
+
+There can be warnings during generation of the website. Here are all the warnings you may encounter:
+
+* `Could not find leaf page for <page> (<kind>), defaulting to <page>`: the template was not able to find pages for that kind; either the site/kind is empty, or this is an error and should be reported in this [issue tracker](https://gitlab.com/tmuguet/hugo-split-gallery/-/issues)
+* `Could not find leaf pages for <page> (<kind>), defaulting to [<page>]`: the template was not able to find pages for that kind; either the site/kind is empty, or this is an error and should be reported in this [issue tracker](https://gitlab.com/tmuguet/hugo-split-gallery/-/issues)
+* `Could not find featured image thumbnail for <page> (<kind>)`: the template was not able to find a suitable thumbnail for an element of this page. You should also see a `Could not find featured image for <page> (<kind>)` warning to find out what specific page is problematic. Check that such page has an `images` parameter pointing to a valid image
+* `Could not find pages for %s (%s)`: the template was not able to find pages for that kind; this is an error and should be reported in this [issue tracker](https://gitlab.com/tmuguet/hugo-split-gallery/-/issues)
+* `Should not be called here`: a partial template was wrongly called, this is an error and should be reported in this [issue tracker](https://gitlab.com/tmuguet/hugo-split-gallery/-/issues)
+* `Could not find featured image for <page> (<kind>)`: the template was not able to find a suitable featured image for this page. Check that it has an `images` parameter pointing to a valid image
+
 ## License
 
 This theme is licensed under the [GPLv3 license](/LICENSE), except for the photos distributed with the example site which are not free to use.

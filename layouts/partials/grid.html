@@ -20,13 +20,18 @@
                         {{ if $leafpage }}
                             {{ $thumbnail := partial "featureimage/thumbnail.html" $leafpage }}
                             <li>
-                                <a href="{{ .Permalink }}" class="c4-izmir" title="{{ .Title }}">
-                                    <img src="{{ $thumbnail }}" alt="{{ .Title }}" />
-                                    <figcaption><h3>{{ .Title }}</h3></figcaption>
+                                <a href="{{ .Permalink }}" {{ if $thumbnail }}class="c4-izmir"{{ end }} title="{{ .Title }}">
+                                    {{ if $thumbnail }}
+                                        <img src="{{ $thumbnail }}" alt="{{ .Title }}" />
+                                        <figcaption><h3>{{ .Title }}</h3></figcaption>
+                                    {{ else }}
+                                        {{ warnf "Could not find featured image thumbnail for %s (%s)" .RelPermalink .Kind}}
+                                        {{ .Title }}
+                                    {{ end }}
                                 </a>
                             </li>
                         {{ else }}
-                            {{ warnf "Could not find thumbnail for %s (%s)" .RelPermalink .Kind}}
+                            {{ warnf "Could not find pages for %s (%s)" .RelPermalink .Kind}}
                         {{ end }}
                     {{ end }}
                     <li></li>
