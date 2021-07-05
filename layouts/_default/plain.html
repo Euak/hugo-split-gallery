@@ -20,24 +20,5 @@
 </div>
 {{ end }}
 
-{{ if .Param "seealso" }}
-<div class="col">
-  <p>{{ i18n "seealso" }}</p>
-  <ul>
-    {{ with .Param "seealso" }}
-      {{ if reflect.IsSlice . }}
-        {{ range . }}
-          {{ with $.Site.GetPage . }}
-            <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
-          {{ end }}
-        {{ end }}
-      {{ else }}
-        {{ with $.Site.GetPage . }}
-          <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
-        {{ end }}
-      {{ end }}
-    {{ end }}
-  </ul>
-</div>
-{{ end }}
+{{ partial "seealso.html" . }}
 {{ end }}

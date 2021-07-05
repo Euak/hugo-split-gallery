@@ -19,22 +19,20 @@
   </div>
   {{ end }}
 
-  {{ range $taxonomy_term, $taxonomy := .Site.Taxonomies }}
-    {{ with $.Site.GetPage (printf "/%s" $taxonomy_term) }}
-      <div class="col">
-        {{ $icon := partial "icons/gettaxonomy.html" $taxonomy_term }}
-        <h3>
-          <a href="{{ .Permalink }}">
-            {{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
-            {{ $taxonomy_term | humanize }}
-          </a>
-        </h3>
-        <ul>
-          {{ range $taxonomy.Alphabetical }}
-          <li><a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a> {{ .Count }}</li>
-          {{ end }}
-        </ul>
-      </div>
-    {{ end }}
+  {{ range where .Site.Pages "Kind" "taxonomy" }}
+    {{ $icon := partial "icons/gettaxonomy.html" .Data.Plural }}
+    <div class="col">
+      <h3>
+        <a href="{{ .Permalink }}">
+          {{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
+          {{ .Data.Plural | humanize }}
+        </a>
+      </h3>
+      <ul>
+        {{ range .Data.Terms.Alphabetical }}
+        <li><a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a> {{ .Count }}</li>
+        {{ end }}
+      </ul>
+    </div>
   {{ end }}
 {{ end }}
