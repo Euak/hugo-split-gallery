@@ -85,34 +85,28 @@ $(document).ready(function () {
     {{ if $dates }}
       <li><i class="fa fa-camera fa-fw"></i> {{ i18n "photosTakenOn" (delimit (sort (uniq ($dates))) ", ") }}</li>
     {{ end }}
-    {{ $allTaxonomies := slice }}
-    {{ range $taxonomy_term, $taxonomy := .Site.Taxonomies }}
-      {{ $allTaxonomies = $allTaxonomies | append $taxonomy_term }}
-    {{ end }}
 
-    {{ range $key, $value := .Params }}
-      {{ if in $allTaxonomies $key }}
-        {{ $icon := partial "icons/gettaxonomy.html" $key }}
+    {{ $page := . }}
+    {{ range where .Site.Pages "Kind" "taxonomy" }}
+      {{ $icon := partial "icons/gettaxonomy.html" .Data.Plural }}
+      {{ $val := $page.Params.Get .Data.Plural }}
+      {{ if $val }}
+        {{ if not (reflect.IsSlice $val) }}
+        {{ $val = slice $val }}
+        {{ end }}
         <li>
-          {{ if reflect.IsSlice $value }}
-            {{ with $.Site.GetPage (printf "/%s" $key) }}
-              <a href="{{ .Permalink }}">
-                {{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
-                {{ $key | humanize }}
-              </a>
-            {{ end }}: 
-            {{ range sort $value }}
-              {{ with $.Site.GetPage (printf "/%s/%s" $key .) }}<a href="{{ .Permalink }}">{{ .Title }}</a>{{ end }}
+          <a href="{{ .Permalink }}">
+            {{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
+            {{ if gt (len $val) 1 }}
+              {{ .Data.Plural | humanize }}
+            {{ else }}
+              {{ .Data.Singular | humanize }}
             {{ end }}
-          {{ else }}
-            {{ with $.Site.GetPage (printf "/%s" $key) }}
-              <a href="{{ .Permalink }}">
-                {{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
-                {{ $key | singularize | humanize }}
-              </a>
-            {{ end }}: 
-            {{ with $.Site.GetPage (printf "/%s/%s" $key $value) }}<a href="{{ .Permalink }}">{{ .Title }}</a>{{ end }}
-          {{ end }}
+          </a> : 
+          {{ range $index, $p := sort ($page.GetTerms .Data.Plural) "Page.Title" "asc" }}
+            {{- if gt $index 0 }}, {{ end -}}
+            <a href="{{ $p.Page.Permalink }}">{{ $p.Page.Title }}</a>
+          {{- end -}}
         </li>
       {{ end }}
     {{ end }}
