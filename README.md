@@ -1,4 +1,4 @@
-# Hugo Split Gallery
+# Hugo Split Gallery | [Demo](https://tmuguet.gitlab.io/hugo-split-gallery/)
 
 Split Gallery is a theme for [Hugo](http://gohugo.io/) focused on photos and maps.  
 This Hugo theme features a photo gallery, a map and custom content per page, and supports custom sections and taxonomies.
@@ -9,7 +9,7 @@ It is inspired by [Hugo Split Theme](https://github.com/christianmendoza/hugo-sp
 
 ![screenshot](/images/screenshot.png)
 
-[Demo](https://tmuguet.gitlab.io/hugo-split-gallery/); [Live example](https://thomasmuguet.info/).
+[Demo](https://tmuguet.gitlab.io/hugo-split-gallery/) (built with [exampleSite](https://gitlab.com/tmuguet/hugo-split-gallery/-/tree/main/exampleSite) as source); [Live example](https://thomasmuguet.info/).
 
 This project follows [semantic versioning](https://semver.org/), meaning any new minor version (e.g. 1.1.0 -> 1.2.0) only introduces new features without breaking changes, and breaking changes are only introduced in major versions (e.g. 1.1.0 -> 2.0.0).
 This means you can safely upgrade from one minor version to the next one.
@@ -75,7 +75,7 @@ images: ["images/IMGP3719.jpg"]
 seealso: ["posts/lac-lauvitel", "posts/lac-muzelle"]    # If single, can avoid the brackets
 ---
 
-Cat ipsum dolor sit amet, hide from vacuum cleaner swat turds around the house hate dog don't nosh on the birds. Run outside as soon as door open. 
+Cat ipsum dolor sit amet, hide from vacuum cleaner swat turds around the house hate dog don't nosh on the birds.
 ```
 
 ## Tweaking your site
@@ -113,7 +113,7 @@ You can configure the icons using [FontAwesome 4.7](https://fontawesome.com/v4.7
 
 ### Footnotes
 
-You can define footnotes per-page and globally to the site.
+You can define footnotes per-page and globally to the site. These footnotes differ from [Markdown footnotes](https://michelf.ca/projects/php-markdown/extra/#footnotes), as they are displayed at the bottom of the page (Markdown footnotes are displayed at the bottom of the article).
 
 Use `footnote` parameter in your post to define a specific footnote for that page:
 
@@ -125,7 +125,7 @@ images: ["images/IMGP3719.jpg"]
 footnote: "Foo bar"
 ---
 
-Cat ipsum dolor sit amet, hide from vacuum cleaner swat turds around the house hate dog don't nosh on the birds. Run outside as soon as door open. 
+Cat ipsum dolor sit amet, hide from vacuum cleaner swat turds around the house hate dog don't nosh on the birds.
 ```
 
 Use the `footnote` parameter in your site configuration to apply it to all your website (you can include HTML):
@@ -182,7 +182,7 @@ cascade:
 
 ### Download
 
-By default, a link _Download all photos_ is displayed for all posts. this can be disabled via setting the `enableDownloadAll` site's parameter to `false`.
+By default, a link _Download all photos_ is displayed for all posts. this can be disabled via setting the `enableDownloadAll` site's parameter to `false`. See also the `galleryButtons` parameter to enable or disable download of photos within the gallery.
 
 ### Gallery
 
