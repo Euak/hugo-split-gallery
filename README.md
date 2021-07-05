@@ -7,7 +7,7 @@ This project is licensed under the [GPLv3 license](/LICENSE). Due to 3rd-party i
 
 It is inspired by [Hugo Split Theme](https://github.com/christianmendoza/hugo-split-theme), itself ported from [Split](https://onepagelove.com/split) by [One Page Love](https://onepagelove.com).
 
-![screenshot](/images/screenshot.png)
+![screenshot](https://gitlab.com/tmuguet/hugo-split-gallery/-/raw/main/images/tn.png)
 
 [Demo](https://tmuguet.gitlab.io/hugo-split-gallery/) (built with [exampleSite](https://gitlab.com/tmuguet/hugo-split-gallery/-/tree/main/exampleSite) as source); [Live example](https://thomasmuguet.info/).
 
