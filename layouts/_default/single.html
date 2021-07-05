@@ -49,11 +49,11 @@ $(document).ready(function () {
 {{ end }}
 
 {{ define "main_content" }}
-{{ $nbTracks := len (.Resources.Match "*.gpx") }}
+{{ $hasTracks := gt (len (.Resources.Match "*.gpx")) 0 }}
 
 <p>{{ .Content }}</p>
 
-{{ if gt (len (.Resources.Match "*.gpx")) 0 }}
+{{ if $hasTracks }}
   {{ partial "map/single.html" . }}
 
   <script>
@@ -82,7 +82,9 @@ $(document).ready(function () {
         {{ end }}
       {{ end }}
     {{ end }}
-    <li><i class="fa fa-camera fa-fw"></i> {{ i18n "photosTakenOn" (delimit (sort (uniq ($dates))) ", ") }}</li>
+    {{ if $dates }}
+      <li><i class="fa fa-camera fa-fw"></i> {{ i18n "photosTakenOn" (delimit (sort (uniq ($dates))) ", ") }}</li>
+    {{ end }}
     {{ $allTaxonomies := slice }}
     {{ range $taxonomy_term, $taxonomy := .Site.Taxonomies }}
       {{ $allTaxonomies = $allTaxonomies | append $taxonomy_term }}

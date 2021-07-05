@@ -19,3 +19,7 @@ a:hover, button.btn:hover {
 .c4-izmir {
   --primary-color: #113106;
 }
+
+.fancybox-progress {
+  background: #008000;
+}
