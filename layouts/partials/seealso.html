@@ -1,0 +1,14 @@
+{{ if .Param "seealso" }}
+<div class="col">
+  <p>{{ i18n "seealso" }}</p>
+  <ul>
+    {{ $val := .Param "seealso" }}
+    {{- if not (reflect.IsSlice $val) -}}{{- $val = slice $val -}}{{- end -}}
+    {{ range $val }}
+        {{ with $.Site.GetPage . }}
+        <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+        {{ end }}
+    {{ end }}
+  </ul>
+</div>
+{{ end }}

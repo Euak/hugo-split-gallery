@@ -91,9 +91,7 @@ $(document).ready(function () {
       {{ $icon := partial "icons/gettaxonomy.html" .Data.Plural }}
       {{ $val := $page.Params.Get .Data.Plural }}
       {{ if $val }}
-        {{ if not (reflect.IsSlice $val) }}
-        {{ $val = slice $val }}
-        {{ end }}
+        {{- if not (reflect.IsSlice $val) -}}{{- $val = slice $val -}}{{- end -}}
         <li>
           <a href="{{ .Permalink }}">
             {{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
@@ -131,24 +129,5 @@ $(document).ready(function () {
 </div>
 {{ end }}
 
-{{ if .Param "seealso" }}
-<div class="col">
-  <p>{{ i18n "seealso" }}</p>
-  <ul>
-    {{ with .Param "seealso" }}
-      {{ if reflect.IsSlice . }}
-        {{ range . }}
-          {{ with $.Site.GetPage . }}
-            <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
-          {{ end }}
-        {{ end }}
-      {{ else }}
-        {{ with $.Site.GetPage . }}
-          <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
-        {{ end }}
-      {{ end }}
-    {{ end }}
-  </ul>
-</div>
-{{ end }}
+{{ partial "seealso.html" . }}
 {{ end }}
