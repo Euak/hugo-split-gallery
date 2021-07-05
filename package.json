@@ -19,7 +19,7 @@
   "type": "git",
   "url": "git+https://gitlab.com/tmuguet/hugo-split-gallery.git"
  },
- "version": "1.0.1",
+ "version": "1.0.2",
  "scripts": {
   "postinstall": "node ./post-install.js"
  },

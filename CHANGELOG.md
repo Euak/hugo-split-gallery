@@ -2,6 +2,10 @@
 
 ## 1.x branch
 
+### 1.0.2
+
+* Enhancement: Support taxonomy terms with spaces (#11)
+
 ### 1.0.1
 
 * Enhancement: Change fancybox progress bar color (#7)
