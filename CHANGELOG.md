@@ -2,13 +2,27 @@
 
 ## 1.x branch
 
+### 1.0.3
+
+* Fix: hugo min version was wrongly set to 0.64.0, is really 0.73.0
+
 ### 1.0.2
+
+*WARNING*: hugo min version was wrongly set to 0.64.0, is really 0.73.0
 
 * Enhancement: Support taxonomy terms with spaces (#11)
 
 ### 1.0.1
 
+*WARNING*: hugo min version was wrongly set to 0.64.0, is really 0.73.0
+
 * Enhancement: Change fancybox progress bar color (#7)
 * Fix: Hide map on homepage if no tracks (#8)
 * Fix: Hide "Photos taken on" item if no photos (#9)
 * Fix: Image still tries to display in grid even if no thumbnail (#10)
+
+### 1.0.0
+
+*WARNING*: hugo min version was wrongly set to 0.64.0, is really 0.73.0
+
+Initial release
