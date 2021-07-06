@@ -2,7 +2,7 @@ image: alpine:edge
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  HUGO_MIN_VERSION: "0.64.0"
+  HUGO_MIN_VERSION: "0.65.0"
 
 test-latest:
   script:
