@@ -3,6 +3,7 @@
 {{ $showDate := false }}
 {{ $showCount := false }}
 {{ $showSection := false }}
+{{ $translate := false }}
 {{ if eq .Kind "page" }}
     {{ warnf "Should not be called here"}}
 {{ else if eq .Kind "term" }}
@@ -10,6 +11,7 @@
     {{ $showSection = gt (len $.Site.Sections) 1 }}
 {{ else if eq .Kind "taxonomy" }}
     {{ $showCount = true }}
+    {{ $translate = true }}
 {{ else if eq .Kind "section" }}
     {{ $showDate = true }}
 {{ else if eq .Kind "home" }}
@@ -20,7 +22,14 @@
 <ul>
     {{ range $leafpages }}
     <li>
-        <a href="{{ .Permalink }}">{{ if and $showDate .Date }}{{ .Date.Format "2006-01-02" }} | {{ end }}{{ .Title }}</a>
+        <a href="{{ .Permalink }}">
+            {{ if and $showDate .Date }}{{ .Date.Format "2006-01-02" }} | {{ end }}
+            {{ if $translate }}
+                {{ default .Title (i18n (printf "%s-%s" .Data.Singular .Title)) }}
+            {{ else }}
+                {{ .Title }}
+            {{ end }}
+        </a>
         {{ if $showCount }}
             {{ len .Data.Pages }}
         {{ end }}

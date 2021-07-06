@@ -111,6 +111,90 @@ You can configure the icons using [FontAwesome 4.7](https://fontawesome.com/v4.7
       icon = "paw"
 ```
 
+#### Multilingual
+
+In case your site is multilingual, you have 2 possibilities for taxonomies:
+
+1. Define whole new taxonomy per-language (as described in [Hugo documentation](https://gohugo.io/content-management/multilingual/#taxonomies-and-blackfriday))
+   1. The simplest solution, but:
+   2. Taxonomy/terms pages will not be seen as translations of each-others
+   3. The [Front Matter](https://gohugo.io/content-management/front-matter/) taxonomies must be translated
+2. Translate the taxonomies
+   1. More complicated to set-up initially, but:
+   2. Lets translations be written only once and for all in [translations files](https://gohugo.io/content-management/multilingual/#translation-of-strings)
+   3. The [Front Matter](https://gohugo.io/content-management/front-matter/) taxonomies are defined in the language you wish
+
+The example site provided in this theme uses the second method.
+
+For translating the taxonomies, you will need to create translation files for each language in a `i18n` folder at the root of your site:
+
+```text
+/
+├── content
+├── i18n
+│   ├── en.toml
+│   ├── fr.toml
+│   └── ..
+├── config.toml
+```
+
+The structure of the file is:
+
+```toml
+[<taxonomy>]
+other = "<Taxonomy Singular>"
+
+[<taxonomy>s]
+other = "<Taxonomy Plural>"
+
+[<taxonomy>-<term>]
+other = "<Term>"
+```
+
+Note that you don't need to translate all the taxonomies or terms if it's not needed.
+
+For instance, given the following taxonomies:
+
+```text
+Season             <- Taxonomy
+    Fall           <- Term
+    Spring         <- Term
+    Summer         <- Term
+    Winter         <- Term
+Location           <- Taxonomy
+    Oisans         <- Term
+    Vercors        <- Term
+    Écrins         <- Term
+```
+
+The corresponding translation file can be:
+
+```toml
+[location]
+other = "Location"
+
+[locations]
+other = "Locations"
+
+[season]
+other = "Season"
+
+[seasons]
+other = "Seasons"
+
+[season-Spring]
+other = "Spring"
+
+[season-Winter]
+other = "Winter"
+
+[season-Fall]
+other = "Fall"
+
+[season-Summer]
+other = "Summer"
+```
+
 ### Footnotes
 
 You can define footnotes per-page and globally to the site. These footnotes differ from [Markdown footnotes](https://michelf.ca/projects/php-markdown/extra/#footnotes), as they are displayed at the bottom of the page (Markdown footnotes are displayed at the bottom of the article).
