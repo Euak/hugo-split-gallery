@@ -8,9 +8,9 @@
 {{ end }}
 
 {{ define "lists" }}
-  {{ if gt (len $.Site.Sections) 1}}
+  {{ if gt (len $.Site.Sections) 1 }}
   <div class="col">
-    <h3>{{ i18n "sections" }}</h3>
+    <h3><i class="fa fa-folder-o fa-fw"></i> {{ i18n "sections" }}</h3>
     <ul>
     {{ range $.Site.Sections }}
       <li><a href="{{ .Permalink }}">{{ .Title }}</a> {{ len .Pages }}</li>
