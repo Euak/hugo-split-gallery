@@ -41,7 +41,8 @@
     <div class="row">
       <div class="col-lg-6" id="content-panel">
         <div class="container h-100">
-          <p class="lead my-0"><a href="{{ .Site.Home.RelPermalink }}">
+          <p class="lead my-0">          
+            <a href="{{ .Site.Home.RelPermalink }}">
               {{ with .Site.Params.siteLogo }}
                 <img src="{{ relURL (.) }}" alt="{{ $.Site.Title | plainify }}" />
               {{ end }}
@@ -49,7 +50,7 @@
             </a>
           </p>
 
-          {{ if or .Site.Menus.main .PrevInSection .NextInSection }}
+          {{ if or .Site.Menus.main (and .IsTranslated (default false ($.Site.Params.showTranslations))) .PrevInSection .NextInSection }}
             <aside class="mt-0 mb-2">
               {{ if .Site.Menus.main }}
                 <ul class="list-inline">
@@ -57,6 +58,14 @@
                     {{ range .Site.Menus.main }}
                         <li class="list-inline-item me-4"><a href="{{ .URL }}">{{ .Pre }} <span>{{ .Name }}</span></a></li>
                     {{ end }}
+                </ul>
+              {{ end }}
+
+              {{ if and .IsTranslated (default false ($.Site.Params.showTranslations)) }}
+                {{ i18n "translations" }}: <ul class="list-inline d-inline">
+                  {{ range .Translations }}
+                  <li class="list-inline-item"><a href="{{ .Permalink }}">{{ .Lang }}</a></li>
+                  {{ end }}
                 </ul>
               {{ end }}
 

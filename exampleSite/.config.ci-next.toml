@@ -23,6 +23,7 @@ DefaultContentLanguage = "en"
   footnote = "Fork me on <a href='https://gitlab.com/tmuguet/hugo-split-gallery'>GitLab</a>!"
   galleryLoop = true
   galleryButtons = ["zoom", "fullScreen", "slideShow", "close"]
+  showTranslations = true
 
   [params.taxonomies]
     [params.taxonomies.locations]

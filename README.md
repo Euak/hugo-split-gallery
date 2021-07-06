@@ -373,6 +373,7 @@ cd themes/hugo-split-gallery && git pull
 * `includeOriginalImage`: include original image as very-high-res for photo galleries (optional, defaults to `true`)
 * `largeImageSize`: size for high-res photo (optional, defaults to `2000px`)
 * `sharedMediaBundle`: path to a headless bundle for shared featured images (optional, defaults to `/media`)
+* `showTranslations`: add links to available translations for each page (homepage, taxonomies, posts, etc.) (optional, defaults to `false`)
 * `siteLogo`: path to a logo to be displayed next to the title (optional, defaults to none)
 * `useDefaultColors`: use default colors in theme (optional, defaults to `true`)
 * `useDefaultFonts`: use default fonts in theme (optional, defaults to `true`)

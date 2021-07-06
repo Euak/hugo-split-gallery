@@ -36,3 +36,6 @@ other = "Ouvrir la trace '{{ . }}' dans map2gpx"
 
 [error404]
 other = "This is not the page you were looking for"
+
+[translations]
+other = "Traductions"
