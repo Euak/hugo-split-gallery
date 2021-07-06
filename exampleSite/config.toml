@@ -40,3 +40,17 @@ DefaultContentLanguage = "en"
       icon = "location-arrow"
     [params.taxonomies.seasons]
       icon = "calendar"
+
+[menu]
+  [[menu.main]]
+    identifier = "about"
+    name = "About this theme"
+    pre = "<i class='fa fa-heart'></i>"
+    url = "/about/"
+    weight = -110
+
+  [[menu.main]]
+    name = "Getting started"
+    pre = "<i class='fa fa-road'></i>"
+    url = "/getting-started/"
+    weight = -100

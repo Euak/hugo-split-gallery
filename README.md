@@ -296,6 +296,7 @@ cd themes/hugo-split-gallery && git pull
 ### Post parameters reference
 
 * `images`: list of paths to the featured images - must have at least one (required)
+* `layout`: alternative layout to be used - possible value is `plain` (useful for text-based pages without images) (optional)
 * `seealso`: list of paths to related posts (optional, default to none)
 * `sharedMediaBundle`: path to a headless bundle for shared featured images (optional, defaults to default site's configuration)
 
