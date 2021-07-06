@@ -6,16 +6,15 @@ variables:
   HUGO_MIN_VERSION: "0.73.0"
 
 test-latest:
+  stage: test
   script:
     - apk update
     - apk add hugo
     - hugo version
     - cd exampleSite && hugo --config .config.ci.toml
-  except:
-    variables:
-      - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 test-refversion:
+  stage: test
   script:
     # Old versions seems not to be available on Alpine packages, so revert to the good old method
     - wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_REFERENCE_VERSION}/hugo_${HUGO_REFERENCE_VERSION}_Linux-64bit.tar.gz
@@ -25,11 +24,9 @@ test-refversion:
     - export PATH=$PATH:${CI_PROJECT_DIR}/bin
     - hugo version
     - cd ${CI_PROJECT_DIR}/exampleSite && hugo --config .config.ci.toml
-  except:
-    variables:
-      - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 test-minversion:
+  stage: test
   script:
     # Old versions seems not to be available on Alpine packages, so revert to the good old method
     - wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_MIN_VERSION}/hugo_${HUGO_MIN_VERSION}_Linux-64bit.tar.gz
@@ -39,19 +36,28 @@ test-minversion:
     - export PATH=$PATH:${CI_PROJECT_DIR}/bin
     - hugo version
     - cd ${CI_PROJECT_DIR}/exampleSite && hugo --config .config.ci.toml
-  except:
-    variables:
-      - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 pages:
-  script:
-    - apk update
-    - apk add hugo
-    - hugo version
-    - cd exampleSite && hugo --config .config.ci.toml
+  stage: deploy
+  script: |
+    wget https://gitlab.com/tmuguet/hugo-split-gallery/-/jobs/artifacts/main/download?job=pages -O artifact.zip
+    unzip -q artifact.zip
+    if [ -f "public/next" ]; then mv public/next next; fi;
+    mv public current
+    apk update
+    apk add hugo
+    hugo version
+    cd ${CI_PROJECT_DIR}/exampleSite
+    if [ $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH ]; then
+      hugo --config .config.ci.toml
+      if [ -f "${CI_PROJECT_DIR}/next" ]; then mv ${CI_PROJECT_DIR}/next ${CI_PROJECT_DIR}/public; fi;
+    else
+      hugo --config .config.ci-next.toml
+      mv ${CI_PROJECT_DIR}/current/* ${CI_PROJECT_DIR}/public
+    fi
   artifacts:
     paths:
       - public
-  only:
-    variables:
-      - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_BRANCH == "next"
