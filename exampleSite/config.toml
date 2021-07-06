@@ -33,6 +33,7 @@ DefaultContentLanguage = "en"
   # galleryTransitionEffect = "fade"
   # galleryTransitionDuration = 366
   # gallerySlideshowSpeed = 3000
+  # sharedMediaBundle = "/media"
 
   [params.taxonomies]
     [params.taxonomies.locations]

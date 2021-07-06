@@ -27,7 +27,7 @@ $(document).ready(function () {
         <ul class="split-grid list-unstyled">
           {{ with .Resources.ByType "image" }}
             {{ range . }}
-              {{ $linkToThumbnail := partial "thumbnail.html" . }}
+              {{ $linkToThumbnail := partial "image-processing/thumbnail.html" . }}
               {{ $large := .Resize $largeImageSize }}
               {{ if $includeOriginalImage }}
                 <li><a href="{{ .Permalink }}"
