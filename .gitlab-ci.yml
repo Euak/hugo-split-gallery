@@ -2,25 +2,42 @@ image: alpine:edge
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  HUGO_MIN_VERSION: "0.65.0"
+  HUGO_REFERENCE_VERSION: "0.83.1"
+  HUGO_MIN_VERSION: "0.73.0"
 
 test-latest:
   script:
     - apk update
     - apk add hugo
+    - hugo version
     - cd exampleSite && hugo --config .config.ci.toml
+  except:
+    variables:
+      - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+test-refversion:
+  script:
+    # Old versions seems not to be available on Alpine packages, so revert to the good old method
+    - wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_REFERENCE_VERSION}/hugo_${HUGO_REFERENCE_VERSION}_Linux-64bit.tar.gz
+    - mkdir -p bin
+    - cd bin
+    - tar -xzf $CI_PROJECT_DIR/hugo_${HUGO_REFERENCE_VERSION}_Linux-64bit.tar.gz
+    - export PATH=$PATH:${CI_PROJECT_DIR}/bin
+    - hugo version
+    - cd ${CI_PROJECT_DIR}/exampleSite && hugo --config .config.ci.toml
   except:
     variables:
       - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 test-minversion:
   script:
-    # Hugo 0.64.0 is not available on Alpine packages, so revert to the good old method
+    # Old versions seems not to be available on Alpine packages, so revert to the good old method
     - wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_MIN_VERSION}/hugo_${HUGO_MIN_VERSION}_Linux-64bit.tar.gz
     - mkdir -p bin
     - cd bin
     - tar -xzf $CI_PROJECT_DIR/hugo_${HUGO_MIN_VERSION}_Linux-64bit.tar.gz
     - export PATH=$PATH:${CI_PROJECT_DIR}/bin
+    - hugo version
     - cd ${CI_PROJECT_DIR}/exampleSite && hugo --config .config.ci.toml
   except:
     variables:
@@ -30,6 +47,7 @@ pages:
   script:
     - apk update
     - apk add hugo
+    - hugo version
     - cd exampleSite && hugo --config .config.ci.toml
   artifacts:
     paths:
