@@ -43,3 +43,9 @@ DefaultContentLanguage = "en"
     pre = "<i class='fa fa-road'></i>"
     url = "/getting-started/"
     weight = -100
+
+  [[menu.main]]
+    name = "See stable version"
+    pre = "<i class='fa fa-floppy-o'></i>"
+    url = "https://tmuguet.gitlab.io/hugo-split-gallery/"
+
