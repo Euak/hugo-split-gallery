@@ -34,6 +34,7 @@ DefaultContentLanguage = "en"
   # galleryTransitionDuration = 366
   # gallerySlideshowSpeed = 3000
   # sharedMediaBundle = "/media"
+  showTranslations = true
 
   [params.taxonomies]
     [params.taxonomies.locations]
