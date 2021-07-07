@@ -40,18 +40,24 @@ test-minversion:
 pages:
   stage: deploy
   script: |
+    echo "Downloading previous artifacts..."
     wget https://gitlab.com/tmuguet/hugo-split-gallery/-/jobs/artifacts/main/download?job=pages -O artifact.zip
     unzip -q artifact.zip
     if [ -f "public/next" ]; then mv public/next next; fi;
     mv public current
+
+    echo "Preparing Hugo"
     apk update
     apk add hugo
     hugo version
     cd ${CI_PROJECT_DIR}/exampleSite
+
     if [ $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH ]; then
+      echo "Generating main site..."
       hugo --config .config.ci.toml
       if [ -f "${CI_PROJECT_DIR}/next" ]; then mv ${CI_PROJECT_DIR}/next ${CI_PROJECT_DIR}/public; fi;
     else
+      echo "Generating next site..."
       hugo --config .config.ci-next.toml
       mv ${CI_PROJECT_DIR}/current/* ${CI_PROJECT_DIR}/public
     fi
