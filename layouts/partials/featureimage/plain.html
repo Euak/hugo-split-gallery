@@ -5,6 +5,16 @@
     {{ if $img }}
         {{ $linkToCover = $img.Permalink }}
     {{ end }}
+
+    {{ if not $linkToCover }}
+        {{ $headlessBundle := partial "featureimage/shared.html" . }}
+        {{ with .Site.GetPage $headlessBundle }}
+            {{ $img := .Resources.GetMatch (index $featured_images 0) }}
+            {{ if $img }}
+                {{ $linkToCover = $img.Permalink }}
+            {{ end }}
+        {{ end }}
+    {{ end }}
 {{ end }}
 {{ if not $linkToCover }}
     {{ warnf "Could not find featured image for %s (%s)" .RelPermalink .Kind}}

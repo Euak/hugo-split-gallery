@@ -243,6 +243,23 @@ You can have a logo displayed next to your site's title. Put your logo into the 
   siteLogo = "img/logo.png"
 ```
 
+### Sharing media across multiple pages
+
+If you wish to share a featured image across multiple pages without duplicating it, you can create a [headless bundle](https://gohugo.io/content-management/page-bundles/#headless-bundle) `media` with images there.
+
+```text
+content/
+├── about
+├── posts
+├── media
+│   ├── index.md
+│   └── images
+│       ├── IMGP.jpg
+│       └── ..
+```
+
+If you wish to use a different bundle than `media`, you can use the `sharedMediaBundle` site's parameter (for site-wide) or `sharedMediaBundle` Front Matter parameter (for only one page).
+
 ## Updating
 
 From the folder of your Hugo website, run the following commands to update to the latest version:
@@ -271,6 +288,7 @@ cd themes/hugo-split-gallery && git pull
 * `galleryTransitionEffect`: Transition effect between slides (defaults to `fade`, possible values are `false` (disable), `fade`, `slide`, `circular`, `tube`, `zoom-in-out`, `rotate`)
 * `includeOriginalImage`: include original image as very-high-res for photo galleries (optional, defaults to `true`)
 * `largeImageSize`: size for high-res photo (optional, defaults to `2000px`)
+* `sharedMediaBundle`: path to a headless bundle for shared featured images (optional, defaults to `/media`)
 * `siteLogo`: path to a logo to be displayed next to the title (optional, defaults to none)
 * `useDefaultColors`: use default colors in theme (optional, defaults to `true`)
 * `useDefaultFonts`: use default fonts in theme (optional, defaults to `true`)
@@ -278,7 +296,9 @@ cd themes/hugo-split-gallery && git pull
 ### Post parameters reference
 
 * `images`: list of paths to the featured images - must have at least one (required)
+* `layout`: alternative layout to be used - possible value is `plain` (useful for text-based pages without images) (optional)
 * `seealso`: list of paths to related posts (optional, default to none)
+* `sharedMediaBundle`: path to a headless bundle for shared featured images (optional, defaults to default site's configuration)
 
 ### Warnings
 

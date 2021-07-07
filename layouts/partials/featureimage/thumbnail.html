@@ -3,7 +3,17 @@
 {{ if $featured_images }}
     {{ $img := .Resources.GetMatch (index $featured_images 0) }}
     {{ if $img }}
-        {{ $linkToThumbnail = partial "thumbnail.html" $img }}
+        {{ $linkToThumbnail = partial "image-processing/thumbnail.html" $img }}
+    {{ end }}
+
+    {{ if not $linkToThumbnail }}
+    {{ $headlessBundle := partial "featureimage/shared.html" . }}
+        {{ with .Site.GetPage $headlessBundle }}
+            {{ $img := .Resources.GetMatch (index $featured_images 0) }}
+            {{ if $img }}
+                {{ $linkToThumbnail = partial "image-processing/thumbnail.html" $img }}
+            {{ end }}
+        {{ end }}
     {{ end }}
 {{ end }}
 {{ if not $linkToThumbnail }}
