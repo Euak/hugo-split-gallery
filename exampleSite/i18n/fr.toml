@@ -1,0 +1,23 @@
+[location]
+other = "Massif"
+
+[locations]
+other = "Massifs"
+
+[season]
+other = "Saison"
+
+[seasons]
+other = "Saisons"
+
+[season-Spring]
+other = "Printemps"
+
+[season-Winter]
+other = "Hiver"
+
+[season-Fall]
+other = "Automne"
+
+[season-Summer]
+other = "Été"

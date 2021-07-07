@@ -89,6 +89,7 @@ $(document).ready(function () {
     {{ $page := . }}
     {{ range where .Site.Pages "Kind" "taxonomy" }}
       {{ $icon := partial "icons/gettaxonomy.html" .Data.Plural }}
+      {{ $key := .Data.Singular }}
       {{ $val := $page.Params.Get .Data.Plural }}
       {{ if $val }}
         {{- if not (reflect.IsSlice $val) -}}{{- $val = slice $val -}}{{- end -}}
@@ -96,14 +97,14 @@ $(document).ready(function () {
           <a href="{{ .Permalink }}">
             {{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
             {{ if gt (len $val) 1 }}
-              {{ .Data.Plural | humanize }}
+              {{ default .Data.Plural (i18n .Data.Plural) | humanize }}
             {{ else }}
-              {{ .Data.Singular | humanize }}
+              {{ default .Data.Singular (i18n .Data.Singular) | humanize }}
             {{ end }}
           </a> : 
           {{ range $index, $p := sort ($page.GetTerms .Data.Plural) "Page.Title" "asc" }}
             {{- if gt $index 0 }}, {{ end -}}
-            <a href="{{ $p.Page.Permalink }}">{{ $p.Page.Title }}</a>
+            <a href="{{ $p.Page.Permalink }}">{{ default $p.Page.Title (i18n (printf "%s-%s" $key $p.Page.Title)) }}</a>
           {{- end -}}
         </li>
       {{ end }}

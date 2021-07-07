@@ -21,16 +21,17 @@
 
   {{ range where .Site.Pages "Kind" "taxonomy" }}
     {{ $icon := partial "icons/gettaxonomy.html" .Data.Plural }}
+    {{ $key := .Data.Singular }}
     <div class="col">
       <h3>
         <a href="{{ .Permalink }}">
           {{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
-          {{ .Data.Plural | humanize }}
+          {{ default .Data.Plural (i18n .Data.Plural) | humanize }}
         </a>
       </h3>
       <ul>
         {{ range .Data.Terms.Alphabetical }}
-        <li><a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a> {{ .Count }}</li>
+        <li><a href="{{ .Page.Permalink }}">{{ default .Page.Title (i18n (printf "%s-%s" $key .Page.Title)) }}</a> {{ .Count }}</li>
         {{ end }}
       </ul>
     </div>
