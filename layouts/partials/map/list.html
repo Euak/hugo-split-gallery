@@ -1,29 +1,76 @@
 {{ $leafpages := partial "getleafpages.html" . }}
 
 {{ $hasTracks := false }}
+{{ $hasGeotaggedPhotos := false }}
 {{ range $leafpages }}
   {{ range .Resources.Match "*.gpx" }}
     {{ $hasTracks = true }}
   {{ end }}
+  {{ range .Resources.ByType "image" }}
+    {{ with .Exif }}
+      {{ if and (.Lat) (.Long) }}
+        {{ $hasGeotaggedPhotos = true }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
 {{ end }}
 
-{{ if $hasTracks }}
+{{ if or $hasTracks $hasGeotaggedPhotos }}
 <div id="mapid" style="width: 100%; height: 50vh;" class="mb-2"></div>
 <script>
+$(document).ready(function() {
 initMap();
 var promises = [];
-{{ range $leafpages }}
-    {{ $page := . }}
-    {{ range .Resources.Match "*.gpx" }}
-        promises.push(
-            showGPX("{{ .Permalink }}", colors[nextColor()]).then(function (featuregroup) {
-                featuregroup.bindPopup('<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>');
-            })
-        );
+
+{{ range $index, $page := $leafpages }}
+    {{ $pageHasTrack := false }}
+    function {{ printf "load_%d" $index | safeJS }} () {
+      var pagepromises = [];
+      var pagebounds = null;
+
+    {{ range $index2, $r := $page.Resources.Match "*.gpx" }}
+        var {{ printf "promise_%d" $index2 | safeJS }} = showGPX("{{ $r.Permalink | safeJS }}", colors[nextColor()]);
+        {{ printf "promise_%d" $index2 | safeJS }}.then(function (featuregroup) {
+            featuregroup.bindPopup('<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>');
+        });
+        promises.push({{ printf "promise_%d" $index2 | safeJS }});
+        pagepromises.push({{ printf "promise_%d" $index2 | safeJS }});
+      {{ $pageHasTrack = true }}
     {{ end }}
+    {{ if $pageHasTrack }}
+      Promise.all(pagepromises).then(function (values) {
+        var b = values[0].getBounds();
+        $.each(values, function (i, val) {
+          b = b.extend(val.getBounds());
+        })
+        $('.split-grid a').eq({{ $index }}).hover(function () {
+          map.flyTo(b.getCenter());
+        }, function () {
+          if (bounds) map.flyToBounds(bounds);
+        });
+      });
+    {{ end }}
+
+    {{ range .Resources.ByType "image" }}
+      {{ with .Exif }}
+        {{ if and (.Lat) (.Long) }}
+          if (pagebounds === null) pagebounds = L.latLng({{ .Lat }}, {{ .Long }}).toBounds(100);
+          else pagebounds = pagebounds.extend(L.latLng({{ .Lat }}, {{ .Long }}).toBounds(100));
+        {{ end }}
+      {{ end }}
+  {{ end }}
+  if (pagebounds) addBounds(pagebounds);
+  {{ if not $pageHasTrack }}
+    if (pagebounds) {
+      addMarker(pagebounds.getCenter(), {{ $index }}).bindPopup('<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>');
+    }
+  {{ end }}
+  }
+  {{ printf "load_%d" $index | safeJS }}();
 {{ end }}
 Promise.all(promises).then((values) => {
-  map.fitBounds(bounds);
+  if (bounds) map.fitBounds(bounds);
+});
 });
 </script>
 {{ end }}

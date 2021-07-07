@@ -49,25 +49,8 @@ $(document).ready(function () {
 {{ end }}
 
 {{ define "main_content" }}
-{{ $hasTracks := gt (len (.Resources.Match "*.gpx")) 0 }}
-
 <p>{{ .Content }}</p>
-
-{{ if $hasTracks }}
-  {{ partial "map/single.html" . }}
-
-  <script>
-  $(document).ready(function () {
-    {{ range $index, $element := .Resources.ByType "image" }}
-    {{ with $element.Exif }}
-      {{ if and (.Lat) (.Long) }}
-        addMarker([{{ .Lat }}, {{ .Long }}], {{ $index }});
-      {{ end }}
-    {{ end }}
-    {{ end }}
-  });
-  </script>
-{{ end }}
+{{ partial "map/single.html" . }}
 {{ end }}
 
 {{ define "lists" }}

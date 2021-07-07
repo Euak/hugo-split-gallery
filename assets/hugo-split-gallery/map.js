@@ -57,10 +57,7 @@ function showGPX(track, color) {
 
     var line = new L.GPX(track, { async: true, onSuccess: function () { }, onFail: function () { } })
       .on('loaded', function (e) {
-        if (bounds == null) {
-          bounds = e.target.getBounds();
-        }
-        bounds = bounds.extend(e.target.getBounds());
+        addBounds(e.target.getBounds());
 
         if (!start.equals(end, 100)) {
           var marker = L.marker(end, {
@@ -93,18 +90,27 @@ function showGPX(track, color) {
   });
 }
 
+function addBounds(o) {
+  if (bounds == null) {
+    bounds = o;
+  }
+  bounds = bounds.extend(o);
+}
+
 function addMarker(latlng, idx) {
   var marker = L.marker(latlng, {
     draggable: false, opacity: 0.5, icon: iconDefault
   }).on('click', function () {
-    $('a[data-fancybox="gallery"]').eq(idx).trigger('click');
+    $('.split-grid a').eq(idx).trigger('click');
   }).addTo(map);
+  addBounds(latlng.toBounds(100));
 
-  $('a[data-fancybox="gallery"]').eq(idx).hover(function () {
+  $('.split-grid a').eq(idx).hover(function () {
     map.flyTo(marker.getLatLng());
     marker.setOpacity(1).setIcon(iconSelected);
   }, function () {
     marker.setOpacity(0.5).setIcon(iconDefault);
     if (bounds) map.flyToBounds(bounds);
   });
+  return marker;
 }

@@ -1,5 +1,17 @@
+{{ $hasTracks := gt (len (.Resources.Match "*.gpx")) 0 }}
+{{ $hasGeotaggedPhotos := false }}
+{{ range .Resources.ByType "image" }}
+  {{ with .Exif }}
+    {{ if and (.Lat) (.Long) }}
+      {{ $hasGeotaggedPhotos = true }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ if or $hasTracks $hasGeotaggedPhotos }}
 <div id="mapid" style="width: 100%; height: 50vh;" class="mb-1"></div>
 <script>
+$(document).ready(function() {
 initMap();
 var promises = [];
 {{ range .Resources.Match "*.gpx" }}
@@ -11,7 +23,16 @@ var promises = [];
         })
     );
 {{ end }}
+{{ range $index, $element := .Resources.ByType "image" }}
+    {{ with $element.Exif }}
+    {{ if and (.Lat) (.Long) }}
+        addMarker(L.latLng({{ .Lat }}, {{ .Long }}), {{ $index }});
+    {{ end }}
+    {{ end }}
+{{ end }}
 Promise.all(promises).then((values) => {
-    map.fitBounds(bounds);
+    if (bounds) map.fitBounds(bounds);
+});
 });
 </script>
+{{ end }}
