@@ -20,57 +20,45 @@
 <script>
 $(document).ready(function() {
 initMap();
-var promises = [];
 
 {{ range $index, $page := $leafpages }}
-    {{ $pageHasTrack := false }}
-    function {{ printf "load_%d" $index | safeJS }} () {
-      var pagepromises = [];
-      var pagebounds = null;
+  function {{ printf "load_%d" $index | safeJS }} () {
+    var gpxs = [];
+    var markers = [];
+    var latlngs = [];
 
-    {{ range $index2, $r := $page.Resources.Match "*.gpx" }}
-        var {{ printf "promise_%d" $index2 | safeJS }} = showGPX("{{ $r.Permalink | safeJS }}", colors[nextColor()]);
-        {{ printf "promise_%d" $index2 | safeJS }}.then(function (featuregroup) {
-            featuregroup.bindPopup('<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>');
-        });
-        promises.push({{ printf "promise_%d" $index2 | safeJS }});
-        pagepromises.push({{ printf "promise_%d" $index2 | safeJS }});
-      {{ $pageHasTrack = true }}
-    {{ end }}
-    {{ if $pageHasTrack }}
-      Promise.all(pagepromises).then(function (values) {
-        var b = values[0].getBounds();
-        $.each(values, function (i, val) {
-          b = b.extend(val.getBounds());
-        })
-        $('.split-grid a').eq({{ $index }}).hover(function () {
-          map.flyTo(b.getCenter());
-        }, function () {
-          if (bounds) map.flyToBounds(bounds);
-        });
-      });
+    {{ range $page.Resources.Match "*.gpx" }}
+      gpxs.push([
+        "{{ .Permalink }}",
+        '<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>',
+      ]);
     {{ end }}
 
     {{ range .Resources.ByType "image" }}
       {{ with .Exif }}
-        {{ if and (.Lat) (.Long) }}
-          if (pagebounds === null) pagebounds = L.latLng({{ .Lat }}, {{ .Long }}).toBounds(100);
-          else pagebounds = pagebounds.extend(L.latLng({{ .Lat }}, {{ .Long }}).toBounds(100));
+        {{ if and .Lat .Long }}
+          latlngs.push(L.latLng({{ .Lat }}, {{ .Long }}));
         {{ end }}
       {{ end }}
-  {{ end }}
-  if (pagebounds) addBounds(pagebounds);
-  {{ if not $pageHasTrack }}
-    if (pagebounds) {
-      addMarker(pagebounds.getCenter(), {{ $index }}).bindPopup('<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>');
+    {{ end }}
+
+    if (latlngs.length > 0) {
+      var pagebounds = L.latLngBounds(latlngs);
+      addBounds(pagebounds);
+      if (gpxs.length === 0) {
+        markers.push([
+          pagebounds.getCenter(),
+          {{ $index }},
+          '<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>',
+        ]);
+      }
     }
-  {{ end }}
+
+    add(gpxs, markers, {{ $index }});
   }
+
   {{ printf "load_%d" $index | safeJS }}();
 {{ end }}
-Promise.all(promises).then((values) => {
-  if (bounds) map.fitBounds(bounds);
-});
 });
 </script>
 {{ end }}

@@ -13,26 +13,28 @@
 <script>
 $(document).ready(function() {
 initMap();
-var promises = [];
+var gpxs = [];
+var markers = [];
 {{ range .Resources.Match "*.gpx" }}
-    promises.push(
-        showGPX("{{ .Permalink }}", colors[nextColor()]).then(function (featuregroup) {
-            featuregroup.bindPopup('<strong>{{ .Name }}</strong><br>'
-            + '<a href="{{ .Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfile" }}</a><br>'
-            + '<a href="https://map2gpx.fr?url={{ .Permalink }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpx" }}</a>');
-        })
-    );
+  gpxs.push([
+    "{{ .Permalink }}",
+    '<strong>{{ .Name }}</strong><br>'
+      + '<a href="{{ .Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfile" }}</a><br>'
+      + '<a href="https://map2gpx.fr?url={{ .Permalink }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpx" }}</a>',
+  ]);
 {{ end }}
 {{ range $index, $element := .Resources.ByType "image" }}
-    {{ with $element.Exif }}
-    {{ if and (.Lat) (.Long) }}
-        addMarker(L.latLng({{ .Lat }}, {{ .Long }}), {{ $index }});
+  {{ with $element.Exif }}
+    {{ if and .Lat .Long }}
+      markers.push([
+        L.latLng({{ .Lat }}, {{ .Long }}),
+        {{ $index }},
+      ]);
     {{ end }}
-    {{ end }}
+  {{ end }}
 {{ end }}
-Promise.all(promises).then((values) => {
-    if (bounds) map.fitBounds(bounds);
-});
+
+add(gpxs, markers);
 });
 </script>
 {{ end }}
