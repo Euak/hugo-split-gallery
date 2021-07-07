@@ -372,6 +372,7 @@ cd themes/hugo-split-gallery && git pull
 * `galleryTransitionEffect`: Transition effect between slides (defaults to `fade`, possible values are `false` (disable), `fade`, `slide`, `circular`, `tube`, `zoom-in-out`, `rotate`)
 * `includeOriginalImage`: include original image as very-high-res for photo galleries (optional, defaults to `true`)
 * `largeImageSize`: size for high-res photo (optional, defaults to `2000px`)
+* `map2gpx`: Enables opening tracks in map2gpx (defaults to `en`, possible values are `false` (disable), `en` (use [map2gpx.eu](https://map2gpx.eu)), `fr` (use [map2gpx.fr](https://map2gpx.fr)))
 * `sharedMediaBundle`: path to a headless bundle for shared featured images (optional, defaults to `/media`)
 * `showTranslations`: add links to available translations for each page (homepage, taxonomies, posts, etc.) (optional, defaults to `false`)
 * `siteLogo`: path to a logo to be displayed next to the title (optional, defaults to none)
