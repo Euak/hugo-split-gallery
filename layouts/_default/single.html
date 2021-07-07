@@ -98,19 +98,21 @@ $(document).ready(function () {
 {{ $tracks := .Resources.Match "*.gpx" }}
 {{ if gt (len $tracks) 0 }}
   {{ $map2gpx := (default "en" ($.Site.Params.map2gpx)) }}
+  {{ $domain := "map2gpx.eu" }}
+  {{ if eq $map2gpx "fr" }}{{ $domain = "map2gpx.fr" }}{{ end }}
   <div class="col">
     <ul class="list-unstyled">
       {{ if gt (len $tracks) 1 }}
         {{ range $tracks }}
           <li><a href="{{ .Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfileWithName" .Name }}</a></li>
           {{ if $map2gpx }}
-            <li><a href="https://{{ if eq $map2gpx "fr" }}map2gpx.fr{{ else }}map2gpx.eu{{ end }}?url={{ .Permalink }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpxWithName" .Name }}</a></li>
+            <li><a href="https://{{ $domain }}?{{ querify "url" .Permalink | safeURL }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpxWithName" .Name }}</a></li>
           {{ end }}
         {{ end }}
       {{ else if gt (len $tracks) 0 }}
         <li><a href="{{ (index $tracks 0).Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfile" }}</a></li>
         {{ if $map2gpx }}
-          <li><a href="https://{{ if eq $map2gpx "fr" }}map2gpx.fr{{ else }}map2gpx.eu{{ end }}?url={{ (index $tracks 0).Permalink }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpx" }}</a></li>
+          <li><a href="https://{{ $domain }}?{{ querify "url" (index $tracks 0).Permalink | safeURL }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpx" }}</a></li>
         {{ end }}
       {{ end }}
     </ul>
