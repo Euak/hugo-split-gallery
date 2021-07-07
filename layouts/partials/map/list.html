@@ -1,29 +1,57 @@
 {{ $leafpages := partial "getleafpages.html" . }}
 
 {{ $hasTracks := false }}
+{{ $hasGeotaggedPhotos := false }}
 {{ range $leafpages }}
   {{ range .Resources.Match "*.gpx" }}
     {{ $hasTracks = true }}
   {{ end }}
+  {{ range .Resources.ByType "image" }}
+    {{ with .Exif }}
+      {{ if and (.Lat) (.Long) }}
+        {{ $hasGeotaggedPhotos = true }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
 {{ end }}
 
-{{ if $hasTracks }}
+{{ if or $hasTracks $hasGeotaggedPhotos }}
 <div id="mapid" style="width: 100%; height: 50vh;" class="mb-2"></div>
 <script>
+$(document).ready(function() {
 initMap();
 var promises = [];
-{{ range $leafpages }}
-    {{ $page := . }}
-    {{ range .Resources.Match "*.gpx" }}
+var pagebounds;
+{{ range $index, $page := $leafpages }}
+    {{ $pageHasTrack := false }}
+    {{ range $page.Resources.Match "*.gpx" }}
         promises.push(
             showGPX("{{ .Permalink }}", colors[nextColor()]).then(function (featuregroup) {
                 featuregroup.bindPopup('<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>');
             })
         );
+        {{ $pageHasTrack = true }}
     {{ end }}
+
+    pagebounds = null;
+    {{ range .Resources.ByType "image" }}
+      {{ with .Exif }}
+        {{ if and (.Lat) (.Long) }}
+          if (pagebounds === null) pagebounds = L.latLng({{ .Lat }}, {{ .Long }}).toBounds(100);
+          else pagebounds = pagebounds.extend(L.latLng({{ .Lat }}, {{ .Long }}).toBounds(100));
+        {{ end }}
+      {{ end }}
+  {{ end }}
+  if (pagebounds) addBounds(pagebounds);
+  {{ if not $pageHasTrack }}
+    if (pagebounds) {
+      addMarker(pagebounds.getCenter(), {{ $index }}).bindPopup('<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>');
+    }
+  {{ end }}
 {{ end }}
 Promise.all(promises).then((values) => {
   if (bounds) map.fitBounds(bounds);
+});
 });
 </script>
 {{ end }}
