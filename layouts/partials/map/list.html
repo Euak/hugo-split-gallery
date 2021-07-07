@@ -21,19 +21,36 @@
 $(document).ready(function() {
 initMap();
 var promises = [];
-var pagebounds;
+
 {{ range $index, $page := $leafpages }}
     {{ $pageHasTrack := false }}
-    {{ range $page.Resources.Match "*.gpx" }}
-        promises.push(
-            showGPX("{{ .Permalink }}", colors[nextColor()]).then(function (featuregroup) {
-                featuregroup.bindPopup('<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>');
-            })
-        );
-        {{ $pageHasTrack = true }}
+    function {{ printf "load_%d" $index | safeJS }} () {
+      var pagepromises = [];
+      var pagebounds = null;
+
+    {{ range $index2, $r := $page.Resources.Match "*.gpx" }}
+        var {{ printf "promise_%d" $index2 | safeJS }} = showGPX("{{ $r.Permalink | safeJS }}", colors[nextColor()]);
+        {{ printf "promise_%d" $index2 | safeJS }}.then(function (featuregroup) {
+            featuregroup.bindPopup('<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>');
+        });
+        promises.push({{ printf "promise_%d" $index2 | safeJS }});
+        pagepromises.push({{ printf "promise_%d" $index2 | safeJS }});
+      {{ $pageHasTrack = true }}
+    {{ end }}
+    {{ if $pageHasTrack }}
+      Promise.all(pagepromises).then(function (values) {
+        var b = values[0].getBounds();
+        $.each(values, function (i, val) {
+          b = b.extend(val.getBounds());
+        })
+        $('.split-grid a').eq({{ $index }}).hover(function () {
+          map.flyTo(b.getCenter());
+        }, function () {
+          if (bounds) map.flyToBounds(bounds);
+        });
+      });
     {{ end }}
 
-    pagebounds = null;
     {{ range .Resources.ByType "image" }}
       {{ with .Exif }}
         {{ if and (.Lat) (.Long) }}
@@ -48,6 +65,8 @@ var pagebounds;
       addMarker(pagebounds.getCenter(), {{ $index }}).bindPopup('<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>');
     }
   {{ end }}
+  }
+  {{ printf "load_%d" $index | safeJS }}();
 {{ end }}
 Promise.all(promises).then((values) => {
   if (bounds) map.fitBounds(bounds);
