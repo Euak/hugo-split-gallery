@@ -23,7 +23,7 @@ var promises = [];
     {{ end }}
 {{ end }}
 Promise.all(promises).then((values) => {
-  map.fitBounds(bounds);
+  if (bounds) map.fitBounds(bounds);
 });
 </script>
 {{ end }}

@@ -50,21 +50,30 @@ $(document).ready(function () {
 
 {{ define "main_content" }}
 {{ $hasTracks := gt (len (.Resources.Match "*.gpx")) 0 }}
+{{ $hasGeotaggedPhotos := false }}
+{{ range .Resources.ByType "image" }}
+  {{ with .Exif }}
+    {{ if and (.Lat) (.Long) }}
+      {{ $hasGeotaggedPhotos = true }}
+    {{ end }}
+  {{ end }}
+{{ end }}
 
 <p>{{ .Content }}</p>
 
-{{ if $hasTracks }}
+{{ if or $hasTracks $hasGeotaggedPhotos }}
   {{ partial "map/single.html" . }}
 
   <script>
   $(document).ready(function () {
     {{ range $index, $element := .Resources.ByType "image" }}
-    {{ with $element.Exif }}
-      {{ if and (.Lat) (.Long) }}
-        addMarker([{{ .Lat }}, {{ .Long }}], {{ $index }});
+      {{ with $element.Exif }}
+        {{ if and (.Lat) (.Long) }}
+          addMarker(L.latLng({{ .Lat }}, {{ .Long }}), {{ $index }});
+        {{ end }}
       {{ end }}
     {{ end }}
-    {{ end }}
+    if (bounds) map.fitBounds(bounds);
   });
   </script>
 {{ end }}

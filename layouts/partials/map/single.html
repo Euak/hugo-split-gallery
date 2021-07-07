@@ -1,5 +1,6 @@
 <div id="mapid" style="width: 100%; height: 50vh;" class="mb-1"></div>
 <script>
+$(document).ready(function() {
 initMap();
 var promises = [];
 {{ range .Resources.Match "*.gpx" }}
@@ -12,6 +13,7 @@ var promises = [];
     );
 {{ end }}
 Promise.all(promises).then((values) => {
-    map.fitBounds(bounds);
+    if (bounds) map.fitBounds(bounds);
+});
 });
 </script>
