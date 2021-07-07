@@ -2,6 +2,27 @@
 
 ## 1.x branch
 
+### 1.1.0
+
+#### UX
+
+* Enhancement: Add option to display available translations (#15)
+* Enhancement: Remove standalone pages from homepage (#18)
+* Enhancement: Show section in lists if multiple sections exist (#2O)
+* Enhancement: Display map if photos are geotagged (#21)
+
+#### Configuration
+
+* Enhancement: Add parameter to configure link to map2gpx (#14)
+* Enhancement: Use i18n for taxonomies (#16)
+* Enhancement: Enable shared media for featured images (#19)
+
+#### Example site
+
+* Enhancement: Add menu in exampleSite (#13)
+* Enhancement: Add sections in exampleSite (#17)
+* Enhancement: Added (partial, on purpose) French translation
+
 ### 1.0.3
 
 * Fix: hugo min version was wrongly set to 0.64.0, is really 0.73.0
