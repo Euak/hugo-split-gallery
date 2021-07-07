@@ -1,0 +1,23 @@
+[location]
+other = "Location"
+
+[locations]
+other = "Locations"
+
+[season]
+other = "Season"
+
+[seasons]
+other = "Seasons"
+
+[season-Spring]
+other = "Spring"
+
+[season-Winter]
+other = "Winter"
+
+[season-Fall]
+other = "Fall"
+
+[season-Summer]
+other = "Summer"

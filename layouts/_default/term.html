@@ -1,12 +1,12 @@
 {{ define "title" }}
 {{/* We redefine title to include taxonomy name */}}
-{{ .Data.Singular | humanize | plainify }} {{ .Title | plainify }} | {{ .Site.Title | plainify }}
+{{ default .Data.Singular (i18n .Data.Singular) | humanize | plainify }} {{ default .Title (i18n (printf "%s-%s" .Data.Singular .Title)) | plainify }} | {{ .Site.Title | plainify }}
 {{ end }}
 {{ define "title_html" }}
 {{/* We redefine title to include taxonomy name */}}
 {{ $icon := partial "icons/gettaxonomy.html" .Data.Plural }}
 {{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
-{{ .Data.Singular | humanize }} {{ .Title }}
+{{ default .Data.Singular (i18n .Data.Singular) | humanize }} {{ default .Title (i18n (printf "%s-%s" .Data.Singular .Title)) }}
 {{ end }}
 
 {{ define "gallery" }}

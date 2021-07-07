@@ -1,29 +1,64 @@
 {{ $leafpages := partial "getleafpages.html" . }}
 
 {{ $hasTracks := false }}
+{{ $hasGeotaggedPhotos := false }}
 {{ range $leafpages }}
   {{ range .Resources.Match "*.gpx" }}
     {{ $hasTracks = true }}
   {{ end }}
+  {{ range .Resources.ByType "image" }}
+    {{ with .Exif }}
+      {{ if and (.Lat) (.Long) }}
+        {{ $hasGeotaggedPhotos = true }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
 {{ end }}
 
-{{ if $hasTracks }}
+{{ if or $hasTracks $hasGeotaggedPhotos }}
 <div id="mapid" style="width: 100%; height: 50vh;" class="mb-2"></div>
 <script>
+$(document).ready(function() {
 initMap();
-var promises = [];
-{{ range $leafpages }}
-    {{ $page := . }}
-    {{ range .Resources.Match "*.gpx" }}
-        promises.push(
-            showGPX("{{ .Permalink }}", colors[nextColor()]).then(function (featuregroup) {
-                featuregroup.bindPopup('<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>');
-            })
-        );
+
+{{ range $index, $page := $leafpages }}
+  function {{ printf "load_%d" $index | safeJS }} () {
+    var gpxs = [];
+    var markers = [];
+    var latlngs = [];
+
+    {{ range $page.Resources.Match "*.gpx" }}
+      gpxs.push([
+        "{{ .Permalink }}",
+        '<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>',
+      ]);
     {{ end }}
+
+    {{ range .Resources.ByType "image" }}
+      {{ with .Exif }}
+        {{ if and .Lat .Long }}
+          latlngs.push(L.latLng({{ .Lat }}, {{ .Long }}));
+        {{ end }}
+      {{ end }}
+    {{ end }}
+
+    if (latlngs.length > 0) {
+      var pagebounds = L.latLngBounds(latlngs);
+      addBounds(pagebounds);
+      if (gpxs.length === 0) {
+        markers.push([
+          pagebounds.getCenter(),
+          {{ $index }},
+          '<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>',
+        ]);
+      }
+    }
+
+    add(gpxs, markers, {{ $index }});
+  }
+
+  {{ printf "load_%d" $index | safeJS }}();
 {{ end }}
-Promise.all(promises).then((values) => {
-  map.fitBounds(bounds);
 });
 </script>
 {{ end }}

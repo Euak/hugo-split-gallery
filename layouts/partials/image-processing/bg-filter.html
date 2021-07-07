@@ -1,0 +1,6 @@
+{{ $linkToCover := "" }}
+{{ $img := . | images.Filter (images.GaussianBlur 30) (images.Brightness -30) }}
+{{ with $img }}
+    {{ $linkToCover = .Permalink }}
+{{ end }}
+{{ return $linkToCover }}

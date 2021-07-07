@@ -111,6 +111,90 @@ You can configure the icons using [FontAwesome 4.7](https://fontawesome.com/v4.7
       icon = "paw"
 ```
 
+#### Multilingual
+
+In case your site is multilingual, you have 2 possibilities for taxonomies:
+
+1. Define whole new taxonomy per-language (as described in [Hugo documentation](https://gohugo.io/content-management/multilingual/#taxonomies-and-blackfriday))
+   1. The simplest solution, but:
+   2. Taxonomy/terms pages will not be seen as translations of each-others
+   3. The [Front Matter](https://gohugo.io/content-management/front-matter/) taxonomies must be translated
+2. Translate the taxonomies
+   1. More complicated to set-up initially, but:
+   2. Lets translations be written only once and for all in [translations files](https://gohugo.io/content-management/multilingual/#translation-of-strings)
+   3. The [Front Matter](https://gohugo.io/content-management/front-matter/) taxonomies are defined in the language you wish
+
+The example site provided in this theme uses the second method.
+
+For translating the taxonomies, you will need to create translation files for each language in a `i18n` folder at the root of your site:
+
+```text
+/
+├── content
+├── i18n
+│   ├── en.toml
+│   ├── fr.toml
+│   └── ..
+├── config.toml
+```
+
+The structure of the file is:
+
+```toml
+[<taxonomy>]
+other = "<Taxonomy Singular>"
+
+[<taxonomy>s]
+other = "<Taxonomy Plural>"
+
+[<taxonomy>-<term>]
+other = "<Term>"
+```
+
+Note that you don't need to translate all the taxonomies or terms if it's not needed.
+
+For instance, given the following taxonomies:
+
+```text
+Season             <- Taxonomy
+    Fall           <- Term
+    Spring         <- Term
+    Summer         <- Term
+    Winter         <- Term
+Location           <- Taxonomy
+    Oisans         <- Term
+    Vercors        <- Term
+    Écrins         <- Term
+```
+
+The corresponding translation file can be:
+
+```toml
+[location]
+other = "Location"
+
+[locations]
+other = "Locations"
+
+[season]
+other = "Season"
+
+[seasons]
+other = "Seasons"
+
+[season-Spring]
+other = "Spring"
+
+[season-Winter]
+other = "Winter"
+
+[season-Fall]
+other = "Fall"
+
+[season-Summer]
+other = "Summer"
+```
+
 ### Footnotes
 
 You can define footnotes per-page and globally to the site. These footnotes differ from [Markdown footnotes](https://michelf.ca/projects/php-markdown/extra/#footnotes), as they are displayed at the bottom of the page (Markdown footnotes are displayed at the bottom of the article).
@@ -243,6 +327,23 @@ You can have a logo displayed next to your site's title. Put your logo into the 
   siteLogo = "img/logo.png"
 ```
 
+### Sharing media across multiple pages
+
+If you wish to share a featured image across multiple pages without duplicating it, you can create a [headless bundle](https://gohugo.io/content-management/page-bundles/#headless-bundle) `media` with images there.
+
+```text
+content/
+├── about
+├── posts
+├── media
+│   ├── index.md
+│   └── images
+│       ├── IMGP.jpg
+│       └── ..
+```
+
+If you wish to use a different bundle than `media`, you can use the `sharedMediaBundle` site's parameter (for site-wide) or `sharedMediaBundle` Front Matter parameter (for only one page).
+
 ## Updating
 
 From the folder of your Hugo website, run the following commands to update to the latest version:
@@ -271,6 +372,9 @@ cd themes/hugo-split-gallery && git pull
 * `galleryTransitionEffect`: Transition effect between slides (defaults to `fade`, possible values are `false` (disable), `fade`, `slide`, `circular`, `tube`, `zoom-in-out`, `rotate`)
 * `includeOriginalImage`: include original image as very-high-res for photo galleries (optional, defaults to `true`)
 * `largeImageSize`: size for high-res photo (optional, defaults to `2000px`)
+* `map2gpx`: Enables opening tracks in map2gpx (defaults to `en`, possible values are `false` (disable), `en` (use [map2gpx.eu](https://map2gpx.eu)), `fr` (use [map2gpx.fr](https://map2gpx.fr)))
+* `sharedMediaBundle`: path to a headless bundle for shared featured images (optional, defaults to `/media`)
+* `showTranslations`: add links to available translations for each page (homepage, taxonomies, posts, etc.) (optional, defaults to `false`)
 * `siteLogo`: path to a logo to be displayed next to the title (optional, defaults to none)
 * `useDefaultColors`: use default colors in theme (optional, defaults to `true`)
 * `useDefaultFonts`: use default fonts in theme (optional, defaults to `true`)
@@ -278,7 +382,9 @@ cd themes/hugo-split-gallery && git pull
 ### Post parameters reference
 
 * `images`: list of paths to the featured images - must have at least one (required)
+* `layout`: alternative layout to be used - possible value is `plain` (useful for text-based pages without images) (optional)
 * `seealso`: list of paths to related posts (optional, default to none)
+* `sharedMediaBundle`: path to a headless bundle for shared featured images (optional, defaults to default site's configuration)
 
 ### Warnings
 

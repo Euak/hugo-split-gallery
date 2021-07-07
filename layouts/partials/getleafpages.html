@@ -8,7 +8,7 @@
 {{ else if eq .Kind "section" }}
     {{ $pages = .Pages }}
 {{ else if eq .Kind "home" }}
-    {{ $pages = .Site.RegularPages }}
+    {{ $pages = where .Site.RegularPages "Section" "!=" "" }}
 {{ end }}
 
 {{ if not $pages }}

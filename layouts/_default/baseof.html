@@ -41,7 +41,8 @@
     <div class="row">
       <div class="col-lg-6" id="content-panel">
         <div class="container h-100">
-          <p class="lead my-0"><a href="{{ .Site.Home.RelPermalink }}">
+          <p class="lead my-0">          
+            <a href="{{ .Site.Home.RelPermalink }}">
               {{ with .Site.Params.siteLogo }}
                 <img src="{{ relURL (.) }}" alt="{{ $.Site.Title | plainify }}" />
               {{ end }}
@@ -49,21 +50,33 @@
             </a>
           </p>
 
-          <aside class="mt-0 mb-2">
-            <ul class="list-inline">
-                {{ $currentPage := . }}
-                {{ range .Site.Menus.main }}
-                    <li class="list-inline-item me-4"><a href="{{ .URL }}">{{ .Pre }} <span>{{ .Name }}</span></a></li>
-                {{ end }}
-            </ul>
+          {{ if or .Site.Menus.main (and .IsTranslated (default false ($.Site.Params.showTranslations))) .PrevInSection .NextInSection }}
+            <aside class="mt-0 mb-2">
+              {{ if .Site.Menus.main }}
+                <ul class="list-inline">
+                    {{ $currentPage := . }}
+                    {{ range .Site.Menus.main }}
+                        <li class="list-inline-item me-4"><a href="{{ .URL }}">{{ .Pre }} <span>{{ .Name }}</span></a></li>
+                    {{ end }}
+                </ul>
+              {{ end }}
 
-            {{ if or .PrevInSection .NextInSection }}
-            <ul class="list-inline">
-              {{ with .PrevInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}"><i class="fa fa-arrow-left fa-fw"></i> {{ .Title }}</a></li>{{ end }}
-              {{ with .NextInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}">{{ .Title }} <i class="fa fa-arrow-right fa-fw"></i></a></li>{{ end }}
-            </ul>
+              {{ if and .IsTranslated (default false ($.Site.Params.showTranslations)) }}
+                {{ i18n "translations" }}: <ul class="list-inline d-inline">
+                  {{ range .Translations }}
+                  <li class="list-inline-item"><a href="{{ .Permalink }}">{{ .Lang }}</a></li>
+                  {{ end }}
+                </ul>
+              {{ end }}
+
+              {{ if or .PrevInSection .NextInSection }}
+              <ul class="list-inline">
+                {{ with .PrevInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}"><i class="fa fa-arrow-left fa-fw"></i> {{ .Title }}</a></li>{{ end }}
+                {{ with .NextInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}">{{ .Title }} <i class="fa fa-arrow-right fa-fw"></i></a></li>{{ end }}
+              </ul>
+              {{ end }}
+            </aside>
             {{ end }}
-          </aside>
           <hr/>
 
           <h1>{{ block "title_html" . }}{{ .Title | default .Site.Title | safeHTML }} {{/* .Kind }} {{ partial "getleafpage.html" . */}}{{ end }}</h1>

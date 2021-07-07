@@ -1,0 +1,62 @@
+title = "Hugo Split Gallery theme sample site"
+copyright = "Theme licensed under the GPLv3 license; photos are &copy; Thomas Muguet"
+baseURL = "https://tmuguet.gitlab.io/hugo-split-gallery/next/"
+languageCode = "en-us"
+theme = "hugo-split-gallery"
+themesDir = "../.."
+publishDir = "../public/next"  # GitLab expects public folder at root
+
+DefaultContentLanguage = "en"
+
+[taxonomies]
+  location = "locations"
+  season = "seasons"
+
+[params]
+  robots = "index, follow"
+  favicon = ""
+  siteLogo = ""
+  description = "Photo gallery inspired by Hugo Split Theme"
+  images = ["DSCF0348.jpg"]
+  includeOriginalImage = false
+  largeImageSize = "2000x"
+  footnote = "Fork me on <a href='https://gitlab.com/tmuguet/hugo-split-gallery'>GitLab</a>!"
+  galleryLoop = true
+  galleryButtons = ["zoom", "fullScreen", "slideShow", "close"]
+  showTranslations = true
+
+  [params.taxonomies]
+    [params.taxonomies.locations]
+      icon = "location-arrow"
+    [params.taxonomies.seasons]
+      icon = "calendar"
+
+[languages]
+  [languages.en]
+    [languages.en.menu]
+      [[languages.en.menu.main]]
+        identifier = "about"
+        name = "About this theme"
+        pre = "<i class='fa fa-heart'></i>"
+        url = "/about/"
+        weight = -110
+
+      [[languages.en.menu.main]]
+        name = "Getting started"
+        pre = "<i class='fa fa-road'></i>"
+        url = "/getting-started/"
+        weight = -100
+
+      [[languages.en.menu.main]]
+        name = "See stable version"
+        pre = "<i class='fa fa-floppy-o'></i>"
+        url = "https://tmuguet.gitlab.io/hugo-split-gallery/"
+
+  [languages.fr]
+    title = "Site exemple du thème Hugo Split Gallery"
+    languageCode = "fr-fr"
+    showTranslations = false
+    map2gpx = "fr"
+
+    [languages.fr.params]
+      description = "Gallerie photo inspirée de Hugo Split Theme"

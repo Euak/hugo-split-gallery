@@ -27,7 +27,7 @@ $(document).ready(function () {
         <ul class="split-grid list-unstyled">
           {{ with .Resources.ByType "image" }}
             {{ range . }}
-              {{ $linkToThumbnail := partial "thumbnail.html" . }}
+              {{ $linkToThumbnail := partial "image-processing/thumbnail.html" . }}
               {{ $large := .Resize $largeImageSize }}
               {{ if $includeOriginalImage }}
                 <li><a href="{{ .Permalink }}"
@@ -49,25 +49,8 @@ $(document).ready(function () {
 {{ end }}
 
 {{ define "main_content" }}
-{{ $hasTracks := gt (len (.Resources.Match "*.gpx")) 0 }}
-
 <p>{{ .Content }}</p>
-
-{{ if $hasTracks }}
-  {{ partial "map/single.html" . }}
-
-  <script>
-  $(document).ready(function () {
-    {{ range $index, $element := .Resources.ByType "image" }}
-    {{ with $element.Exif }}
-      {{ if and (.Lat) (.Long) }}
-        addMarker([{{ .Lat }}, {{ .Long }}], {{ $index }});
-      {{ end }}
-    {{ end }}
-    {{ end }}
-  });
-  </script>
-{{ end }}
+{{ partial "map/single.html" . }}
 {{ end }}
 
 {{ define "lists" }}
@@ -89,6 +72,7 @@ $(document).ready(function () {
     {{ $page := . }}
     {{ range where .Site.Pages "Kind" "taxonomy" }}
       {{ $icon := partial "icons/gettaxonomy.html" .Data.Plural }}
+      {{ $key := .Data.Singular }}
       {{ $val := $page.Params.Get .Data.Plural }}
       {{ if $val }}
         {{- if not (reflect.IsSlice $val) -}}{{- $val = slice $val -}}{{- end -}}
@@ -96,33 +80,45 @@ $(document).ready(function () {
           <a href="{{ .Permalink }}">
             {{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
             {{ if gt (len $val) 1 }}
-              {{ .Data.Plural | humanize }}
+              {{ default .Data.Plural (i18n .Data.Plural) | humanize }}
             {{ else }}
-              {{ .Data.Singular | humanize }}
+              {{ default .Data.Singular (i18n .Data.Singular) | humanize }}
             {{ end }}
           </a> : 
           {{ range $index, $p := sort ($page.GetTerms .Data.Plural) "Page.Title" "asc" }}
             {{- if gt $index 0 }}, {{ end -}}
-            <a href="{{ $p.Page.Permalink }}">{{ $p.Page.Title }}</a>
+            <a href="{{ $p.Page.Permalink }}">{{ default $p.Page.Title (i18n (printf "%s-%s" $key $p.Page.Title)) }}</a>
           {{- end -}}
         </li>
       {{ end }}
     {{ end }}
   </ul>
 </div>
-<div class="col">
-  <ul class="list-unstyled">
-    {{ if gt (len (.Resources.Match "*.gpx")) 1 }}
-      {{ range .Resources.Match "*.gpx" }}
-        <li><a href="{{ .Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfileWithName" .Name }}</a></li>
-        <li><a href="https://map2gpx.fr?url={{ .Permalink }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpxWithName" .Name }}</a></li>
+
+{{ $tracks := .Resources.Match "*.gpx" }}
+{{ if gt (len $tracks) 0 }}
+  {{ $map2gpx := (default "en" ($.Site.Params.map2gpx)) }}
+  {{ $domain := "map2gpx.eu" }}
+  {{ if eq $map2gpx "fr" }}{{ $domain = "map2gpx.fr" }}{{ end }}
+  <div class="col">
+    <ul class="list-unstyled">
+      {{ if gt (len $tracks) 1 }}
+        {{ range $tracks }}
+          <li><a href="{{ .Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfileWithName" .Name }}</a></li>
+          {{ if $map2gpx }}
+            <li><a href="https://{{ $domain }}?{{ querify "url" .Permalink | safeURL }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpxWithName" .Name }}</a></li>
+          {{ end }}
+        {{ end }}
+      {{ else if gt (len $tracks) 0 }}
+        <li><a href="{{ (index $tracks 0).Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfile" }}</a></li>
+        {{ if $map2gpx }}
+          <li><a href="https://{{ $domain }}?{{ querify "url" (index $tracks 0).Permalink | safeURL }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpx" }}</a></li>
+        {{ end }}
       {{ end }}
-    {{ else if gt (len (.Resources.Match "*.gpx")) 0 }}
-      <li><a href="{{ (index (.Resources.Match "*.gpx") 0).Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfile" }}</a></li>
-      <li><a href="https://map2gpx.fr?url={{ (index (.Resources.Match "*.gpx") 0).Permalink }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpx" }}</a></li>
-    {{ end }}
-  </ul>
-</div>
+    </ul>
+  </div>
+{{ end }}
+
 {{ if (default false ($.Site.Params.enableDownloadAll)) }}
 <div class="col">
   <ul class="list-unstyled"><li><button type="button" class="btn btn-link" onclick="dl(this);" data-filename="{{ .Title | urlize }}"><i class="fa fa-cloud-download fa-fw"></i> {{ i18n "downloadPhotos" }}</button></li></ul>

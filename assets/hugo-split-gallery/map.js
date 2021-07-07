@@ -57,10 +57,7 @@ function showGPX(track, color) {
 
     var line = new L.GPX(track, { async: true, onSuccess: function () { }, onFail: function () { } })
       .on('loaded', function (e) {
-        if (bounds == null) {
-          bounds = e.target.getBounds();
-        }
-        bounds = bounds.extend(e.target.getBounds());
+        addBounds(e.target.getBounds());
 
         if (!start.equals(end, 100)) {
           var marker = L.marker(end, {
@@ -93,18 +90,57 @@ function showGPX(track, color) {
   });
 }
 
+function addBounds(o) {
+  if (bounds == null) {
+    bounds = o;
+  }
+  bounds = bounds.extend(o);
+}
+
 function addMarker(latlng, idx) {
   var marker = L.marker(latlng, {
     draggable: false, opacity: 0.5, icon: iconDefault
   }).on('click', function () {
-    $('a[data-fancybox="gallery"]').eq(idx).trigger('click');
+    $('.split-grid a').eq(idx).trigger('click');
   }).addTo(map);
+  addBounds(latlng.toBounds(100));
 
-  $('a[data-fancybox="gallery"]').eq(idx).hover(function () {
+  $('.split-grid a').eq(idx).hover(function () {
     map.flyTo(marker.getLatLng());
     marker.setOpacity(1).setIcon(iconSelected);
   }, function () {
     marker.setOpacity(0.5).setIcon(iconDefault);
     if (bounds) map.flyToBounds(bounds);
   });
+  return marker;
+}
+
+function add(gpxs, markers, index) {
+  var promises = [];
+  $.each(gpxs, function (i, gpx) {
+    var promise = showGPX(gpx[0], colors[nextColor()]);
+    promise.then(function (featuregroup) {
+      featuregroup.bindPopup(gpx[1]);
+    });
+    promises.push(promise);
+  });
+  $.each(markers, function (i, marker) {
+    var m = addMarker(marker[0], marker[1]);
+    if (marker.length > 2) m.bindPopup(marker[2]);
+  });
+
+  Promise.all(promises).then((values) => {
+    if (index !== undefined && values.length > 0) {
+      var b = values[0].getBounds();
+      $.each(values, function (i, val) {
+        b = b.extend(val.getBounds());
+      })
+      $('.split-grid a').eq(index).hover(function () {
+        map.flyTo(b.getCenter());
+      }, function () {
+        if (bounds) map.flyToBounds(bounds);
+      });
+    }
+    if (bounds) map.fitBounds(bounds);
+});
 }
