@@ -30,22 +30,31 @@ DefaultContentLanguage = "en"
     [params.taxonomies.seasons]
       icon = "calendar"
 
-[menu]
-  [[menu.main]]
-    identifier = "about"
-    name = "About this theme"
-    pre = "<i class='fa fa-heart'></i>"
-    url = "/about/"
-    weight = -110
+[languages]
+  [languages.en]
+    [languages.en.menu]
+      [[languages.en.menu.main]]
+        identifier = "about"
+        name = "About this theme"
+        pre = "<i class='fa fa-heart'></i>"
+        url = "/about/"
+        weight = -110
 
-  [[menu.main]]
-    name = "Getting started"
-    pre = "<i class='fa fa-road'></i>"
-    url = "/getting-started/"
-    weight = -100
+      [[languages.en.menu.main]]
+        name = "Getting started"
+        pre = "<i class='fa fa-road'></i>"
+        url = "/getting-started/"
+        weight = -100
 
-  [[menu.main]]
-    name = "See stable version"
-    pre = "<i class='fa fa-floppy-o'></i>"
-    url = "https://tmuguet.gitlab.io/hugo-split-gallery/"
+      [[languages.en.menu.main]]
+        name = "See stable version"
+        pre = "<i class='fa fa-floppy-o'></i>"
+        url = "https://tmuguet.gitlab.io/hugo-split-gallery/"
 
+  [languages.fr]
+    title = "Site exemple du thème Hugo Split Gallery"
+    languageCode = "fr-fr"
+    showTranslations = false
+
+    [languages.fr.params]
+      description = "Gallerie photo inspirée de Hugo Split Theme"
