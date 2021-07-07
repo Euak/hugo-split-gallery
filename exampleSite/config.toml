@@ -35,6 +35,7 @@ DefaultContentLanguage = "en"
   # gallerySlideshowSpeed = 3000
   # sharedMediaBundle = "/media"
   showTranslations = true
+  map2gpx = "en"
 
   [params.taxonomies]
     [params.taxonomies.locations]
@@ -62,6 +63,7 @@ DefaultContentLanguage = "en"
     title = "Site exemple du thème Hugo Split Gallery"
     languageCode = "fr-fr"
     showTranslations = false
+    map2gpx = "fr"
 
     [languages.fr.params]
       description = "Gallerie photo inspirée de Hugo Split Theme"
