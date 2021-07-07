@@ -111,25 +111,29 @@ $(document).ready(function () {
     {{ end }}
   </ul>
 </div>
-<div class="col">
-  <ul class="list-unstyled">
-    {{ $map2gpx := (default "en" ($.Site.Params.map2gpx)) }}
-    {{ $tracks := .Resources.Match "*.gpx" }}
-    {{ if gt (len $tracks) 1 }}
-      {{ range $tracks }}
-        <li><a href="{{ .Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfileWithName" .Name }}</a></li>
+
+{{ $tracks := .Resources.Match "*.gpx" }}
+{{ if gt (len $tracks) 0 }}
+  {{ $map2gpx := (default "en" ($.Site.Params.map2gpx)) }}
+  <div class="col">
+    <ul class="list-unstyled">
+      {{ if gt (len $tracks) 1 }}
+        {{ range $tracks }}
+          <li><a href="{{ .Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfileWithName" .Name }}</a></li>
+          {{ if $map2gpx }}
+            <li><a href="https://{{ if eq $map2gpx "fr" }}map2gpx.fr{{ else }}map2gpx.eu{{ end }}?url={{ .Permalink }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpxWithName" .Name }}</a></li>
+          {{ end }}
+        {{ end }}
+      {{ else if gt (len $tracks) 0 }}
+        <li><a href="{{ (index $tracks 0).Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfile" }}</a></li>
         {{ if $map2gpx }}
-          <li><a href="https://{{ if eq $map2gpx "fr" }}map2gpx.fr{{ else }}map2gpx.eu{{ end }}?url={{ .Permalink }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpxWithName" .Name }}</a></li>
+          <li><a href="https://{{ if eq $map2gpx "fr" }}map2gpx.fr{{ else }}map2gpx.eu{{ end }}?url={{ (index $tracks 0).Permalink }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpx" }}</a></li>
         {{ end }}
       {{ end }}
-    {{ else if gt (len $tracks) 0 }}
-      <li><a href="{{ (index $tracks 0).Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfile" }}</a></li>
-      {{ if $map2gpx }}
-        <li><a href="https://{{ if eq $map2gpx "fr" }}map2gpx.fr{{ else }}map2gpx.eu{{ end }}?url={{ (index $tracks 0).Permalink }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpx" }}</a></li>
-      {{ end }}
-    {{ end }}
-  </ul>
-</div>
+    </ul>
+  </div>
+{{ end }}
+
 {{ if (default false ($.Site.Params.enableDownloadAll)) }}
 <div class="col">
   <ul class="list-unstyled"><li><button type="button" class="btn btn-link" onclick="dl(this);" data-filename="{{ .Title | urlize }}"><i class="fa fa-cloud-download fa-fw"></i> {{ i18n "downloadPhotos" }}</button></li></ul>
