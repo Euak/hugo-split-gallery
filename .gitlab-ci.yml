@@ -7,35 +7,53 @@ variables:
 
 test-latest:
   stage: test
-  script:
-    - apk update
-    - apk add hugo
-    - hugo version
-    - cd exampleSite && hugo --config .config.ci.toml
+  script: |
+    apk update
+    apk add hugo
+    hugo version
+    cd exampleSite
+    hugo --config .config.ci.toml 2>&1 | tee build.log
+    if grep -q 'WARN' build.log; then
+      echo "Failed because of the following warnings:"
+      grep 'WARN' build.log
+      exit 1
+    fi
 
 test-refversion:
   stage: test
-  script:
-    # Old versions seems not to be available on Alpine packages, so revert to the good old method
-    - wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_REFERENCE_VERSION}/hugo_${HUGO_REFERENCE_VERSION}_Linux-64bit.tar.gz
-    - mkdir -p bin
-    - cd bin
-    - tar -xzf $CI_PROJECT_DIR/hugo_${HUGO_REFERENCE_VERSION}_Linux-64bit.tar.gz
-    - export PATH=$PATH:${CI_PROJECT_DIR}/bin
-    - hugo version
-    - cd ${CI_PROJECT_DIR}/exampleSite && hugo --config .config.ci.toml
+  # Old versions seems not to be available on Alpine packages, so revert to the good old method
+  script: |
+    wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_REFERENCE_VERSION}/hugo_${HUGO_REFERENCE_VERSION}_Linux-64bit.tar.gz
+    mkdir -p bin
+    cd bin
+    tar -xzf $CI_PROJECT_DIR/hugo_${HUGO_REFERENCE_VERSION}_Linux-64bit.tar.gz
+    export PATH=$PATH:${CI_PROJECT_DIR}/bin
+    hugo version
+    cd ${CI_PROJECT_DIR}/exampleSite
+    hugo --config .config.ci.toml 2>&1 | tee build.log
+    if grep -q 'WARN' build.log; then
+      echo "Failed because of the following warnings:"
+      grep 'WARN' build.log
+      exit 1
+    fi
 
 test-minversion:
   stage: test
-  script:
-    # Old versions seems not to be available on Alpine packages, so revert to the good old method
-    - wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_MIN_VERSION}/hugo_${HUGO_MIN_VERSION}_Linux-64bit.tar.gz
-    - mkdir -p bin
-    - cd bin
-    - tar -xzf $CI_PROJECT_DIR/hugo_${HUGO_MIN_VERSION}_Linux-64bit.tar.gz
-    - export PATH=$PATH:${CI_PROJECT_DIR}/bin
-    - hugo version
-    - cd ${CI_PROJECT_DIR}/exampleSite && hugo --config .config.ci.toml
+  # Old versions seems not to be available on Alpine packages, so revert to the good old method
+  script: |
+    wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_MIN_VERSION}/hugo_${HUGO_MIN_VERSION}_Linux-64bit.tar.gz
+    mkdir -p bin
+    cd bin
+    tar -xzf $CI_PROJECT_DIR/hugo_${HUGO_MIN_VERSION}_Linux-64bit.tar.gz
+    export PATH=$PATH:${CI_PROJECT_DIR}/bin
+    hugo version
+    cd ${CI_PROJECT_DIR}/exampleSite
+    hugo --config .config.ci.toml 2>&1 | tee build.log
+    if grep -q 'WARN' build.log; then
+      echo "Failed because of the following warnings:"
+      grep 'WARN' build.log
+      exit 1
+    fi
 
 pages:
   stage: deploy
