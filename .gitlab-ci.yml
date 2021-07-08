@@ -61,7 +61,7 @@ pages:
     echo "Downloading previous artifacts..."
     wget https://gitlab.com/tmuguet/hugo-split-gallery/-/jobs/artifacts/main/download?job=pages -O artifact.zip
     unzip -q artifact.zip
-    if [ -f "public/next" ]; then mv public/next next; fi;
+    if [ -d "public/next" ]; then mv public/next next; fi;
     mv public current
 
     echo "Preparing Hugo"
@@ -73,7 +73,7 @@ pages:
     if [ $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH ]; then
       echo "Generating main site..."
       hugo --config .config.ci.toml
-      if [ -f "${CI_PROJECT_DIR}/next" ]; then mv ${CI_PROJECT_DIR}/next ${CI_PROJECT_DIR}/public; fi;
+      if [ -d "${CI_PROJECT_DIR}/next" ]; then mv ${CI_PROJECT_DIR}/next ${CI_PROJECT_DIR}/public; fi;
     else
       echo "Generating next site..."
       hugo --config .config.ci-next.toml
