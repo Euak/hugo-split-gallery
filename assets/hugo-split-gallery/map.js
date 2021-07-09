@@ -73,7 +73,7 @@ function showGPX(track, color) {
     }
   }
 
-  if (!start.equals(end, 100)) {
+  if (start && end && !start.equals(end, 100)) {
     L.marker(end, {
       icon: iconsMap[color]
     }).addTo(featuregroup);
