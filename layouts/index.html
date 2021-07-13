@@ -9,7 +9,7 @@
 
 {{ define "lists" }}
   {{ if gt (len $.Site.Sections) 1 }}
-  <div class="col">
+  <div class="col" id="sections">
     <h3><i class="fa fa-folder-o fa-fw"></i> {{ i18n "sections" }}</h3>
     <ul>
     {{ range $.Site.Sections }}
@@ -22,7 +22,7 @@
   {{ range where .Site.Pages "Kind" "taxonomy" }}
     {{ $icon := partial "icons/gettaxonomy.html" .Data.Plural }}
     {{ $key := .Data.Singular }}
-    <div class="col">
+    <div class="col" id="taxonomy-{{ $key }}">
       <h3>
         <a href="{{ .Permalink }}">
           {{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}

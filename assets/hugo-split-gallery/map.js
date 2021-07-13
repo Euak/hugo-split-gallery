@@ -73,23 +73,24 @@ function showGPX(track, color) {
     }
   }
 
-  if (!start.equals(end, 100)) {
-    L.marker(end, {
-      icon: iconsMap[color]
-    }).addTo(featuregroup);
-  }
+  if (start && end) {
+    if (!start.equals(end, 100)) {
+      L.marker(end, {
+        icon: iconsMap[color]
+      }).addTo(featuregroup);
+    }
   
-  addBounds(line.getBounds());
-  featuregroup.addTo(map);
+    featuregroup.addTo(map);
+    addBounds(featuregroup.getBounds());
 
-  return featuregroup;
+    return featuregroup;
+  }
+  console.warn("Empty track");
+  return null;
 }
 
 function addBounds(o) {
-  if (bounds == null) {
-    bounds = o.pad(0.5);
-  }
-  bounds = bounds.extend(o.pad(0.5));
+  bounds = (bounds === null) ? o.pad(0.5) : bounds.extend(o.pad(0.5));
 }
 
 function addMarker(latlng, idx) {
@@ -114,8 +115,11 @@ function add(gpxs, markers, index) {
   var b = null;
   $.each(gpxs, function (i, gpx) {
     var featuregroup = showGPX(gpx[0], colors[nextColor()]);
-    featuregroup.bindPopup(gpx[1]);
-    b = b === null ? featuregroup.getBounds().pad(0.5) : b.extend(featuregroup.getBounds().pad(0.5));
+    if (featuregroup) {
+      var featuregroupbounds = featuregroup.getBounds().pad(0.5);
+      featuregroup.bindPopup(gpx[1]);
+      b = (b === null) ? featuregroupbounds : b.extend(featuregroupbounds);
+    }
   });
   $.each(markers, function (i, marker) {
     var m = addMarker(marker[0], marker[1]);
