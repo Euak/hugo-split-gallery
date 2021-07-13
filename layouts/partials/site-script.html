@@ -1,4 +1,4 @@
-{{ range slice "bootstrap/*.js" "jquery/*.js" "fancybox/*.js" "leaflet/*.js" "leaflet-gpx/*.js" "leaflet.awesome-markers/*.min.js" }}
+{{ range slice "bootstrap/*.js" "jquery/*.js" "fancybox/*.js" "leaflet/*.js" "togeojson/*.js" "leaflet.awesome-markers/*.min.js" }}
 {{ $secureJS := resources.GetMatch (printf "/vendor/%s" .) | resources.Fingerprint "sha512" }}
 <script src="{{ $secureJS.Permalink }}" type="text/javascript" integrity="{{ $secureJS.Data.Integrity }}"></script>
 {{ end }}
