@@ -31,9 +31,9 @@ const assets = {
         'node_modules/leaflet/dist/leaflet.js',
         'node_modules/leaflet/dist/images',
     ],
-    'leaflet-gpx': [
-        'node_modules/leaflet-gpx/LICENSE',
-        'node_modules/leaflet-gpx/gpx.js'
+    'togeojson': [
+        'node_modules/@tmcw/togeojson/LICENSE',
+        'node_modules/@tmcw/togeojson/dist/togeojson.umd.js',
     ],
     'font-awesome': [
         'node_modules/font-awesome/README.md',
