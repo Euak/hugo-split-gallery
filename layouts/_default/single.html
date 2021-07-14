@@ -49,13 +49,13 @@ $(document).ready(function () {
 {{ end }}
 
 {{ define "main_content" }}
-<p>{{ .Content }}</p>
+{{ .Content }}
 {{ partial "map/single.html" . }}
 {{ end }}
 
 {{ define "lists" }}
 <div class="col">
-  <ul class="list-unstyled">
+  <ul class="list-unstyled" id="list-metadata">
     <li><i class="fa fa-file fa-fw"></i> {{ i18n "publishedAt" (.Date.Format "2006-01-02") }}</li>
     {{ $dates := slice }}
     {{ with .Resources.ByType "image" }}
@@ -101,7 +101,7 @@ $(document).ready(function () {
   {{ $domain := "map2gpx.eu" }}
   {{ if eq $map2gpx "fr" }}{{ $domain = "map2gpx.fr" }}{{ end }}
   <div class="col">
-    <ul class="list-unstyled">
+    <ul class="list-unstyled" id="list-gpxs">
       {{ if gt (len $tracks) 1 }}
         {{ range $tracks }}
           <li><a href="{{ .Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfileWithName" .Name }}</a></li>
@@ -121,7 +121,7 @@ $(document).ready(function () {
 
 {{ if (default false ($.Site.Params.enableDownloadAll)) }}
 <div class="col">
-  <ul class="list-unstyled"><li><button type="button" class="btn btn-link" onclick="dl(this);" data-filename="{{ .Title | urlize }}"><i class="fa fa-cloud-download fa-fw"></i> {{ i18n "downloadPhotos" }}</button></li></ul>
+  <ul class="list-unstyled" id="list-downloads"><li><button type="button" class="btn btn-link" onclick="dl(this);" data-filename="{{ .Title | urlize }}"><i class="fa fa-cloud-download fa-fw"></i> {{ i18n "downloadPhotos" }}</button></li></ul>
 </div>
 {{ end }}
 
