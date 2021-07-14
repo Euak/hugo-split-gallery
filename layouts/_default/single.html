@@ -9,10 +9,10 @@ $(document).ready(function () {
 {{ with .Resources.ByType "image" }}
   {{ range . }}
     {{ if $includeOriginalImage }}
-      addzipfile(zip, "{{ .Permalink | safeURL }}");
+      addzipfile("{{ .Permalink | safeURL }}");
     {{ else }}
       {{ $large := .Resize $largeImageSize }}
-      addzipfile(zip, "{{ $large.Permalink | safeURL }}");
+      addzipfile("{{ $large.Permalink | safeURL }}");
     {{ end }}
   {{ end }}
 {{ end }}
