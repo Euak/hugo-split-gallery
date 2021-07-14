@@ -57,6 +57,7 @@ DefaultContentLanguage = "en"
     languageCode = "fr-fr"
     showTranslations = false
     map2gpx = "fr"
+    enableDownloadAll = true
 
     [languages.fr.params]
       description = "Gallerie photo inspirée de Hugo Split Theme"
