@@ -10,7 +10,7 @@
 {{ else if eq .Kind "section" }}
     {{ $page = index .Pages 0 }}
 {{ else if eq .Kind "home" }}
-    {{ $page = index .Site.RegularPages 0 }}
+    {{ $page = index (where .Site.RegularPages "Section" "!=" "") 0 }}
 {{ end }}
 
 {{ if not $page }}
