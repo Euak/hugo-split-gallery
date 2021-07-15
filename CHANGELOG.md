@@ -2,6 +2,24 @@
 
 ## 1.x branch
 
+### 1.1.1
+
+#### UX
+
+* Enhancement: Defer zipping to when "Download all photos" button is clicked (avoids downloading all full-res pictures too soon)
+* Enhancement: load tracks synchronously
+* Fix: Background image in 404 page does not use filters
+* Fix: Background image on homepage uses latest post belonging to a section
+
+#### Documentation
+
+* Fix: Fixed documentation on enableDownloadAll parameter
+
+#### Internal
+
+* Enhancement: Using [toGeojson](https://github.com/tmcw/togeojson) for parsing files (#25)
+* Enhancement: Added CI to validate theme (#23, #24)
+
 ### 1.1.0
 
 #### UX
