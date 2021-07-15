@@ -1,9 +1,9 @@
 var zip = new JSZip();
+var paths = [];
 var Promise = window.Promise || JSZip.external.Promise;
 
-function addzipfile(zip, path) {
-  var filename = path.replace(/.*\//g, ""); // strip path
-  zip.file(filename, urlToPromise(path), { binary: true });
+function addzipfile(path) {
+  paths.push(path);
 }
 function urlToPromise(url) {
   return new Promise(function (resolve, reject) {
@@ -21,6 +21,12 @@ function dl(source) {
   var $progress = $("<span>En cours...</span>").appendTo($hint);
   $icon.removeClass('fa-cloud-download').addClass('fa-spinner').addClass('fa-spin');
   $source.attr("disabled", "disabled");
+
+  $.each(paths, function (i, path) {
+    var filename = path.replace(/.*\//g, ""); // strip path
+    zip.file(filename, urlToPromise(path), { binary: true });
+  });
+  paths = []; // Don't re-add them if we re-click on button
 
   zip.generateAsync({
     type: "blob",

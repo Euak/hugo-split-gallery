@@ -1,7 +1,7 @@
 {{ define "gallery" }}
   {{ $featured_image := false }}
   {{ with index .Site.RegularPages 0 }}
-    {{ $featured_image = partial "featureimage/bg.html" . }}
+    {{ $featured_image = partial "featureimage/plain.html" . }}
   {{ end }}
   {{ if $featured_image }}
     <div class="col-lg-6 p-0" id="gallery-panel" style="background-image: url('{{ $featured_image }}');">

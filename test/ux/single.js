@@ -1,0 +1,34 @@
+import { Selector } from 'testcafe';
+
+fixture("Single UX")
+    .page("http://127.0.0.1:8080/hugo-split-gallery/posts/lake-lauvitel/index.html");
+
+test("Clicking on a track marker should display its popup", async t => {
+    await t
+        .expect(Selector("#mapid .leaflet-popup-pane").hasChildElements).notOk()
+        .click(Selector("#mapid .leaflet-marker-pane .awesome-marker.awesome-marker-icon-green"))
+        .expect(Selector("#mapid .leaflet-popup-pane").hasChildElements).ok()
+        .expect(Selector("#mapid .leaflet-popup-pane .leaflet-popup-content").innerText).contains("2016-05-21 Lac du Lauvitel.gpx")
+        .expect(Selector("#mapid .leaflet-popup-pane .leaflet-popup-content").innerText).contains("Download GPX file")
+        .expect(Selector("#mapid .leaflet-popup-pane .leaflet-popup-content").innerText).contains("Open the track in map2gpx");
+});
+test("Clicking on a photo marker should launch gallery", async t => {
+    await t
+        .expect(Selector(".fancybox-container").exists).notOk()
+        .click(Selector("#mapid .leaflet-marker-pane .awesome-marker.awesome-marker-icon-gray").nth(0))
+        .expect(Selector(".fancybox-container").exists).ok();
+});
+test("Hovering on a photo should move the map", async t => {
+    const map = Selector("#mapid .leaflet-proxy");
+    const initialStyle = map.style; // Using transform property as a proxy to detect movement
+
+    await t
+        .hover(Selector(".split-grid a").nth(0))
+        .expect(map.style).notEql(initialStyle);
+});
+test("Clicking on a photo should launch gallery", async t => {
+    await t
+        .expect(Selector(".fancybox-container").exists).notOk()
+        .click(Selector(".split-grid a").nth(0))
+        .expect(Selector(".fancybox-container").exists).ok();
+});

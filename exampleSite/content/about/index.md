@@ -2,6 +2,7 @@
 title: "About Hugo Split Gallery theme"
 images: ["images/DSCF0348.jpg"]
 layout: "plain"
+date: 2021-07-14T12:34:56+00:00
 ---
 
 Cat ipsum dolor sit amet, growl at dogs in my sleep stare out cat door then go back inside. Naughty running cat stares at human while pushing stuff off a table. Ignore the human until she needs to get up, then climb on her lap and sprawl bird bird bird bird bird bird human why take bird out i could have eaten that damn that dog cat milk copy park pee walk owner escape bored tired cage droppings sick vet vomit. Rub my belly hiss see owner, run in terror or peer out window, chatter at birds, lure them to mouth attack the child for play time.

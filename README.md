@@ -266,7 +266,7 @@ cascade:
 
 ### Download
 
-By default, a link _Download all photos_ is displayed for all posts. this can be disabled via setting the `enableDownloadAll` site's parameter to `false`. See also the `galleryButtons` parameter to enable or disable download of photos within the gallery.
+A link _Download all photos_ can be displayed for all posts. This is disabled by default, but can be enabled via setting the `enableDownloadAll` site's parameter to `true`. See also the `galleryButtons` parameter to enable or disable download of photos within the gallery.
 
 ### Gallery
 

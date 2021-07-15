@@ -1,7 +1,7 @@
 {{ if .Param "seealso" }}
 <div class="col">
   <p>{{ i18n "seealso" }}</p>
-  <ul>
+  <ul id="list-seealso">
     {{ $val := .Param "seealso" }}
     {{- if not (reflect.IsSlice $val) -}}{{- $val = slice $val -}}{{- end -}}
     {{ range $val }}
