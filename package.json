@@ -13,19 +13,21 @@
   "hugo",
   "gohugo"
  ],
- "license": "GPLv3",
+ "license": "GPL-3.0-or-later",
  "name": "hugo-split-gallery",
  "repository": {
   "type": "git",
   "url": "git+https://gitlab.com/tmuguet/hugo-split-gallery.git"
  },
- "version": "1.1.0",
+ "version": "1.1.1",
  "scripts": {
-  "postinstall": "node ./post-install.js"
+  "postinstall": "node ./post-install.js",
+  "test": "testcafe firefox:headless ./test/**/** --app \"cd exampleSite && hugo server -p 8080 --config .config.ci.toml\" --hostname 127.0.0.1"
  },
  "devDependencies": {
   "@ciar4n/izmir": "^1.0.1",
   "@fancyapps/fancybox": "^3.5.7",
+  "@tmcw/togeojson": "^4.4.1",
   "bootstrap": "^5.0.1",
   "file-saver": "^2.0.5",
   "font-awesome": "^4.7.0",
@@ -35,6 +37,7 @@
   "jszip-utils": "^0.1.0",
   "leaflet": "^1.7.1",
   "leaflet-gpx": "^1.5.2",
-  "leaflet.awesome-markers": "^2.0.5"
+  "leaflet.awesome-markers": "^2.0.5",
+  "testcafe": "^1.15.0"
  }
 }

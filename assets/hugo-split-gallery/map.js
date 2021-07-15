@@ -42,59 +42,55 @@ function nextColor() {
 }
 
 function showGPX(track, color) {
-  return new Promise(function (resolve, _reject) {
-    var start = null;
-    var end = null;
-    var featuregroup = L.featureGroup();
+  var start = null;
+  var end = null;
+  var featuregroup = L.featureGroup();
 
-    if (!(color in iconsMap)) {
-      iconsMap[color] = L.AwesomeMarkers.icon({
-        icon: 'location-arrow',
-        markerColor: color,
-        prefix: 'fa'
-      });
-    }
-
-    var line = new L.GPX(track, { async: true, onSuccess: function () { }, onFail: function () { } })
-      .on('loaded', function (e) {
-        addBounds(e.target.getBounds());
-
-        if (!start.equals(end, 100)) {
-          var marker = L.marker(end, {
-            icon: iconsMap[color]
-          });
-          marker.addTo(featuregroup);
-        }
-
-        resolve(featuregroup);
-      }).on('failed', function (_e) {
-          console.log("Failed to retrieve track");
-          resolve(L.featureGroup());
-      });
-    featuregroup.addTo(map);
-
-    line.on('addline', function (e) {
-      e.line.setStyle({ weight: 5, color: colorMap[color], opacity: 0.75 });
-      e.line.addTo(featuregroup);
-
-      end = e.line.getLatLngs()[e.line.getLatLngs().length - 1];
-
-      if (start) return;
-
-      start = e.line.getLatLngs()[0];
-      var marker = L.marker(start, {
-        icon: iconsMap[color]
-      });
-      marker.addTo(featuregroup);
+  if (!(color in iconsMap)) {
+    iconsMap[color] = L.AwesomeMarkers.icon({
+      icon: 'location-arrow',
+      markerColor: color,
+      prefix: 'fa'
     });
-  });
+  }
+
+  var line = new L.geoJSON(track);
+  var layers = line.getLayers();
+  for (let i = 0; i < layers.length; i += 1) {
+    if (layers[i] instanceof L.Polyline) {
+      layers[i].setStyle({ weight: 5, color: colorMap[color], opacity: 0.75 });
+      layers[i].addTo(featuregroup);
+
+      var latlngs = layers[i].getLatLngs();
+      
+      if (start === null) {
+        start = latlngs[0];
+        L.marker(start, {
+          icon: iconsMap[color]
+        }).addTo(featuregroup);
+      }
+      end = latlngs[latlngs.length - 1];
+    }
+  }
+
+  if (start && end) {
+    if (!start.equals(end, 100)) {
+      L.marker(end, {
+        icon: iconsMap[color]
+      }).addTo(featuregroup);
+    }
+  
+    featuregroup.addTo(map);
+    addBounds(featuregroup.getBounds());
+
+    return featuregroup;
+  }
+  console.warn("Empty track");
+  return null;
 }
 
 function addBounds(o) {
-  if (bounds == null) {
-    bounds = o;
-  }
-  bounds = bounds.extend(o);
+  bounds = (bounds === null) ? o.pad(0.5) : bounds.extend(o.pad(0.5));
 }
 
 function addMarker(latlng, idx) {
@@ -116,31 +112,29 @@ function addMarker(latlng, idx) {
 }
 
 function add(gpxs, markers, index) {
-  var promises = [];
+  var b = null;
   $.each(gpxs, function (i, gpx) {
-    var promise = showGPX(gpx[0], colors[nextColor()]);
-    promise.then(function (featuregroup) {
+    var featuregroup = showGPX(gpx[0], colors[nextColor()]);
+    if (featuregroup) {
+      var featuregroupbounds = featuregroup.getBounds().pad(0.5);
       featuregroup.bindPopup(gpx[1]);
-    });
-    promises.push(promise);
+      b = (b === null) ? featuregroupbounds : b.extend(featuregroupbounds);
+    }
   });
   $.each(markers, function (i, marker) {
     var m = addMarker(marker[0], marker[1]);
     if (marker.length > 2) m.bindPopup(marker[2]);
   });
 
-  Promise.all(promises).then((values) => {
-    if (index !== undefined && values.length > 0) {
-      var b = values[0].getBounds();
-      $.each(values, function (i, val) {
-        b = b.extend(val.getBounds());
-      })
-      $('.split-grid a').eq(index).hover(function () {
-        map.flyTo(b.getCenter());
-      }, function () {
-        if (bounds) map.flyToBounds(bounds);
-      });
-    }
-    if (bounds) map.fitBounds(bounds);
-});
+  if (index !== undefined && gpxs.length > 0) {
+    $('.split-grid a').eq(index).hover(function () {
+      map.flyTo(b.getCenter());
+    }, function () {
+      if (bounds) map.flyToBounds(bounds);
+    });
+  }
+}
+
+function finalizeMap() {
+  if (bounds) map.fitBounds(bounds);
 }

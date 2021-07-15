@@ -5,37 +5,75 @@ variables:
   HUGO_REFERENCE_VERSION: "0.83.1"
   HUGO_MIN_VERSION: "0.73.0"
 
-test-latest:
-  stage: test
-  script:
-    - apk update
-    - apk add hugo
-    - hugo version
-    - cd exampleSite && hugo --config .config.ci.toml
+build-latest:
+  stage: build
+  script: |
+    apk update
+    apk add hugo
+    hugo version
+    cd exampleSite
+    hugo --config .config.ci.toml 2>&1 | tee build.log
+    if grep -q 'WARN' build.log; then
+      echo "Failed because of the following warnings:"
+      grep 'WARN' build.log
+      exit 1
+    fi
 
-test-refversion:
-  stage: test
-  script:
-    # Old versions seems not to be available on Alpine packages, so revert to the good old method
-    - wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_REFERENCE_VERSION}/hugo_${HUGO_REFERENCE_VERSION}_Linux-64bit.tar.gz
-    - mkdir -p bin
-    - cd bin
-    - tar -xzf $CI_PROJECT_DIR/hugo_${HUGO_REFERENCE_VERSION}_Linux-64bit.tar.gz
-    - export PATH=$PATH:${CI_PROJECT_DIR}/bin
-    - hugo version
-    - cd ${CI_PROJECT_DIR}/exampleSite && hugo --config .config.ci.toml
+build-refversion:
+  stage: build
+  # Old versions seems not to be available on Alpine packages, so revert to the good old method
+  script: |
+    wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_REFERENCE_VERSION}/hugo_${HUGO_REFERENCE_VERSION}_Linux-64bit.tar.gz
+    mkdir -p bin
+    cd bin
+    tar -xzf $CI_PROJECT_DIR/hugo_${HUGO_REFERENCE_VERSION}_Linux-64bit.tar.gz
+    export PATH=$PATH:${CI_PROJECT_DIR}/bin
+    cd ${CI_PROJECT_DIR}/exampleSite
+    hugo version
+    hugo --config .config.ci.toml 2>&1 | tee build.log
+    if grep -q 'WARN' build.log; then
+      echo "Failed because of the following warnings:"
+      grep 'WARN' build.log
+      exit 1
+    fi
 
-test-minversion:
+build-minversion:
+  stage: build
+  # Old versions seems not to be available on Alpine packages, so revert to the good old method
+  script: |
+    wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_MIN_VERSION}/hugo_${HUGO_MIN_VERSION}_Linux-64bit.tar.gz
+    mkdir -p bin
+    cd bin
+    tar -xzf $CI_PROJECT_DIR/hugo_${HUGO_MIN_VERSION}_Linux-64bit.tar.gz
+    export PATH=$PATH:${CI_PROJECT_DIR}/bin
+    cd ${CI_PROJECT_DIR}/exampleSite
+    hugo version
+    hugo --config .config.ci.toml 2>&1 | tee build.log
+    if grep -q 'WARN' build.log; then
+      echo "Failed because of the following warnings:"
+      grep 'WARN' build.log
+      exit 1
+    fi
+
+test:
   stage: test
-  script:
-    # Old versions seems not to be available on Alpine packages, so revert to the good old method
-    - wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_MIN_VERSION}/hugo_${HUGO_MIN_VERSION}_Linux-64bit.tar.gz
-    - mkdir -p bin
-    - cd bin
-    - tar -xzf $CI_PROJECT_DIR/hugo_${HUGO_MIN_VERSION}_Linux-64bit.tar.gz
-    - export PATH=$PATH:${CI_PROJECT_DIR}/bin
-    - hugo version
-    - cd ${CI_PROJECT_DIR}/exampleSite && hugo --config .config.ci.toml
+  image:
+    name: testcafe/testcafe
+    entrypoint: ["/bin/sh", "-c"]
+  script: |
+    wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_REFERENCE_VERSION}/hugo_${HUGO_REFERENCE_VERSION}_Linux-64bit.tar.gz
+    mkdir -p bin
+    cd bin
+    tar -xzf $CI_PROJECT_DIR/hugo_${HUGO_REFERENCE_VERSION}_Linux-64bit.tar.gz
+    export PATH=$PATH:${CI_PROJECT_DIR}/bin
+    cd ${CI_PROJECT_DIR}
+
+    hugo version
+    cd ${CI_PROJECT_DIR}/exampleSite
+    hugo --config .config.ci.toml
+    cd ${CI_PROJECT_DIR}
+
+    /opt/testcafe/docker/testcafe-docker.sh firefox:headless,chromium ./test/**/** --app "cd ${CI_PROJECT_DIR}/exampleSite && hugo server -p 8080 --bind 0.0.0.0 --config .config.ci.toml --disableLiveReload --renderToDisk --watch=false"
 
 pages:
   stage: deploy
@@ -43,7 +81,7 @@ pages:
     echo "Downloading previous artifacts..."
     wget https://gitlab.com/tmuguet/hugo-split-gallery/-/jobs/artifacts/main/download?job=pages -O artifact.zip
     unzip -q artifact.zip
-    if [ -f "public/next" ]; then mv public/next next; fi;
+    if [ -d "public/next" ]; then mv public/next next; fi;
     mv public current
 
     echo "Preparing Hugo"
@@ -55,7 +93,7 @@ pages:
     if [ $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH ]; then
       echo "Generating main site..."
       hugo --config .config.ci.toml
-      if [ -f "${CI_PROJECT_DIR}/next" ]; then mv ${CI_PROJECT_DIR}/next ${CI_PROJECT_DIR}/public; fi;
+      if [ -d "${CI_PROJECT_DIR}/next" ]; then mv ${CI_PROJECT_DIR}/next ${CI_PROJECT_DIR}/public; fi;
     else
       echo "Generating next site..."
       hugo --config .config.ci-next.toml
