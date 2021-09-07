@@ -65,3 +65,16 @@ test.page("http://127.0.0.1:8080/hugo-split-gallery/fr/posts/grand-veymont/index
     ("Link to map2gpx.fr should be displayed", async t => {
         await t.expect(Selector("#list-gpxs li").nth(1).find("a").getAttribute("href")).eql("https://map2gpx.fr?url=http%3A%2F%2Flocalhost%3A8080%2Fhugo-split-gallery%2Ffr%2Fposts%2Fgrand-veymont%2F2020-06-14%2520Grand%2520Veymont.gpx");
     });
+
+test.page("http://127.0.0.1:8080/hugo-split-gallery/ski/deux-alpes/index.html")
+    ("Photos should be displayed by date of capture (if available)", async t => {
+        const items = Selector(".split-grid img");
+        await t
+            .expect(items.nth(0).getAttribute("src")).contains("DSCF6119")
+            .expect(items.nth(1).getAttribute("src")).contains("DSCF6346")
+            .expect(items.nth(2).getAttribute("src")).contains("DSCF6394")
+            .expect(items.nth(3).getAttribute("src")).contains("DSCF6111"); // Without Exif data
+
+        // TODO: we should also check the markers are in the correct order too
+        // (should be OK though as we're using the same sortedimages partial)
+    });

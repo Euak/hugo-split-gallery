@@ -34,7 +34,7 @@ var markers = [];
   {{ end }},
   ]);
 {{ end }}
-{{ range $index, $element := .Resources.ByType "image" }}
+{{ range $index, $element := partial "sortedimages.html" . }}
   {{ with $element.Exif }}
     {{ if and .Lat .Long }}
       markers.push([
