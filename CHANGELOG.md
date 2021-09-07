@@ -2,6 +2,12 @@
 
 ## 1.x branch
 
+### 1.2.0
+
+#### UX
+
+* Enhancement: Order photos by date of capture instead of by filenames (#27)
+
 ### 1.1.1
 
 #### UX

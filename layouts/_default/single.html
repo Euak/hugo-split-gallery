@@ -2,18 +2,17 @@
 {{ $featured_image := partial "featureimage/bg.html" . }}
 {{ $includeOriginalImage := default true (.Param "includeOriginalImage") }}
 {{ $largeImageSize := default "2000x" (.Param "largeImageSize") }}
+{{ $images := partial "sortedimages.html" . }}
 
 {{ if (default false ($.Site.Params.enableDownloadAll)) }}
 <script>
 $(document).ready(function () {
-{{ with .Resources.ByType "image" }}
-  {{ range . }}
-    {{ if $includeOriginalImage }}
-      addzipfile("{{ .Permalink | safeURL }}");
-    {{ else }}
-      {{ $large := .Resize $largeImageSize }}
-      addzipfile("{{ $large.Permalink | safeURL }}");
-    {{ end }}
+{{ range $images }}
+  {{ if $includeOriginalImage }}
+    addzipfile("{{ .Permalink | safeURL }}");
+  {{ else }}
+    {{ $large := .Resize $largeImageSize }}
+    addzipfile("{{ $large.Permalink | safeURL }}");
   {{ end }}
 {{ end }}
 });
@@ -25,19 +24,17 @@ $(document).ready(function () {
     <div class="row h-100 p-0">
       <div class="col my-auto p-0">
         <ul class="split-grid list-unstyled">
-          {{ with .Resources.ByType "image" }}
-            {{ range . }}
-              {{ $linkToThumbnail := partial "image-processing/thumbnail.html" . }}
-              {{ $large := .Resize $largeImageSize }}
-              {{ if $includeOriginalImage }}
-                <li><a href="{{ .Permalink }}"
-                    data-srcset="{{ .Permalink }} {{ .Width }}w, {{ $large.Permalink }} {{ $large.Width }}w"
-                    data-fancybox="gallery"><img src="{{ $linkToThumbnail }}" /></a></li>
-              {{ else }}
-                <li><a href="{{ $large.Permalink }}"
-                    data-srcset="{{ $large.Permalink }} {{ $large.Width }}w"
-                    data-fancybox="gallery"><img src="{{ $linkToThumbnail }}" /></a></li>
-              {{ end }}
+          {{ range $images }}
+            {{ $linkToThumbnail := partial "image-processing/thumbnail.html" . }}
+            {{ $large := .Resize $largeImageSize }}
+            {{ if $includeOriginalImage }}
+              <li><a href="{{ .Permalink }}"
+                  data-srcset="{{ .Permalink }} {{ .Width }}w, {{ $large.Permalink }} {{ $large.Width }}w"
+                  data-fancybox="gallery"><img src="{{ $linkToThumbnail }}" /></a></li>
+            {{ else }}
+              <li><a href="{{ $large.Permalink }}"
+                  data-srcset="{{ $large.Permalink }} {{ $large.Width }}w"
+                  data-fancybox="gallery"><img src="{{ $linkToThumbnail }}" /></a></li>
             {{ end }}
           {{ end }}
         <li></li>
@@ -58,10 +55,10 @@ $(document).ready(function () {
   <ul class="list-unstyled" id="list-metadata">
     <li><i class="fa fa-file fa-fw"></i> {{ i18n "publishedAt" (.Date.Format "2006-01-02") }}</li>
     {{ $dates := slice }}
-    {{ with .Resources.ByType "image" }}
-      {{ range . }}
-        {{ with .Exif }}
-          {{ $dates = $dates | append (.Date.Format "2006-01-02") }}
+    {{ range .Resources.ByType "image" }}
+      {{ if .Exif }}
+        {{ if .Exif.Date }}
+          {{ $dates = $dates | append (.Exif.Date.Format "2006-01-02") }}
         {{ end }}
       {{ end }}
     {{ end }}

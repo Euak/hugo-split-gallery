@@ -9,44 +9,46 @@
 {{ end }}
 
 {{ if or $hasTracks $hasGeotaggedPhotos }}
-{{ $map2gpx := (default "en" ($.Site.Params.map2gpx)) }}
-{{ $domain := "map2gpx.eu" }}
-{{ if eq $map2gpx "fr" }}{{ $domain = "map2gpx.fr" }}{{ end }}
+  {{ $map2gpx := (default "en" ($.Site.Params.map2gpx)) }}
+  {{ $domain := "map2gpx.eu" }}
+  {{ if eq $map2gpx "fr" }}{{ $domain = "map2gpx.fr" }}{{ end }}
 
-<div id="mapid" style="width: 100%; height: 50vh;" class="mb-1"></div>
-{{ $page := . }}
-{{ range .Resources.Match "*.gpx" }}
-  {{ $p := resources.GetMatch "/hugo-split-gallery/gpx.js" | resources.ExecuteAsTemplate (printf "%s/%s.js" $page.File.Dir .Name) . }}
-  <script src="{{ $p.Permalink }}"></script>
-{{ end }}
-<script>
-$(document).ready(function() {
-initMap();
-var gpxs = [];
-var markers = [];
-{{ range .Resources.Match "*.gpx" }}
-  gpxs.push([
-  {{ printf "track_%s" (md5 .Content) | safeJS }},
-    '<strong>{{ .Name }}</strong><br>'
-      + '<a href="{{ .Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfile" }}</a><br>'
-  {{ if $map2gpx }}
-      + '<a href="https://{{ $domain }}?{{ querify "url" .Permalink | safeURL }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpx" }}</a>'
-  {{ end }},
-  ]);
-{{ end }}
-{{ range $index, $element := .Resources.ByType "image" }}
-  {{ with $element.Exif }}
-    {{ if and .Lat .Long }}
-      markers.push([
-        L.latLng({{ .Lat }}, {{ .Long }}),
-        {{ $index }},
-      ]);
-    {{ end }}
+  <div id="mapid" style="width: 100%; height: 50vh;" class="mb-1"></div>
+  {{ $page := . }}
+  {{ range .Resources.Match "*.gpx" }}
+    {{ $p := resources.GetMatch "/hugo-split-gallery/gpx.js" | resources.ExecuteAsTemplate (printf "%s/%s.js" $page.File.Dir .Name) . }}
+    <script src="{{ $p.Permalink }}"></script>
   {{ end }}
-{{ end }}
+  <script>
+    $(document).ready(function() {
+      initMap();
+      var gpxs = [];
+      var markers = [];
 
-add(gpxs, markers);
-finalizeMap();
-});
-</script>
+      {{ range .Resources.Match "*.gpx" }}
+        gpxs.push([
+          {{ printf "track_%s" (md5 .Content) | safeJS }},
+          '<strong>{{ .Name }}</strong><br>'
+          + '<a href="{{ .Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfile" }}</a><br>'
+          {{ if $map2gpx }}
+          + '<a href="https://{{ $domain }}?{{ querify "url" .Permalink | safeURL }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpx" }}</a>'
+          {{ end }},
+        ]);
+      {{ end }}
+
+      {{ range $index, $element := partial "sortedimages.html" . }}
+        {{ with $element.Exif }}
+          {{ if and .Lat .Long }}
+            markers.push([
+              L.latLng({{ .Lat }}, {{ .Long }}),
+              {{ $index }},
+            ]);
+          {{ end }}
+        {{ end }}
+      {{ end }}
+
+      add(gpxs, markers);
+      finalizeMap();
+    });
+  </script>
 {{ end }}
