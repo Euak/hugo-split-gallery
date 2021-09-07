@@ -1,0 +1,18 @@
+{{ $images_with_exif := slice }}
+{{ $images_without_exif := slice }}
+{{ range .Resources.ByType "image" }}
+    {{ if .Exif }}
+        {{ if .Exif.Date }}
+            {{ $images_with_exif = $images_with_exif | append . }}
+        {{ else }}
+            {{ $images_without_exif = $images_without_exif | append . }}
+        {{ end }}
+    {{ else }}
+        {{ $images_without_exif = $images_without_exif | append . }}
+    {{ end }}
+{{ end }}
+
+{{ $images := sort $images_with_exif ".Exif.Date" "asc" }}
+{{ $images = $images | append $images_without_exif }}
+
+{{ return $images }}
