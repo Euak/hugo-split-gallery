@@ -73,7 +73,7 @@ test:
     hugo --config .config.ci.toml
     cd ${CI_PROJECT_DIR}
 
-    /opt/testcafe/docker/testcafe-docker.sh firefox:headless,chromium ./test/**/** --app "cd ${CI_PROJECT_DIR}/exampleSite && hugo server -p 8080 --bind 0.0.0.0 --config .config.ci.toml --disableLiveReload --renderToDisk --watch=false"
+    /opt/testcafe/docker/testcafe-docker.sh firefox:headless ./test/**/** --app "cd ${CI_PROJECT_DIR}/exampleSite && hugo server -p 8080 --bind 0.0.0.0 --config .config.ci.toml --disableLiveReload --renderToDisk --watch=false"
 
 pages:
   stage: deploy
