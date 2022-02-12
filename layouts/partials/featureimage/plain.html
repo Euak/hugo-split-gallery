@@ -1,7 +1,8 @@
 {{ $linkToCover := false }}
 {{ $featured_images := .Param "images" }}
 {{ if $featured_images }}
-    {{ $img := .Resources.GetMatch (index $featured_images 0) }}
+    {{ $page := partial "getdefaultlangpage.html" . }}
+    {{ $img := $page.Resources.GetMatch (index $featured_images 0) }}
     {{ if $img }}
         {{ $linkToCover = $img.Permalink }}
     {{ end }}

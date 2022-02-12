@@ -63,7 +63,7 @@ test.page("http://127.0.0.1:8080/hugo-split-gallery/posts/grand-veymont/index.ht
     });
 test.page("http://127.0.0.1:8080/hugo-split-gallery/fr/posts/grand-veymont/index.html")
     ("Link to map2gpx.fr should be displayed", async t => {
-        await t.expect(Selector("#list-gpxs li").nth(1).find("a").getAttribute("href")).eql("https://map2gpx.fr?url=http%3A%2F%2Flocalhost%3A8080%2Fhugo-split-gallery%2Ffr%2Fposts%2Fgrand-veymont%2F2020-06-14%2520Grand%2520Veymont.gpx");
+        await t.expect(Selector("#list-gpxs li").nth(1).find("a").getAttribute("href")).eql("https://map2gpx.fr?url=http%3A%2F%2Flocalhost%3A8080%2Fhugo-split-gallery%2Fposts%2Fgrand-veymont%2F2020-06-14%2520Grand%2520Veymont.gpx");
     });
 
 test.page("http://127.0.0.1:8080/hugo-split-gallery/ski/deux-alpes/index.html")
