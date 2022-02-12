@@ -3,10 +3,12 @@
 {{ $hasTracks := false }}
 {{ $hasGeotaggedPhotos := false }}
 {{ range $leafpages }}
-  {{ range .Resources.Match "*.gpx" }}
+  {{ $tracks := partial "sortedgpx.html" . }}
+  {{ if gt (len $tracks) 0 }}
     {{ $hasTracks = true }}
   {{ end }}
-  {{ range .Resources.ByType "image" }}
+  {{ $images := partial "sortedimages.html" . }}
+  {{ range $images }}
     {{ with .Exif }}
       {{ if and (.Lat) (.Long) }}
         {{ $hasGeotaggedPhotos = true }}
@@ -18,7 +20,8 @@
 {{ if or $hasTracks $hasGeotaggedPhotos }}
 <div id="mapid" style="width: 100%; height: 50vh;" class="mb-2"></div>
 {{ range $index, $page := $leafpages }}
-  {{ range $page.Resources.Match "*.gpx" }}
+  {{ $tracks := partial "sortedgpx.html" $page }}
+  {{ range $tracks }}
     {{ $p := resources.GetMatch "/hugo-split-gallery/gpx.js" | resources.ExecuteAsTemplate (printf "%s/%s.js" $page.File.Dir .Name) . }}
     <script src="{{ $p.Permalink }}"></script>
   {{ end }}
@@ -28,19 +31,21 @@ $(document).ready(function() {
 initMap();
 
 {{ range $index, $page := $leafpages }}
+  {{ $tracks := partial "sortedgpx.html" $page }}
+  {{ $images := partial "sortedimages.html" $page }}
   function {{ printf "load_%d" $index | safeJS }} () {
     var gpxs = [];
     var markers = [];
     var latlngs = [];
 
-    {{ range $page.Resources.Match "*.gpx" }}
+    {{ range $tracks }}
       gpxs.push([
         {{ printf "track_%s" (md5 .Content) | safeJS }},
         '<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>',
       ]);
     {{ end }}
 
-    {{ range .Resources.ByType "image" }}
+    {{ range $images }}
       {{ with .Exif }}
         {{ if and .Lat .Long }}
           latlngs.push(L.latLng({{ .Lat }}, {{ .Long }}));
