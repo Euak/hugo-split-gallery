@@ -92,7 +92,7 @@ $(document).ready(function () {
   </ul>
 </div>
 
-{{ $tracks := .Resources.Match "*.gpx" }}
+{{ $tracks := partial "sortedgpx.html" . }}
 {{ if gt (len $tracks) 0 }}
   {{ $map2gpx := (default "en" ($.Site.Params.map2gpx)) }}
   {{ $domain := "map2gpx.eu" }}

@@ -22,18 +22,20 @@
   {{ range where .Site.Pages "Kind" "taxonomy" }}
     {{ $icon := partial "icons/gettaxonomy.html" .Data.Plural }}
     {{ $key := .Data.Singular }}
-    <div class="col" id="taxonomy-{{ $key }}">
-      <h3>
-        <a href="{{ .Permalink }}">
-          {{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
-          {{ default .Data.Plural (i18n .Data.Plural) | humanize }}
-        </a>
-      </h3>
-      <ul>
-        {{ range .Data.Terms.Alphabetical }}
-        <li><a href="{{ .Page.Permalink }}">{{ default .Page.Title (i18n (printf "%s-%s" $key .Page.Title)) }}</a> {{ .Count }}</li>
-        {{ end }}
-      </ul>
-    </div>
+    {{ if gt (len .Data.Terms) 0 }}
+      <div class="col" id="taxonomy-{{ $key }}">
+        <h3>
+          <a href="{{ .Permalink }}">
+            {{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
+            {{ default .Data.Plural (i18n .Data.Plural) | humanize }}
+          </a>
+        </h3>
+        <ul>
+          {{ range .Data.Terms.Alphabetical }}
+          <li><a href="{{ .Page.Permalink }}">{{ default .Page.Title (i18n (printf "%s-%s" $key .Page.Title)) }}</a> {{ .Count }}</li>
+          {{ end }}
+        </ul>
+      </div>
+    {{ end }}
   {{ end }}
 {{ end }}

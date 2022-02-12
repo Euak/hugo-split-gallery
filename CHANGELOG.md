@@ -2,6 +2,16 @@
 
 ## 1.x branch
 
+### 1.3.0
+
+#### UX
+
+* Enhancement: Hide taxonomy on index if no pages use it (#28)
+
+#### Internal
+
+* Enhancement: Do not duplicate images for each languages in multilingual projects (#29)
+
 ### 1.2.0
 
 #### UX

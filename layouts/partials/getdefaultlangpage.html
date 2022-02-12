@@ -1,0 +1,9 @@
+{{ $page := . }}
+{{ if .IsTranslated }}
+    {{ range .Translations }}
+        {{ if eq .Lang $.Sites.First.Language.Lang }}
+          {{ $page = . }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+{{ return $page }}

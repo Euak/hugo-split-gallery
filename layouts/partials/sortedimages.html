@@ -1,6 +1,7 @@
+{{ $page := partial "getdefaultlangpage.html" . }}
 {{ $images_with_exif := slice }}
 {{ $images_without_exif := slice }}
-{{ range .Resources.ByType "image" }}
+{{ range $page.Resources.ByType "image" }}
     {{ if .Exif }}
         {{ if .Exif.Date }}
             {{ $images_with_exif = $images_with_exif | append . }}
