@@ -1,0 +1,41 @@
+[poweredby]
+other = """\
+    Vytvořeno pomocí <a href="https://gohugo.io/">hugo</a> s \
+    <a href="https://gitlab.com/tmuguet/hugo-split-gallery">Hugo Split Gallery theme</a> \
+    (inspirováno z <a href="https://github.com/tmuguet/hugo-split-theme">Hugo Split Theme</a> a \
+    <a href="https://onepagelove.com/split">Split Template</a> od \
+    <a href="https://onepagelove.com">One Page Love</a>) \
+    """
+
+[sections]
+other = "Sekce"
+
+[seealso]
+other = "Podívej take..."
+
+[publishedAt]
+other = "Článek publikován {{ . }}"
+
+[photosTakenOn]
+other = "Fotografie z {{ . }}"
+
+[downloadPhotos]
+other = "Download všechny fotografie"
+
+[downloadGPXfile]
+other = "Download GPX-File"
+
+[downloadGPXfileWithName]
+other = "Download GPX-File '{{ . }}'"
+
+[openGPXinmap2gpx]
+other = "Otevři stopu v map2gpx"
+
+[openGPXinmap2gpxWithName]
+other = "Otevři stopu '{{ . }}' v map2gpx"
+
+[error404]
+other = "Hopla, ..."
+
+[translations]
+other = "Překlady"
