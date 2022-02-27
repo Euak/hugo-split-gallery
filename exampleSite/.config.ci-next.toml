@@ -32,6 +32,8 @@ DefaultContentLanguage = "en"
       icon = "calendar"
 
 [languages]
+  weight = 1
+
   [languages.en]
     [languages.en.menu]
       [[languages.en.menu.main]]
@@ -58,6 +60,7 @@ DefaultContentLanguage = "en"
     showTranslations = false
     map2gpx = "fr"
     enableDownloadAll = true
+    weight = 2
 
     [languages.fr.params]
       description = "Gallerie photo inspirée de Hugo Split Theme"
