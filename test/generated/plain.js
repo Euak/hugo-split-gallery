@@ -12,6 +12,11 @@ test("Content should be available", async t => {
 test("Background image should match Front Matter", async t => {
     await t.expect(Selector("#gallery-panel").getAttribute("style")).contains("http://localhost:8080/hugo-split-gallery/media/images/DSCF0348.jpg");
 });
+test("Social media images should match Front Matter", async t => {
+    await t.expect(Selector("meta[property='og:image']").getAttribute("content")).contains("http://localhost:8080/hugo-split-gallery/media/images/DSCF0348.jpg");
+    await t.expect(Selector("meta[itemprop='image']").getAttribute("content")).contains("http://localhost:8080/hugo-split-gallery/media/images/DSCF0348.jpg");
+    await t.expect(Selector("meta[name='twitter:image']").getAttribute("content")).contains("http://localhost:8080/hugo-split-gallery/media/images/DSCF0348.jpg");
+});
 test("Date should come from Front Matter", async t => {
     await t.expect(Selector("#list-metadata").childElementCount).eql(1);
 });

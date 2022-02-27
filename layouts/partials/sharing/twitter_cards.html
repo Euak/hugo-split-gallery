@@ -1,0 +1,19 @@
+{{- /* Edited from original template for using featured images */ -}}
+{{- $featured_image := false -}}
+{{- if .IsPage }}
+{{- $featured_image = partial "featureimage/plain.html" . -}}
+{{- else -}}
+{{- $leafpages := partial "getleafpages.html" . -}}
+{{- $leafpage := partial "getleafpage.html" . -}}
+{{- $featured_image = partial "featureimage/plain.html" $leafpage -}}
+{{- end -}}
+{{- if $featured_image -}}
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="{{ $featured_image }}"/>
+{{- end -}}
+
+<meta name="twitter:title" content="{{ .Title }}"/>
+<meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end -}}"/>
+{{ with .Site.Social.twitter -}}
+<meta name="twitter:site" content="@{{ . }}"/>
+{{ end -}}
