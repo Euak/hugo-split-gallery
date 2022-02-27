@@ -1,0 +1,41 @@
+[poweredby]
+other = """\
+    Generiert mit <a href="https://gohugo.io/">hugo</a> mit \
+    <a href="https://gitlab.com/tmuguet/hugo-split-gallery">Hugo Split Gallery theme</a> \
+    (inspiriert von <a href="https://github.com/tmuguet/hugo-split-theme">Hugo Split Theme</a> und \
+    <a href="https://onepagelove.com/split">Split Template</a> von \
+    <a href="https://onepagelove.com">One Page Love</a>) \
+    """
+
+[sections]
+other = "Sektionen"
+
+[seealso]
+other = "Siehe auch..."
+
+[publishedAt]
+other = "Artikel veröffentlicht am {{ . }}"
+
+[photosTakenOn]
+other = "Fotos vom {{ . }}"
+
+[downloadPhotos]
+other = "Alle Fotos herunterladen"
+
+[downloadGPXfile]
+other = "GPX-Datei herunterladen"
+
+[downloadGPXfileWithName]
+other = "GPX-Datei herunterladen '{{ . }}'"
+
+[openGPXinmap2gpx]
+other = "Öffnen die Strecke im map2gpx"
+
+[openGPXinmap2gpxWithName]
+other = "Öffnen die Strecke '{{ . }}' im map2gpx"
+
+[error404]
+other = "Dies ist nicht die Seite, nach der Sie gesucht haben"
+
+[translations]
+other = "Übersetzungen"
