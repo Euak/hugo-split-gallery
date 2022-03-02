@@ -20,20 +20,23 @@
 {{ end }}
 
 <ul>
-    {{ range $leafpages }}
-    <li>
-        <a href="{{ .Permalink }}">
-            {{ if and $showDate .Date }}{{ .Date.Format "2006-01-02" }} | {{ end }}
-            {{ if $translate }}
-                {{ default .Title (i18n (printf "%s-%s" .Data.Singular .Title)) }}
-            {{ else }}
-                {{ .Title }}
-            {{ end }}
-        </a>
-        {{ if $showCount }}
-            {{ len .Data.Pages }}
+    {{ $lines := $.Site.Params.maxNbOfShownPosts | default 1000 }}
+    {{ range $idx, $val := $leafpages }}
+        {{if lt $idx $lines }}
+            <li>
+                <a href="{{ .Permalink }}">
+                {{ if and $showDate .Date }}{{ .Date.Format "2006-01-02" }} | {{ end }}
+                {{ if $translate }}
+                    {{ default .Title (i18n (printf "%s-%s" .Data.Singular .Title)) }}
+                {{ else }}
+                    {{ .Title }}
+                {{ end }}
+                </a>
+                {{ if $showCount }}
+                    {{ len .Data.Pages }}
+                {{ end }}
+            {{ if $showSection }}({{ .Parent.Title }}){{ end }}
+            </li>
         {{ end }}
-        {{ if $showSection }}({{ .Parent.Title }}){{ end }}
-    </li>
     {{ end }}
 </ul>
