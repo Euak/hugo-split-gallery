@@ -18,6 +18,12 @@ build-latest:
       grep 'WARN' build.log
       exit 1
     fi
+    hugo --config .config.ci-next.toml 2>&1 | tee build-next.log
+    if grep -q 'WARN' build-next.log; then
+      echo "Failed because of the following warnings:"
+      grep 'WARN' build-next.log
+      exit 1
+    fi
 
 build-refversion:
   stage: build
@@ -36,6 +42,12 @@ build-refversion:
       grep 'WARN' build.log
       exit 1
     fi
+    hugo --config .config.ci-next.toml 2>&1 | tee build-next.log
+    if grep -q 'WARN' build-next.log; then
+      echo "Failed because of the following warnings:"
+      grep 'WARN' build-next.log
+      exit 1
+    fi
 
 build-minversion:
   stage: build
@@ -52,6 +64,12 @@ build-minversion:
     if grep -q 'WARN' build.log; then
       echo "Failed because of the following warnings:"
       grep 'WARN' build.log
+      exit 1
+    fi
+    hugo --config .config.ci-next.toml 2>&1 | tee build-next.log
+    if grep -q 'WARN' build-next.log; then
+      echo "Failed because of the following warnings:"
+      grep 'WARN' build-next.log
       exit 1
     fi
 

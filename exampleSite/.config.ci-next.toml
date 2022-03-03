@@ -32,9 +32,9 @@ DefaultContentLanguage = "en"
       icon = "calendar"
 
 [languages]
-  weight = 1
-
   [languages.en]
+    weight = 1
+
     [languages.en.menu]
       [[languages.en.menu.main]]
         identifier = "about"
