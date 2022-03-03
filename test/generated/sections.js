@@ -20,6 +20,12 @@ test("Grid should display 3 photos + 1 padding element", async t => {
 test("Background image should be from the latest post, with filters", async t => {
     await t.expect(Selector("#gallery-panel").getAttribute("style")).contains("http://localhost:8080/hugo-split-gallery/posts/lake-lauvitel/images/IMGP5799_");
 });
+test("Social media images should be from the latest post, without filters", async t => {
+    await t.expect(Selector("meta[property='og:image']").getAttribute("content")).contains("http://localhost:8080/hugo-split-gallery/posts/lake-lauvitel/images/IMGP5799.jpg");
+    // TODO: not sure if specs from schema or bug in Hugo ?
+    // await t.expect(Selector("meta[itemprop='image']").getAttribute("content")).contains("http://localhost:8080/hugo-split-gallery/posts/lake-lauvitel/images/IMGP5799.jpg");
+    await t.expect(Selector("meta[name='twitter:image']").getAttribute("content")).contains("http://localhost:8080/hugo-split-gallery/posts/lake-lauvitel/images/IMGP5799.jpg");
+});
 test("Map should display 4 markers", async t => {
     await t
         .expect(Selector("#mapid .leaflet-marker-pane .awesome-marker").count).eql(4);

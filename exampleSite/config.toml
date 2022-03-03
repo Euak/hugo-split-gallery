@@ -45,6 +45,8 @@ DefaultContentLanguage = "en"
 
 [languages]
   [languages.en]
+    weight = 1
+
     [languages.en.menu]
       [[languages.en.menu.main]]
         identifier = "about"
@@ -64,6 +66,7 @@ DefaultContentLanguage = "en"
     languageCode = "fr-fr"
     showTranslations = false
     map2gpx = "fr"
+    weight = 2
 
     [languages.fr.params]
       description = "Gallerie photo inspirée de Hugo Split Theme"
