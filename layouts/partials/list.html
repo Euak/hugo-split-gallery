@@ -4,7 +4,7 @@
 {{ $showCount := false }}
 {{ $showSection := false }}
 {{ $translate := false }}
-{{ $maxlistlen := 10000 }}
+{{ $maxlistlen := false }}
 
 {{ if eq .Kind "page" }}
     {{ warnf "Should not be called here"}}
@@ -26,7 +26,7 @@
 
 <ul>
     {{ range $idx, $val := $leafpages }}
-        {{if lt $idx $maxlistlen }}
+        {{if or (eq $maxlistlen false) (lt $idx $maxlistlen) }}
             <li>
                 <a href="{{ .Permalink }}">
                 {{ if and $showDate .Date }}{{ .Date.Format "2006-01-02" }} | {{ end }}
