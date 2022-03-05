@@ -4,6 +4,8 @@
 {{ $showCount := false }}
 {{ $showSection := false }}
 {{ $translate := false }}
+{{ $maxlistlen := 10000 }}
+
 {{ if eq .Kind "page" }}
     {{ warnf "Should not be called here"}}
 {{ else if eq .Kind "term" }}
@@ -17,12 +19,14 @@
 {{ else if eq .Kind "home" }}
     {{ $showDate = true }}
     {{ $showSection = gt (len $.Site.Sections) 1 }}
+    {{ if $.Site.Params.maxNbOfShownPosts }}
+        {{ $maxlistlen = $.Site.Params.maxNbOfShownPosts }}
+    {{ end }}
 {{ end }}
 
 <ul>
-    {{ $lines := $.Site.Params.maxNbOfShownPosts | default 1000 }}
     {{ range $idx, $val := $leafpages }}
-        {{if lt $idx $lines }}
+        {{if lt $idx $maxlistlen }}
             <li>
                 <a href="{{ .Permalink }}">
                 {{ if and $showDate .Date }}{{ .Date.Format "2006-01-02" }} | {{ end }}
