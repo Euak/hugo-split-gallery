@@ -1,5 +1,8 @@
 import { Selector } from 'testcafe';
 
+import * as asserts from '../asserts.js';
+import * as selectors from '../selectors.js';
+
 fixture("Sections")
     .page("http://127.0.0.1:8080/hugo-split-gallery/posts/index.html");
 
@@ -18,13 +21,11 @@ test("Grid should display 3 photos + 1 padding element", async t => {
     await t.expect(Selector(".split-grid").childElementCount).eql(4);
 });
 test("Background image should be from the latest post, with filters", async t => {
-    await t.expect(Selector("#gallery-panel").getAttribute("style")).contains("http://localhost:8080/hugo-split-gallery/posts/lake-lauvitel/images/IMGP5799_");
+    await asserts.backgroundBlurred(t, selectors.background(), "posts/lake-lauvitel/images/IMGP5799");
 });
 test("Social media images should be from the latest post, without filters", async t => {
-    await t.expect(Selector("meta[property='og:image']").getAttribute("content")).contains("http://localhost:8080/hugo-split-gallery/posts/lake-lauvitel/images/IMGP5799.jpg");
-    // TODO: not sure if specs from schema or bug in Hugo ?
-    // await t.expect(Selector("meta[itemprop='image']").getAttribute("content")).contains("http://localhost:8080/hugo-split-gallery/posts/lake-lauvitel/images/IMGP5799.jpg");
-    await t.expect(Selector("meta[name='twitter:image']").getAttribute("content")).contains("http://localhost:8080/hugo-split-gallery/posts/lake-lauvitel/images/IMGP5799.jpg");
+    await asserts.background(t, selectors.opengraphImage(), "posts/lake-lauvitel/images/IMGP5799");
+    await asserts.background(t, selectors.twitterImage(), "posts/lake-lauvitel/images/IMGP5799");
 });
 test("Map should display 4 markers", async t => {
     await t
