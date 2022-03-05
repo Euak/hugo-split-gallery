@@ -2,8 +2,14 @@
 {{ $featured_images := .Param "images" }}
 {{ if $featured_images }}
     {{ $page := partial "getdefaultlangpage.html" . }}
+    {{ $includeOriginalImage := default true ($page.Param "includeOriginalImage") }}
+    {{ $largeImageSize := default "2000x" ($page.Param "largeImageSize") }}
+
     {{ $img := $page.Resources.GetMatch (index $featured_images 0) }}
     {{ if $img }}
+        {{ if not $includeOriginalImage }}
+            {{ $img = $img.Resize $largeImageSize }}
+        {{ end }}
         {{ $linkToCover = partial "image-processing/bg-filter.html" $img }}
     {{ end }}
 
@@ -12,6 +18,9 @@
         {{ with .Site.GetPage $headlessBundle }}
             {{ $img := .Resources.GetMatch (index $featured_images 0) }}
             {{ if $img }}
+                {{ if not $includeOriginalImage }}
+                    {{ $img = $img.Resize $largeImageSize }}
+                {{ end }}
                 {{ $linkToCover = partial "image-processing/bg-filter.html" $img }}
             {{ end }}
         {{ end }}
