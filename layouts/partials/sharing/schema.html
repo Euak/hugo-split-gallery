@@ -1,0 +1,25 @@
+<meta itemprop="name" content="{{ .Title }}">
+<meta itemprop="description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}">
+
+{{- if .IsPage -}}
+{{- $iso8601 := "2006-01-02T15:04:05-07:00" -}}
+{{ with .PublishDate }}<meta itemprop="datePublished" {{ .Format $iso8601 | printf "content=%q" | safeHTMLAttr }} />{{ end}}
+{{ with .Lastmod }}<meta itemprop="dateModified" {{ .Format $iso8601 | printf "content=%q" | safeHTMLAttr }} />{{ end}}
+<meta itemprop="wordCount" content="{{ .WordCount }}">
+
+{{- /* Edited from original template for using featured images */ -}}
+{{- $featured_image := false -}}
+{{- if .IsPage }}
+{{- $featured_image = partial "featureimage/plain.html" . -}}
+{{- else -}}
+{{- $leafpages := partial "getleafpages.html" . -}}
+{{- $leafpage := partial "getleafpage.html" . -}}
+{{- $featured_image = partial "featureimage/plain.html" $leafpage -}}
+{{- end -}}
+{{- if $featured_image -}}
+<meta itemprop="image" content="{{ $featured_image }}"/>
+{{- end -}}
+
+<!-- Output all taxonomies as schema.org keywords -->
+<meta itemprop="keywords" content="{{ if .IsPage}}{{ range $index, $tag := .Params.tags }}{{ $tag }},{{ end }}{{ else }}{{ range $plural, $terms := .Site.Taxonomies }}{{ range $term, $val := $terms }}{{ printf "%s," $term }}{{ end }}{{ end }}{{ end }}" />
+{{- end -}}

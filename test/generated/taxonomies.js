@@ -1,5 +1,8 @@
 import { Selector } from 'testcafe';
 
+import * as asserts from '../asserts.js';
+import * as selectors from '../selectors.js';
+
 fixture("Taxonomies")
     .page("http://127.0.0.1:8080/hugo-split-gallery/");
 
@@ -24,7 +27,12 @@ test.page("http://127.0.0.1:8080/hugo-split-gallery/locations/index.html")
     });
 test.page("http://127.0.0.1:8080/hugo-split-gallery/locations/index.html")
     ("Locations taxonomy page background image should be from the latest post, with filters", async t => {
-        await t.expect(Selector("#gallery-panel").getAttribute("style")).contains("http://localhost:8080/hugo-split-gallery/posts/lake-lauvitel/images/IMGP5799_");
+        await asserts.backgroundBlurred(t, selectors.background(), "posts/lake-lauvitel/images/IMGP5799");
+    });
+test.page("http://127.0.0.1:8080/hugo-split-gallery/locations/index.html")
+    ("Locations taxonomy page social media images should be from the latest post, without filters", async t => {
+        await asserts.background(t, selectors.opengraphImage(), "posts/lake-lauvitel/images/IMGP5799");
+        await asserts.background(t, selectors.twitterImage(), "posts/lake-lauvitel/images/IMGP5799");
     });
 test.page("http://127.0.0.1:8080/hugo-split-gallery/locations/index.html")
     ("Locations taxonomy page should not have a map", async t => {
@@ -47,7 +55,12 @@ test.page("http://127.0.0.1:8080/hugo-split-gallery/locations/oisans/index.html"
     });
 test.page("http://127.0.0.1:8080/hugo-split-gallery/locations/oisans/index.html")
     ("Oisans term page background image should be from the latest post, with filters", async t => {
-        await t.expect(Selector("#gallery-panel").getAttribute("style")).contains("http://localhost:8080/hugo-split-gallery/posts/lake-lauvitel/images/IMGP5799_");
+        await asserts.backgroundBlurred(t, selectors.background(), "posts/lake-lauvitel/images/IMGP5799");
+    });
+test.page("http://127.0.0.1:8080/hugo-split-gallery/locations/oisans/index.html")
+    ("Oisans term page social media images should be from the latest post, without filters", async t => {
+        await asserts.background(t, selectors.opengraphImage(), "posts/lake-lauvitel/images/IMGP5799");
+        await asserts.background(t, selectors.twitterImage(), "posts/lake-lauvitel/images/IMGP5799");
     });
 test.page("http://127.0.0.1:8080/hugo-split-gallery/locations/oisans/index.html")
     ("Oisans term page map should display 4 markers", async t => {

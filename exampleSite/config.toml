@@ -1,5 +1,5 @@
 title = "Hugo Split Gallery theme sample site"
-copyright = "&copy;2021 Me"
+copyright = "&copy;2021-2022 Me"
 baseURL = "https://example.com"
 languageCode = "en-us"
 theme = "hugo-split-gallery"
@@ -36,6 +36,7 @@ DefaultContentLanguage = "en"
   # sharedMediaBundle = "/media"
   showTranslations = true
   map2gpx = "en"
+  paginate = 10
 
   [params.taxonomies]
     [params.taxonomies.locations]
@@ -45,6 +46,8 @@ DefaultContentLanguage = "en"
 
 [languages]
   [languages.en]
+    weight = 1
+
     [languages.en.menu]
       [[languages.en.menu.main]]
         identifier = "about"
@@ -64,6 +67,7 @@ DefaultContentLanguage = "en"
     languageCode = "fr-fr"
     showTranslations = false
     map2gpx = "fr"
+    weight = 2
 
     [languages.fr.params]
       description = "Gallerie photo inspirée de Hugo Split Theme"

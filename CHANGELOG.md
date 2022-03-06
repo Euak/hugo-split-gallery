@@ -2,6 +2,26 @@
 
 ## 1.x branch
 
+### 1.4.0
+
+#### Translations
+
+* Added Czech and German translations thanks to @beva-sdev
+
+#### UX
+
+* Enhancement: Limit number of shown posts on main page via paginate parameter, thanks to @beva-sdev
+
+#### Documentation
+
+* Enhancement: Splitted documentation into multiple .md files for better comprehension (#22)
+* Enhancement: Enhanced documentation for multilingual support (#31, #32), thanks to @beva-sdev
+
+#### Internal
+
+* Enhancement: Fixed images uses for social media sharing (#30)
+* Enhancement: Fixed background images/social media images if includeOriginalImage is false (#33)
+
 ### 1.3.0
 
 #### UX

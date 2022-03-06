@@ -1,5 +1,8 @@
 import { Selector } from 'testcafe';
 
+import * as asserts from '../asserts.js';
+import * as selectors from '../selectors.js';
+
 fixture("Single")
     .page("http://127.0.0.1:8080/hugo-split-gallery/posts/lake-lauvitel/index.html");
 
@@ -49,7 +52,12 @@ test("Grid should display 11 photos + 1 padding element", async t => {
     await t.expect(Selector(".split-grid").childElementCount).eql(12);
 });
 test("Background image should be from featured image, with filters", async t => {
-    await t.expect(Selector("#gallery-panel").getAttribute("style")).contains("http://localhost:8080/hugo-split-gallery/posts/lake-lauvitel/images/IMGP5799_");
+    await asserts.backgroundBlurred(t, selectors.background(), "posts/lake-lauvitel/images/IMGP5799");
+});
+test("Social media images should be from featured image, without filters", async t => {
+    await asserts.background(t, selectors.opengraphImage(), "posts/lake-lauvitel/images/IMGP5799");
+    await asserts.background(t, selectors.schemaImage(), "posts/lake-lauvitel/images/IMGP5799");
+    await asserts.background(t, selectors.twitterImage(), "posts/lake-lauvitel/images/IMGP5799");
 });
 test("Map should display 1 track marker + 9 photo markers", async t => {
     await t
