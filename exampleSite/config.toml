@@ -36,6 +36,7 @@ DefaultContentLanguage = "en"
   # sharedMediaBundle = "/media"
   showTranslations = true
   map2gpx = "en"
+  paginate = 10
 
   [params.taxonomies]
     [params.taxonomies.locations]
