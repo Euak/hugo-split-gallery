@@ -115,7 +115,7 @@ All other third-parties included are free to use (under MIT License, SIL OFL 1.1
 
 If you find a bug or have an idea for a feature, feel free to use the [issue tracker](https://gitlab.com/tmuguet/hugo-split-gallery/-/issues) to let me know.
 
-In case you want to merge some code, you are more than welcome to open merge requests (with or without a related issue). Please target the `next` branch of this repo, as `main` is reserved for tagged versions. Please also note this theme follows semantic versioning, thus don't introduce breaking changes if they are not necessary.
+In case you want to merge some code, you are more than welcome to open merge requests (with or without a related issue). Please branch from the `next` version of this repo and target the `next` branch for the merge request, as `main` is reserved for tagged versions. Please also note this theme follows semantic versioning, thus don't introduce breaking changes if they are not necessary.
 
 ### Adding translation
 

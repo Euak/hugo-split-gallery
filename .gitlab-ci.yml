@@ -108,7 +108,7 @@ pages:
     hugo version
     cd ${CI_PROJECT_DIR}/exampleSite
 
-    if [ $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH ]; then
+    if [ $CI_COMMIT_BRANCH == "main" ]; then
       echo "Generating main site..."
       hugo --config .config.ci.toml
       if [ -d "${CI_PROJECT_DIR}/next" ]; then mv ${CI_PROJECT_DIR}/next ${CI_PROJECT_DIR}/public; fi;
@@ -121,5 +121,5 @@ pages:
     paths:
       - public
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_BRANCH == "main"
     - if: $CI_COMMIT_BRANCH == "next"
