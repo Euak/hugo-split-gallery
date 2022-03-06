@@ -133,6 +133,15 @@ Use the `footnote` parameter in your site configuration to apply it to all your 
 
 If both are provided, both are displayed.
 
+## Pagination
+
+You can limit the number of posts displayed in the list of the home page via the `paginate` parameter of your site.
+
+```toml
+[params]
+  paginate = 10
+```
+
 ## Multilingual
 
 ### Taxonomies

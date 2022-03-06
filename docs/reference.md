@@ -19,6 +19,7 @@
 * `includeOriginalImage`: include original image as very-high-res for photo galleries (optional, defaults to `true`)
 * `largeImageSize`: size for high-res photo (optional, defaults to `2000px`)
 * `map2gpx`: Enables opening tracks in map2gpx (defaults to `en`, possible values are `false` (disable), `en` (use [map2gpx.eu](https://map2gpx.eu)), `fr` (use [map2gpx.fr](https://map2gpx.fr)))
+* `paginate`: max number of posts to display in the list of the home page (does not affect the grid of pictures on the right nor the map) (optional, defaults to `false` to disable pagination)
 * `sharedMediaBundle`: path to a headless bundle for shared featured images (optional, defaults to `/media`)
 * `showTranslations`: add links to available translations for each page (homepage, taxonomies, posts, etc.) (optional, defaults to `false`)
 * `siteLogo`: path to a logo to be displayed next to the title (optional, defaults to none)
