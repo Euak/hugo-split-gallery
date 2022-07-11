@@ -6,7 +6,7 @@ fixture("Home page UX")
 test("Clicking on a track marker should display its popup", async t => {
     await t
         .expect(Selector("#mapid .leaflet-popup-pane").hasChildElements).notOk()
-        .click(Selector("#mapid .leaflet-marker-pane .awesome-marker.awesome-marker-icon-orange")) // Select "Grand Veymont"
+        .click(Selector("#mapid .leaflet-marker-pane .awesome-marker.awesome-marker-icon-purple")) // Select "Grand Veymont"
         .expect(Selector("#mapid .leaflet-popup-pane").hasChildElements).ok()
         .expect(Selector("#mapid .leaflet-popup-pane .leaflet-popup-content").innerText).eql("Grand Veymont");
 });

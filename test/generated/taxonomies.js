@@ -63,8 +63,8 @@ test.page("http://127.0.0.1:8080/hugo-split-gallery/locations/oisans/index.html"
         await asserts.background(t, selectors.twitterImage(), "posts/lake-lauvitel/images/IMGP5799");
     });
 test.page("http://127.0.0.1:8080/hugo-split-gallery/locations/oisans/index.html")
-    ("Oisans term page map should display 4 markers", async t => {
+    ("Oisans term page map should display 3 track markers + 2 photo markers", async t => {
         await t
             .expect(Selector("#mapid .leaflet-marker-pane .awesome-marker.awesome-marker-icon-gray").count).eql(2)
-            .expect(Selector("#mapid .leaflet-marker-pane .awesome-marker").count).eql(4);
+            .expect(Selector("#mapid .leaflet-marker-pane .awesome-marker").count).eql(3+2);
     });

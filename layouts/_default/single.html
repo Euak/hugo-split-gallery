@@ -92,13 +92,13 @@ $(document).ready(function () {
   </ul>
 </div>
 
-{{ $tracks := partial "sortedgpx.html" . }}
+{{ $tracks := partial "sortedtracks.html" . }}
 {{ if gt (len $tracks) 0 }}
   {{ $map2gpx := (default "en" ($.Site.Params.map2gpx)) }}
   {{ $domain := "map2gpx.eu" }}
   {{ if eq $map2gpx "fr" }}{{ $domain = "map2gpx.fr" }}{{ end }}
   <div class="col">
-    <ul class="list-unstyled" id="list-gpxs">
+    <ul class="list-unstyled" id="list-tracks">
       {{ if gt (len $tracks) 1 }}
         {{ range $tracks }}
           <li><a href="{{ .Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfileWithName" .Name }}</a></li>
