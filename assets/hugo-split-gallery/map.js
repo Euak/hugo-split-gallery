@@ -127,6 +127,9 @@ function add(tracks, markers, index) {
   $.each(tracks, function (i, track) {
     var featuregroup = showTrack(track[0], colors[nextColor()]);
     if (featuregroup) {
+      featuregroup.on('mouseover', function () {
+        featuregroup.bringToFront();
+      });
       var featuregroupbounds = featuregroup.getBounds().pad(0.5);
       featuregroup.bindPopup(track[1]);
       b = (b === null) ? featuregroupbounds : b.extend(featuregroupbounds);
