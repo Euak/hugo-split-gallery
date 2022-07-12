@@ -1,4 +1,4 @@
-{{ $tracks := partial "sortedgpx.html" . }}
+{{ $tracks := partial "sortedtracks.html" . }}
 {{ $hasTracks := gt (len ($tracks)) 0 }}
 {{ $hasGeotaggedPhotos := false }}
 {{ $images := partial "sortedimages.html" . }}
@@ -17,25 +17,37 @@
 
   <div id="mapid" style="width: 100%; height: 50vh;" class="mb-1"></div>
   {{ $page := . }}
-  {{ $tracks := partial "sortedgpx.html" . }}
+  {{ $tracks := partial "sortedtracks.html" . }}
   {{ range $tracks }}
-    {{ $p := resources.GetMatch "/hugo-split-gallery/gpx.js" | resources.ExecuteAsTemplate (printf "%s/%s.js" $page.File.Dir .Name) . }}
+    {{ $p :=  false }}
+    {{ if eq (path.Ext .Name) ".gpx" }}
+      {{ $p = resources.GetMatch "/hugo-split-gallery/gpx.js" | resources.ExecuteAsTemplate (printf "%s/%s.js" $page.File.Dir .Name) . }}
+    {{ else if eq (path.Ext .Name) ".kml" }}
+      {{ $p = resources.GetMatch "/hugo-split-gallery/kml.js" | resources.ExecuteAsTemplate (printf "%s/%s.js" $page.File.Dir .Name) . }}
+      {{ else if eq (path.Ext .Name) ".geojson" }}
+      {{ $p = resources.GetMatch "/hugo-split-gallery/geojson.js" | resources.ExecuteAsTemplate (printf "%s/%s.js" $page.File.Dir .Name) . }}
+    {{ else }}
+      {{ warnf "Unsupported type %q" .Name }}
+    {{ end }}
     <script src="{{ $p.Permalink }}"></script>
   {{ end }}
   <script>
     $(document).ready(function() {
       initMap();
-      var gpxs = [];
+      var tracks = [];
       var markers = [];
 
       {{ range $tracks }}
-        gpxs.push([
-          {{ printf "track_%s" (md5 .Content) | safeJS }},
-          '<strong>{{ .Name }}</strong><br>'
+        {{ $varname := md5 .Content }}
+        var desc_{{ printf "track_%s" $varname | safeJS }} = '<strong>{{ .Name }}</strong><br>'
           + '<a href="{{ .Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfile" }}</a><br>'
           {{ if $map2gpx }}
           + '<a href="https://{{ $domain }}?{{ querify "url" .Permalink | safeURL }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpx" }}</a>'
-          {{ end }},
+          {{ end }};
+
+        tracks.push([
+          {{ printf "track_%s" $varname | safeJS }},
+          desc_{{ printf "track_%s" $varname | safeJS }},
         ]);
       {{ end }}
 
@@ -50,7 +62,7 @@
         {{ end }}
       {{ end }}
 
-      add(gpxs, markers);
+      add(tracks, markers);
       finalizeMap();
     });
   </script>

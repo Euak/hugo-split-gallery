@@ -3,7 +3,7 @@
 {{ $hasTracks := false }}
 {{ $hasGeotaggedPhotos := false }}
 {{ range $leafpages }}
-  {{ $tracks := partial "sortedgpx.html" . }}
+  {{ $tracks := partial "sortedtracks.html" . }}
   {{ if gt (len $tracks) 0 }}
     {{ $hasTracks = true }}
   {{ end }}
@@ -20,9 +20,18 @@
 {{ if or $hasTracks $hasGeotaggedPhotos }}
 <div id="mapid" style="width: 100%; height: 50vh;" class="mb-2"></div>
 {{ range $index, $page := $leafpages }}
-  {{ $tracks := partial "sortedgpx.html" $page }}
+  {{ $tracks := partial "sortedtracks.html" $page }}
   {{ range $tracks }}
-    {{ $p := resources.GetMatch "/hugo-split-gallery/gpx.js" | resources.ExecuteAsTemplate (printf "%s/%s.js" $page.File.Dir .Name) . }}
+    {{ $p :=  false }}
+    {{ if eq (path.Ext .Name) ".gpx" }}
+      {{ $p = resources.GetMatch "/hugo-split-gallery/gpx.js" | resources.ExecuteAsTemplate (printf "%s/%s.js" $page.File.Dir .Name) . }}
+    {{ else if eq (path.Ext .Name) ".kml" }}
+      {{ $p = resources.GetMatch "/hugo-split-gallery/kml.js" | resources.ExecuteAsTemplate (printf "%s/%s.js" $page.File.Dir .Name) . }}
+      {{ else if eq (path.Ext .Name) ".geojson" }}
+      {{ $p = resources.GetMatch "/hugo-split-gallery/geojson.js" | resources.ExecuteAsTemplate (printf "%s/%s.js" $page.File.Dir .Name) . }}
+    {{ else }}
+      {{ warnf "Unsupported type %q" .Name }}
+    {{ end }}
     <script src="{{ $p.Permalink }}"></script>
   {{ end }}
 {{ end }}
@@ -31,15 +40,15 @@ $(document).ready(function() {
 initMap();
 
 {{ range $index, $page := $leafpages }}
-  {{ $tracks := partial "sortedgpx.html" $page }}
+  {{ $tracks := partial "sortedtracks.html" $page }}
   {{ $images := partial "sortedimages.html" $page }}
   function {{ printf "load_%d" $index | safeJS }} () {
-    var gpxs = [];
+    var tracks = [];
     var markers = [];
     var latlngs = [];
 
     {{ range $tracks }}
-      gpxs.push([
+      tracks.push([
         {{ printf "track_%s" (md5 .Content) | safeJS }},
         '<strong><a href="{{ $page.Permalink }}">{{ $page.Title }}</a></strong>',
       ]);
@@ -56,7 +65,7 @@ initMap();
     if (latlngs.length > 0) {
       var pagebounds = L.latLngBounds(latlngs);
       addBounds(pagebounds);
-      if (gpxs.length === 0) {
+      if (tracks.length === 0) {
         markers.push([
           pagebounds.getCenter(),
           {{ $index }},
@@ -65,7 +74,7 @@ initMap();
       }
     }
 
-    add(gpxs, markers, {{ $index }});
+    add(tracks, markers, {{ $index }});
   }
 
   {{ printf "load_%d" $index | safeJS }}();

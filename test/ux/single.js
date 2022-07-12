@@ -8,8 +8,8 @@ test("Clicking on a track marker should display its popup", async t => {
         .expect(Selector("#mapid .leaflet-popup-pane").hasChildElements).notOk()
         .click(Selector("#mapid .leaflet-marker-pane .awesome-marker.awesome-marker-icon-green"))
         .expect(Selector("#mapid .leaflet-popup-pane").hasChildElements).ok()
-        .expect(Selector("#mapid .leaflet-popup-pane .leaflet-popup-content").innerText).contains("2016-05-21 Lac du Lauvitel.gpx")
-        .expect(Selector("#mapid .leaflet-popup-pane .leaflet-popup-content").innerText).contains("Download GPX file")
+        .expect(Selector("#mapid .leaflet-popup-pane .leaflet-popup-content").innerText).contains("2021-03-01 Lac Lauvitel.kml")
+        .expect(Selector("#mapid .leaflet-popup-pane .leaflet-popup-content").innerText).contains("Download the track")
         .expect(Selector("#mapid .leaflet-popup-pane .leaflet-popup-content").innerText).contains("Open the track in map2gpx");
 });
 test("Clicking on a photo marker should launch gallery", async t => {
