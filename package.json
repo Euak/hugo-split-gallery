@@ -22,7 +22,7 @@
  "version": "1.4.0",
  "scripts": {
   "postinstall": "node ./post-install.js",
-  "test": "testcafe firefox:headless ./test/**/** --app \"cd exampleSite && hugo server -p 8080 --config .config.ci.toml --disableLiveReload --watch=false\" --hostname localhost"
+  "test": "testcafe firefox:headless ./test/**/** --app \"cd exampleSite && hugo server -p 8080 --config .config.ci.toml --disableLiveReload --watch=false\" --hostname localhost --concurrency 2"
  },
  "devDependencies": {
   "@ciar4n/izmir": "^1.0.1",

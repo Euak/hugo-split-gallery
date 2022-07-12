@@ -16,6 +16,14 @@ test("Clicking on a photo marker should display its popup", async t => {
         .expect(Selector("#mapid .leaflet-popup-pane").hasChildElements).ok()
         .expect(Selector("#mapid .leaflet-popup-pane .leaflet-popup-content").innerText).eql("La Grave");
 });
+test.skip("Hovering on a track should bring it up", async t => {
+    // TODO: find a way to make that test work
+    await t.expect(Selector("#mapid path.leaflet-interactive").nth(-1).getAttribute('stroke')).eql('#F59630');
+
+    await t
+        .hover(Selector("#mapid .leaflet-marker-pane .awesome-marker.awesome-marker-icon-green").nth(0)).wait(100)
+        .expect(Selector("#mapid path.leaflet-interactive").nth(-1).getAttribute('stroke')).eql('#72B026');
+});
 test("Hovering on a photo with a track should move the map", async t => {
     const map = Selector("#mapid .leaflet-proxy");
     const initialStyle = map.style; // Using transform property as a proxy to detect movement
