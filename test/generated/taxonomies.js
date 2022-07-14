@@ -14,7 +14,7 @@ test("Taxonomies should be displayed on homepage", async t => {
 
 test.page("http://127.0.0.1:8080/hugo-split-gallery/locations/index.html")
     ("Locations taxonomy page title should be taxonomy plural with icon", async t => {
-        await t.expect(Selector("h1").innerText).eql(" Locations")
+        await t.expect(Selector("h1").innerText).eql("Locations")
             .expect(Selector("h1 i").classNames).eql(["fa", "fa-location-arrow", "fa-fw"]);
     });
 test.page("http://127.0.0.1:8080/hugo-split-gallery/locations/index.html")
@@ -42,7 +42,7 @@ test.page("http://127.0.0.1:8080/hugo-split-gallery/locations/index.html")
 
 test.page("http://127.0.0.1:8080/hugo-split-gallery/locations/oisans/index.html")
     ("Oisans term page title should be taxonomy singular + term with icon", async t => {
-        await t.expect(Selector("h1").innerText).eql(" Location Oisans")
+        await t.expect(Selector("h1").innerText).eql("Location Oisans")
             .expect(Selector("h1 i").classNames).eql(["fa", "fa-location-arrow", "fa-fw"]);
     });
 test.page("http://127.0.0.1:8080/hugo-split-gallery/locations/oisans/index.html")

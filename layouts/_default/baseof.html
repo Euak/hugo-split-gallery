@@ -55,7 +55,7 @@
                 <ul class="list-inline" id="menu-main">
                     {{ $currentPage := . }}
                     {{ range .Site.Menus.main }}
-                        <li class="list-inline-item me-4"><a href="{{ .URL }}">{{ .Pre }} <span>{{ .Name }}</span></a></li>
+                        <li class="list-inline-item me-4"><a href="{{ .URL }}">{{ .Pre }}<span>{{ .Name }}</span></a></li>
                     {{ end }}
                 </ul>
               {{ end }}
@@ -70,8 +70,8 @@
 
               {{ if or .PrevInSection .NextInSection }}
               <ul class="list-inline" id="menu-prevnext">
-                {{ with .PrevInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}"><i class="fa fa-arrow-left fa-fw"></i> {{ .Title }}</a></li>{{ end }}
-                {{ with .NextInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}">{{ .Title }} <i class="fa fa-arrow-right fa-fw"></i></a></li>{{ end }}
+                {{ with .PrevInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}"><i class="fa fa-arrow-left fa-fw prev"></i>{{ .Title }}</a></li>{{ end }}
+                {{ with .NextInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}">{{ .Title }}<i class="fa fa-arrow-right fa-fw next"></i></a></li>{{ end }}
               </ul>
               {{ end }}
             </aside>
