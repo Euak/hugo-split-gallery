@@ -53,7 +53,7 @@ $(document).ready(function () {
 {{ define "lists" }}
 <div class="col">
   <ul class="list-unstyled" id="list-metadata">
-    <li><i class="fa fa-file fa-fw"></i> {{ i18n "publishedAt" (.Date.Format "2006-01-02") }}</li>
+    <li><i class="fa fa-file fa-fw"></i>{{ i18n "publishedAt" (.Date.Format "2006-01-02") }}</li>
     {{ $dates := slice }}
     {{ range .Resources.ByType "image" }}
       {{ if .Exif }}
@@ -63,7 +63,7 @@ $(document).ready(function () {
       {{ end }}
     {{ end }}
     {{ if $dates }}
-      <li><i class="fa fa-camera fa-fw"></i> {{ i18n "photosTakenOn" (delimit (sort (uniq ($dates))) ", ") }}</li>
+      <li><i class="fa fa-camera fa-fw"></i>{{ i18n "photosTakenOn" (delimit (sort (uniq ($dates))) ", ") }}</li>
     {{ end }}
 
     {{ $page := . }}
@@ -73,15 +73,12 @@ $(document).ready(function () {
       {{ $val := $page.Params.Get .Data.Plural }}
       {{ if $val }}
         {{- if not (reflect.IsSlice $val) -}}{{- $val = slice $val -}}{{- end -}}
+        {{- $label := default .Data.Plural (i18n .Data.Plural) | humanize -}}
+        {{- if eq (len $val) 1 -}}
+          {{- $label = default .Data.Singular (i18n .Data.Singular) | humanize -}}
+        {{- end -}}
         <li>
-          <a href="{{ .Permalink }}">
-            {{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
-            {{ if gt (len $val) 1 }}
-              {{ default .Data.Plural (i18n .Data.Plural) | humanize }}
-            {{ else }}
-              {{ default .Data.Singular (i18n .Data.Singular) | humanize }}
-            {{ end }}
-          </a> : 
+          <a href="{{ .Permalink }}">{{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i>{{ end }}{{ $label }}</a>: 
           {{ range $index, $p := sort ($page.GetTerms .Data.Plural) "Page.Title" "asc" }}
             {{- if gt $index 0 }}, {{ end -}}
             <a href="{{ $p.Page.Permalink }}">{{ default $p.Page.Title (i18n (printf "%s-%s" $key $p.Page.Title)) }}</a>
@@ -101,15 +98,15 @@ $(document).ready(function () {
     <ul class="list-unstyled" id="list-tracks">
       {{ if gt (len $tracks) 1 }}
         {{ range $tracks }}
-          <li><a href="{{ .Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfileWithName" .Name }}</a></li>
+          <li><a href="{{ .Permalink }}"><i class="fa fa-map-signs fa-fw"></i>{{ i18n "downloadGPXfileWithName" .Name }}</a></li>
           {{ if $map2gpx }}
-            <li><a href="https://{{ $domain }}?{{ querify "url" .Permalink | safeURL }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpxWithName" .Name }}</a></li>
+            <li><a href="https://{{ $domain }}?{{ querify "url" .Permalink | safeURL }}"><i class="fa fa-map fa-fw"></i>{{ i18n "openGPXinmap2gpxWithName" .Name }}</a></li>
           {{ end }}
         {{ end }}
       {{ else if gt (len $tracks) 0 }}
-        <li><a href="{{ (index $tracks 0).Permalink }}"><i class="fa fa-map-signs fa-fw"></i> {{ i18n "downloadGPXfile" }}</a></li>
+        <li><a href="{{ (index $tracks 0).Permalink }}"><i class="fa fa-map-signs fa-fw"></i>{{ i18n "downloadGPXfile" }}</a></li>
         {{ if $map2gpx }}
-          <li><a href="https://{{ $domain }}?{{ querify "url" (index $tracks 0).Permalink | safeURL }}"><i class="fa fa-map fa-fw"></i> {{ i18n "openGPXinmap2gpx" }}</a></li>
+          <li><a href="https://{{ $domain }}?{{ querify "url" (index $tracks 0).Permalink | safeURL }}"><i class="fa fa-map fa-fw"></i>{{ i18n "openGPXinmap2gpx" }}</a></li>
         {{ end }}
       {{ end }}
     </ul>
@@ -118,7 +115,7 @@ $(document).ready(function () {
 
 {{ if (default false ($.Site.Params.enableDownloadAll)) }}
 <div class="col">
-  <ul class="list-unstyled" id="list-downloads"><li><button type="button" class="btn btn-link" onclick="dl(this);" data-filename="{{ .Title | urlize }}"><i class="fa fa-cloud-download fa-fw"></i> {{ i18n "downloadPhotos" }}</button></li></ul>
+  <ul class="list-unstyled" id="list-downloads"><li><button type="button" class="btn btn-link" onclick="dl(this);" data-filename="{{ .Title | urlize }}"><i class="fa fa-cloud-download fa-fw"></i>{{ i18n "downloadPhotos" }}</button></li></ul>
 </div>
 {{ end }}
 

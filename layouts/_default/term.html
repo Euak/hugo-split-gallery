@@ -5,8 +5,7 @@
 {{ define "title_html" }}
 {{/* We redefine title to include taxonomy name */}}
 {{ $icon := partial "icons/gettaxonomy.html" .Data.Plural }}
-{{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
-{{ default .Data.Singular (i18n .Data.Singular) | humanize }} {{ default .Title (i18n (printf "%s-%s" .Data.Singular .Title)) }}
+{{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i>{{ end }}{{ default .Data.Singular (i18n .Data.Singular) | humanize }} {{ default .Title (i18n (printf "%s-%s" .Data.Singular .Title)) }}
 {{ end }}
 
 {{ define "gallery" }}

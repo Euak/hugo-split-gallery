@@ -20,8 +20,8 @@ test("Metadata should have 4 items", async t => {
         .expect(items.count).eql(4)
         .expect(items.nth(0).innerText).contains("Article published on 2021-03-01")
         .expect(items.nth(1).innerText).contains("Photos taken on 2016-05-21, 2017-10-31, 2018-04-22, 2019-04-22, 2019-08-05, 2021-03-01")
-        .expect(items.nth(2).innerText).contains("Locations : Oisans, Écrins")
-        .expect(items.nth(3).innerText).contains("Seasons : Fall, Spring, Summer, Winter");
+        .expect(items.nth(2).innerText).contains("Locations: Oisans, Écrins")
+        .expect(items.nth(3).innerText).contains("Seasons: Fall, Spring, Summer, Winter");
 });
 test.page("http://127.0.0.1:8080/hugo-split-gallery/posts/lakes-muzelle-lauvitel/index.html")
     ("Tracks should have 2 items", async t => {
