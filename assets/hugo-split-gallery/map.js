@@ -41,7 +41,7 @@ function nextColor() {
   return currentColor;
 }
 
-function showGPX(track, color) {
+function showTrack(track, color) {
   var start = null;
   var end = null;
   var featuregroup = L.featureGroup();
@@ -57,7 +57,7 @@ function showGPX(track, color) {
   var line = new L.geoJSON(track);
   var layers = line.getLayers();
   for (let i = 0; i < layers.length; i += 1) {
-    if (layers[i] instanceof L.Polyline) {
+    if (layers[i] instanceof L.Polyline && layers[i].feature.geometry.type === 'LineString') {
       layers[i].setStyle({ weight: 5, color: colorMap[color], opacity: 0.75 });
       layers[i].addTo(featuregroup);
 
@@ -70,16 +70,27 @@ function showGPX(track, color) {
         }).addTo(featuregroup);
       }
       end = latlngs[latlngs.length - 1];
-    }
+    } /*
+    Not sure we want to display other features
+    else if (layers[i] instanceof L.Path) {
+      // Add layer (polygon, etc.) with custom style
+      layers[i].setStyle({ weight: 5, color: colorMap[color], opacity: 0.75 });
+      layers[i].addTo(featuregroup);
+    } else {
+      // Add layer (marker, etc.) as-is
+      layers[i].addTo(featuregroup);
+    }*/
   }
 
-  if (start && end) {
+  if (start !== null && end !== null) {
     if (!start.equals(end, 100)) {
       L.marker(end, {
         icon: iconsMap[color]
       }).addTo(featuregroup);
     }
-  
+  }
+
+  if (featuregroup.getLayers().length > 0) {
     featuregroup.addTo(map);
     addBounds(featuregroup.getBounds());
 
@@ -111,13 +122,16 @@ function addMarker(latlng, idx) {
   return marker;
 }
 
-function add(gpxs, markers, index) {
+function add(tracks, markers, index) {
   var b = null;
-  $.each(gpxs, function (i, gpx) {
-    var featuregroup = showGPX(gpx[0], colors[nextColor()]);
+  $.each(tracks, function (i, track) {
+    var featuregroup = showTrack(track[0], colors[nextColor()]);
     if (featuregroup) {
+      featuregroup.on('mouseover', function () {
+        featuregroup.bringToFront();
+      });
       var featuregroupbounds = featuregroup.getBounds().pad(0.5);
-      featuregroup.bindPopup(gpx[1]);
+      featuregroup.bindPopup(track[1]);
       b = (b === null) ? featuregroupbounds : b.extend(featuregroupbounds);
     }
   });
@@ -126,7 +140,7 @@ function add(gpxs, markers, index) {
     if (marker.length > 2) m.bindPopup(marker[2]);
   });
 
-  if (index !== undefined && gpxs.length > 0) {
+  if (index !== undefined && tracks.length > 0) {
     $('.split-grid a').eq(index).hover(function () {
       map.flyTo(b.getCenter());
     }, function () {

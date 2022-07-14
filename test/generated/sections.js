@@ -27,7 +27,7 @@ test("Social media images should be from the latest post, without filters", asyn
     await asserts.background(t, selectors.opengraphImage(), "posts/lake-lauvitel/images/IMGP5799");
     await asserts.background(t, selectors.twitterImage(), "posts/lake-lauvitel/images/IMGP5799");
 });
-test("Map should display 4 markers", async t => {
+test("Map should display 5 markers", async t => {
     await t
-        .expect(Selector("#mapid .leaflet-marker-pane .awesome-marker").count).eql(4);
+        .expect(Selector("#mapid .leaflet-marker-pane .awesome-marker").count).eql(5);
 });

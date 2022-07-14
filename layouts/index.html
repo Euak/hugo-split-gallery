@@ -26,8 +26,7 @@
       <div class="col" id="taxonomy-{{ $key }}">
         <h3>
           <a href="{{ .Permalink }}">
-            {{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i> {{ end }}
-            {{ default .Data.Plural (i18n .Data.Plural) | humanize }}
+            {{ if $icon }}<i class="fa fa-{{ $icon }} fa-fw"></i>{{ end }}{{ default .Data.Plural (i18n .Data.Plural) | humanize }}
           </a>
         </h3>
         <ul>

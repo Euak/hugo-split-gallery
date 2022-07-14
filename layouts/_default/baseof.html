@@ -42,10 +42,7 @@
         <div class="container h-100">
           <p class="lead my-0" id="site-title">          
             <a href="{{ .Site.Home.RelPermalink }}">
-              {{ with .Site.Params.siteLogo }}
-                <img src="{{ relURL (.) }}" alt="{{ $.Site.Title | plainify }}" />
-              {{ end }}
-              {{ .Site.Title | safeHTML }}
+              {{ with .Site.Params.siteLogo }}<img src="{{ relURL (.) }}" alt="{{ $.Site.Title | plainify }}" />{{ end }}{{ .Site.Title | safeHTML }}
             </a>
           </p>
 
@@ -55,7 +52,7 @@
                 <ul class="list-inline" id="menu-main">
                     {{ $currentPage := . }}
                     {{ range .Site.Menus.main }}
-                        <li class="list-inline-item me-4"><a href="{{ .URL }}">{{ .Pre }} <span>{{ .Name }}</span></a></li>
+                        <li class="list-inline-item me-4"><a href="{{ .URL }}">{{ .Pre }}<span>{{ .Name }}</span></a></li>
                     {{ end }}
                 </ul>
               {{ end }}
@@ -70,8 +67,8 @@
 
               {{ if or .PrevInSection .NextInSection }}
               <ul class="list-inline" id="menu-prevnext">
-                {{ with .PrevInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}"><i class="fa fa-arrow-left fa-fw"></i> {{ .Title }}</a></li>{{ end }}
-                {{ with .NextInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}">{{ .Title }} <i class="fa fa-arrow-right fa-fw"></i></a></li>{{ end }}
+                {{ with .PrevInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}"><i class="fa fa-arrow-left fa-fw prev"></i>{{ .Title }}</a></li>{{ end }}
+                {{ with .NextInSection }}<li class="list-inline-item me-4"><a href="{{ .Permalink }}">{{ .Title }}<i class="fa fa-arrow-right fa-fw next"></i></a></li>{{ end }}
               </ul>
               {{ end }}
             </aside>

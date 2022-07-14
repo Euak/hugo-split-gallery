@@ -23,10 +23,10 @@ other = "Fotos vom {{ . }}"
 other = "Alle Fotos herunterladen"
 
 [downloadGPXfile]
-other = "GPX-Datei herunterladen"
+other = "Strecke herunterladen"
 
 [downloadGPXfileWithName]
-other = "GPX-Datei herunterladen '{{ . }}'"
+other = "Strecke herunterladen '{{ . }}'"
 
 [openGPXinmap2gpx]
 other = "Öffnen die Strecke im map2gpx"

@@ -22,7 +22,7 @@ Inside the folder of your Hugo site, run the following command:
 git submodule add https://gitlab.com/tmuguet/hugo-split-gallery.git themes/hugo-split-gallery
 ```
 
-Then, change (or add) the theme in the site's configuration (e.g. _config.toml_):
+Then, change (or add) the theme in the site's configuration (e.g. `config.toml`):
 
 ```toml
 theme = "hugo-split-gallery"
@@ -58,7 +58,7 @@ content/
 │   │       └── ..
 ```
 
-In other words, photos displayed in the gallery **must** be in a `images` subfolder, and GPX track(s) -if any- must be at the same level as the content.
+In other words, photos displayed in the gallery **must** be in a `images` subfolder, and track(s) -if any- must be at the same level as the content. Supported formats for tracks are GPX (`.gpx` files), KML (`.kml` files) and GeoJSON (`.geojson` files).
 
 Additionnally, the content of the post:
 

@@ -34,7 +34,7 @@ test.page("http://127.0.0.1:8080/hugo-split-gallery/fr/posts/grand-veymont/index
 
 test.page("http://127.0.0.1:8080/hugo-split-gallery/fr/posts/lake-lauvitel/index.html")
     ("French translation should use tracks from main site", async t => {
-        const items = Selector("#list-gpxs li a");
+        const items = Selector("#list-tracks li a");
         await t
             .expect(items.nth(0).getAttribute("href")).contains("/hugo-split-gallery/posts/lake-lauvitel/2016-05-21%20Lac%20du%20Lauvitel.gpx");
     });

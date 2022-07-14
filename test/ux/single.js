@@ -8,8 +8,8 @@ test("Clicking on a track marker should display its popup", async t => {
         .expect(Selector("#mapid .leaflet-popup-pane").hasChildElements).notOk()
         .click(Selector("#mapid .leaflet-marker-pane .awesome-marker.awesome-marker-icon-green"))
         .expect(Selector("#mapid .leaflet-popup-pane").hasChildElements).ok()
-        .expect(Selector("#mapid .leaflet-popup-pane .leaflet-popup-content").innerText).contains("2016-05-21 Lac du Lauvitel.gpx")
-        .expect(Selector("#mapid .leaflet-popup-pane .leaflet-popup-content").innerText).contains("Download GPX file")
+        .expect(Selector("#mapid .leaflet-popup-pane .leaflet-popup-content").innerText).contains("2021-03-01 Lac Lauvitel.kml")
+        .expect(Selector("#mapid .leaflet-popup-pane .leaflet-popup-content").innerText).contains("Download the track")
         .expect(Selector("#mapid .leaflet-popup-pane .leaflet-popup-content").innerText).contains("Open the track in map2gpx");
 });
 test("Clicking on a photo marker should launch gallery", async t => {
@@ -17,6 +17,14 @@ test("Clicking on a photo marker should launch gallery", async t => {
         .expect(Selector(".fancybox-container").exists).notOk()
         .click(Selector("#mapid .leaflet-marker-pane .awesome-marker.awesome-marker-icon-gray").nth(0))
         .expect(Selector(".fancybox-container").exists).ok();
+});
+test.skip("Hovering on a track should bring it up", async t => {
+    // TODO: find a way to make that test work
+    await t.expect(Selector("#mapid path.leaflet-interactive").nth(-1).getAttribute('stroke')).eql('#F59630');
+
+    await t
+        .hover(Selector("#mapid .leaflet-marker-pane .awesome-marker.awesome-marker-icon-green").nth(0))
+        .expect(Selector("#mapid path.leaflet-interactive").nth(-1).getAttribute('stroke')).eql('#72B026');
 });
 test("Hovering on a photo should move the map", async t => {
     const map = Selector("#mapid .leaflet-proxy");

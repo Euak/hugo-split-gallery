@@ -20,15 +20,25 @@ test("Metadata should have 4 items", async t => {
         .expect(items.count).eql(4)
         .expect(items.nth(0).innerText).contains("Article published on 2021-03-01")
         .expect(items.nth(1).innerText).contains("Photos taken on 2016-05-21, 2017-10-31, 2018-04-22, 2019-04-22, 2019-08-05, 2021-03-01")
-        .expect(items.nth(2).innerText).contains("Locations : Oisans, Écrins")
-        .expect(items.nth(3).innerText).contains("Seasons : Fall, Spring, Summer, Winter");
+        .expect(items.nth(2).innerText).contains("Locations: Oisans, Écrins")
+        .expect(items.nth(3).innerText).contains("Seasons: Fall, Spring, Summer, Winter");
 });
-test("GPXs should have 2 items", async t => {
-    const items = Selector("#list-gpxs li");
+test.page("http://127.0.0.1:8080/hugo-split-gallery/posts/lakes-muzelle-lauvitel/index.html")
+    ("Tracks should have 2 items", async t => {
+    const items = Selector("#list-tracks li");
     await t
         .expect(items.count).eql(2)
-        .expect(items.nth(0).innerText).contains("Download GPX file")
+        .expect(items.nth(0).innerText).contains("Download the track")
         .expect(items.nth(1).innerText).contains("Open the track in map2gpx");
+});
+test("Tracks should have 2 items per track", async t => {
+    const items = Selector("#list-tracks li");
+    await t
+        .expect(items.count).eql(4)
+        .expect(items.nth(0).innerText).contains("Download the track")
+        .expect(items.nth(1).innerText).contains("Open the track")
+        .expect(items.nth(2).innerText).contains("Download the track")
+        .expect(items.nth(3).innerText).contains("Open the track");
 });
 test("Download all should be disabled by default", async t => {
     const items = Selector("#list-downloads li");
@@ -59,19 +69,20 @@ test("Social media images should be from featured image, without filters", async
     await asserts.background(t, selectors.schemaImage(), "posts/lake-lauvitel/images/IMGP5799");
     await asserts.background(t, selectors.twitterImage(), "posts/lake-lauvitel/images/IMGP5799");
 });
-test("Map should display 1 track marker + 9 photo markers", async t => {
+test("Map should display 2 track markers + 9 photo markers", async t => {
     await t
         .expect(Selector("#mapid .leaflet-marker-pane .awesome-marker.awesome-marker-icon-green").count).eql(1)
+        .expect(Selector("#mapid .leaflet-marker-pane .awesome-marker.awesome-marker-icon-orange").count).eql(1)
         .expect(Selector("#mapid .leaflet-marker-pane .awesome-marker.awesome-marker-icon-gray").count).eql(9);
 });
 
 test.page("http://127.0.0.1:8080/hugo-split-gallery/posts/grand-veymont/index.html")
     ("Link to map2gpx.eu should be displayed by default", async t => {
-        await t.expect(Selector("#list-gpxs li").nth(1).find("a").getAttribute("href")).eql("https://map2gpx.eu?url=http%3A%2F%2Flocalhost%3A8080%2Fhugo-split-gallery%2Fposts%2Fgrand-veymont%2F2020-06-14%2520Grand%2520Veymont.gpx");
+        await t.expect(Selector("#list-tracks li").nth(1).find("a").getAttribute("href")).eql("https://map2gpx.eu?url=http%3A%2F%2Flocalhost%3A8080%2Fhugo-split-gallery%2Fposts%2Fgrand-veymont%2F2020-06-14%2520Grand%2520Veymont.geojson");
     });
 test.page("http://127.0.0.1:8080/hugo-split-gallery/fr/posts/grand-veymont/index.html")
     ("Link to map2gpx.fr should be displayed", async t => {
-        await t.expect(Selector("#list-gpxs li").nth(1).find("a").getAttribute("href")).eql("https://map2gpx.fr?url=http%3A%2F%2Flocalhost%3A8080%2Fhugo-split-gallery%2Fposts%2Fgrand-veymont%2F2020-06-14%2520Grand%2520Veymont.gpx");
+        await t.expect(Selector("#list-tracks li").nth(1).find("a").getAttribute("href")).eql("https://map2gpx.fr?url=http%3A%2F%2Flocalhost%3A8080%2Fhugo-split-gallery%2Fposts%2Fgrand-veymont%2F2020-06-14%2520Grand%2520Veymont.geojson");
     });
 
 test.page("http://127.0.0.1:8080/hugo-split-gallery/ski/deux-alpes/index.html")
