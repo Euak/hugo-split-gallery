@@ -24,6 +24,10 @@
   margin-bottom: auto;
 }
 
+#site-title img {
+  margin-right: 0.5rem;
+}
+
 ul, ol {
   margin: 0;
   padding: 0;
