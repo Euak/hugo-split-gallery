@@ -2,6 +2,17 @@
 
 ## 1.x branch
 
+### 1.5.0
+
+#### Content
+
+* Added support of KML and GeoJSON tracks (#26)
+
+#### UX
+
+* Enhancement: Bring track to front when hovered on the map (#35)
+* Enhancement: Enhance display of icons (#36)
+
 ### 1.4.0
 
 #### Translations
