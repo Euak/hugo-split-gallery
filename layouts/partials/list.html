@@ -25,11 +25,11 @@
 {{ end }}
 
 <ul>
-    {{ range $idx, $val := $leafpages }}
+    {{ range $idx, $val := $leafpages.Reverse }}
         {{if or (eq $maxlistlen false) (lt $idx $maxlistlen) }}
             <li>
                 <a href="{{ .Permalink }}">
-                {{ if and $showDate .Date }}{{ .Date.Format "2006-01-02" }} | {{ end }}
+                {{ if and $showDate .Date }}{{ .Date.Format "2 Jan 2006" }} | {{ end }}
                 {{ if $translate }}
                     {{ default .Title (i18n (printf "%s-%s" .Data.Singular .Title)) }}
                 {{ else }}
